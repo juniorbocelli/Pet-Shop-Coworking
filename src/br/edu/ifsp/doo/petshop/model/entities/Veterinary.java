@@ -9,8 +9,8 @@ public class Veterinary extends User {
     // Lista de Consultas
     private Map<TimeLapse, ClinicalConsultation> schedule = new TreeMap<>();
 
-    public Veterinary(String cpf, String password, String email, String address) {
-        super(cpf, password, email, address);
+    public Veterinary(String cpf, String name, String password, String email, String address) {
+        super(cpf, name, password, email, address);
     }
 
     public boolean isActive() {

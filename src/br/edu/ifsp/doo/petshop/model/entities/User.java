@@ -4,14 +4,16 @@ import br.edu.ifsp.doo.petshop.utils.CheckCpf;
 
 public class User {
     private String cpf;
+    private String name;
     private String password;
     private String phone;
     private String cell;
     private String email;
     private String address;
 
-    public User(String cpf, String password, String email, String address) {
+    public User(String cpf, String name, String password, String email, String address) {
         this.cpf = cpf;
+        this.name = name;
         this.password = password;
         this.email = email;
         this.address = address;

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Client {
     private String cpf;
+    private String name;
     private String phone;
     private String cell;
     private String email;
@@ -12,8 +13,9 @@ public class Client {
     // Lista de Animais do Cliente
     private ArrayList<Animal> animals = new ArrayList<>();
 
-    public Client(String cpf, String phone, String address) {
+    public Client(String cpf, String name, String phone, String address) {
         this.cpf = cpf;
+        this.name = name;
         this.phone = phone;
         this.address = address;
     }
