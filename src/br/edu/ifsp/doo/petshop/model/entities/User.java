@@ -1,5 +1,7 @@
 package br.edu.ifsp.doo.petshop.model.entities;
 
+import br.edu.ifsp.doo.petshop.utils.CheckCpf;
+
 public class User {
     private String cpf;
     private String password;
@@ -19,8 +21,12 @@ public class User {
         return cpf;
     }
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
+    public void setCpf(String cpf) throws Exception {
+        if (CheckCpf.isValid(cpf)) {
+            this.cpf = cpf;
+        } else {
+            throw new Exception("CPF inválido!");
+        }
     }
 
     public String getPassword() {
