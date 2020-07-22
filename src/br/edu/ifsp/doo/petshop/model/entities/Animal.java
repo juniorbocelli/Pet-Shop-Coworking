@@ -11,9 +11,12 @@ public class Animal {
     private int birthYear;
     private boolean active = true;
     private AnimalTypes animalType;
-    private ArrayList<Diseases> diseases;
+    private ArrayList<Diseases> diseases = new ArrayList<>();
     private Genders gender;
     private Veterinary preferredVeterinarian;
+
+    // Prontuário do animal
+    private VeterinaryRecord veterinaryRecord;
 
     public Animal(String name, int birthYear, AnimalTypes animalType, ArrayList<Diseases> diseases, Genders gender, Veterinary preferredVeterinarian) {
         this.name = name;
