@@ -13,6 +13,9 @@ public class Product {
     }
 
     public void setName(String name) {
+        if (name.length() < 10)
+            throw new IllegalArgumentException("O nome deve ter no mínimo 10 caracteres!");
+
         this.name = name;
     }
 

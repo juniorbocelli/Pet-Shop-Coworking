@@ -54,6 +54,10 @@ public class Animal {
         this.birthYear = birthYear;
     }
 
+    public int getAge() {
+        return birthYear - Calendar.getInstance().YEAR;
+    }
+
     public boolean isActive() {
         return active;
     }
@@ -93,6 +97,10 @@ public class Animal {
     public void addDiaese(Diseases diaese){
         if (!diseases.contains(diaese))
             diseases.add(diaese);
+    }
 
+    public void removeDiaese(Diseases diaese){
+        if (diseases.contains(diaese))
+            diseases.remove(diaese);
     }
 }
