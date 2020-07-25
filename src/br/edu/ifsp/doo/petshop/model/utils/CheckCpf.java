@@ -1,4 +1,4 @@
-package br.edu.ifsp.doo.petshop.utils;
+package br.edu.ifsp.doo.petshop.model.utils;
 
 import java.util.InputMismatchException;
 

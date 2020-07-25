@@ -1,5 +1,7 @@
 package br.edu.ifsp.doo.petshop.model.entities;
 
+import br.edu.ifsp.doo.petshop.model.utils.CheckCpf;
+
 import java.util.ArrayList;
 
 public class Client {
@@ -21,8 +23,9 @@ public class Client {
     }
 
     // Construtor para caso de agendamento de Cliente sem cadastro
-    public Client(String cpf, String phone) {
+    public Client(String cpf, String name, String phone) {
         this.cpf = cpf;
+        this.name = name;
         this.phone = phone;
     }
 
@@ -31,7 +34,20 @@ public class Client {
     }
 
     public void setCpf(String cpf) {
+        if (!CheckCpf.isValid(cpf))
+            throw new IllegalArgumentException("CPF inválido!");
+        cpf = CheckCpf.unmask(cpf);
         this.cpf = cpf;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        if (name.length() < 6)
+            throw new IllegalArgumentException("O nome deve ter no mínimo 6 caracteres!");
+        this.name = name;
     }
 
     public String getPhone() {
@@ -39,6 +55,15 @@ public class Client {
     }
 
     public void setPhone(String phone) {
+        // Retira máscara
+        phone = phone.replace("(", "")
+                .replace(")", "")
+                .replace("-", "")
+                .replace(" ", "");
+
+        // Faz verificações
+        if(phone.length() < 10 || !phone.chars().allMatch( Character::isDigit ))
+            throw  new  IllegalArgumentException("Telefone inválido!");
         this.phone = phone;
     }
 
@@ -47,6 +72,15 @@ public class Client {
     }
 
     public void setCell(String cell) {
+        // Retira máscara
+        cell = cell.replace("(", "")
+                .replace(")", "")
+                .replace("-", "")
+                .replace(" ", "");
+
+        // Faz verificações
+        if(cell.length() < 11 || !cell.chars().allMatch( Character::isDigit ))
+            throw  new  IllegalArgumentException("Celular inválido!");
         this.cell = cell;
     }
 
@@ -67,17 +101,32 @@ public class Client {
     }
 
     // Método que adiciona Animal
-    public void addAnimal(Animal animal){
-
+    public void addAnimal(Animal animal) throws Exception{
+        // Verifica se o Animal já pertence a lista
+        if (this.animals.contains(animal))
+            throw new Exception("Animal já cadastrado!");
+        this.animals.add(animal);
     }
 
     // Método que lista Animais ativos
-    public ArrayList<Animal> listActiveAnimals(){
-        return this.animals;
+    public ArrayList<Animal> listAnimals(){
+        ArrayList<Animal> activeAnimalsList = new ArrayList<>();
+
+        for (Animal a : this.animals)
+            if (a.isActive())
+                activeAnimalsList.add(a);
+
+        return activeAnimalsList;
     }
 
     // Método que lista todos os Animais
-    public ArrayList<Animal> listAnimals(){
-        return this.animals;
+    public ArrayList<Animal> listAllAnimals(){
+        ArrayList<Animal> animalsList = new ArrayList<>();
+
+        for (Animal a : this.animals)
+            if (a.isActive())
+                animalsList.add(a);
+
+        return animalsList;
     }
 }

@@ -1,6 +1,7 @@
 package br.edu.ifsp.doo.petshop.model.entities;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class Animal {
     public enum AnimalTypes {CACHORRO, GATO};
@@ -38,6 +39,8 @@ public class Animal {
     }
 
     public void setName(String name) {
+        if (name.length() < 6)
+            throw new IllegalArgumentException("O nome deve ter no mínimo 6 caracteres!");
         this.name = name;
     }
 
@@ -46,6 +49,8 @@ public class Animal {
     }
 
     public void setBirthYear(int birthYear) {
+        if (birthYear < 2000 || birthYear > Calendar.getInstance().YEAR)
+            throw new IllegalArgumentException("Ano de nascimento inválido!");
         this.birthYear = birthYear;
     }
 
@@ -86,6 +91,8 @@ public class Animal {
     }
 
     public void addDiaese(Diseases diaese){
+        if (!diseases.contains(diaese))
+            diseases.add(diaese);
 
     }
 }
