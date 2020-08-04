@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="73.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifsp.doo.petshop.view.loaders.FXMLProduct">
+   <children>
+      <AnchorPane prefHeight="58.0" prefWidth="600.0">
+         <children>
+            <TextField fx:id="clnName" layoutX="89.0" layoutY="19.0" prefHeight="25.0" prefWidth="474.0" />
+            <Label layoutX="34.0" layoutY="21.0" text="Nome:">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutY="58.0" prefHeight="46.0" prefWidth="600.0">
+         <children>
+            <Button fx:id="btnSabe" layoutX="331.0" layoutY="8.0" mnemonicParsing="false" onAction="#save" text="Salvar">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
+            <Button fx:id="bntClose" layoutX="495.0" layoutY="8.0" mnemonicParsing="false" onAction="#close" text="Fechar">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
+         </children></AnchorPane>
+   </children>
+</AnchorPane>

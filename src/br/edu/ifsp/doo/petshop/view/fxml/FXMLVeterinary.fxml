@@ -43,7 +43,7 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <Button fx:id="btnAddNewConsultant" layoutX="676.0" layoutY="18.0" mnemonicParsing="false" onAction="#addNewConsultant" text="+ Adicionar Novo" />
+            <Button fx:id="btnAddNewConsultant" layoutX="676.0" layoutY="18.0" mnemonicParsing="false" onAction="#addNewConsultantion" text="+ Adicionar Novo" />
          </children>
       </AnchorPane>
       <AnchorPane layoutY="581.0" prefHeight="67.0" prefWidth="800.0">

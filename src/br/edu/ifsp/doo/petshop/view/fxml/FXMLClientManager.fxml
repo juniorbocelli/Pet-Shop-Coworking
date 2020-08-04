@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifsp.doo.petshop.view.loaders.FXMLClientManager">
+
+    <children>
+        <AnchorPane prefHeight="109.0" prefWidth="800.0">
+            <children>
+                <TextField fx:id="txtSearch" layoutX="134.0" layoutY="33.0" onAction="#search" prefHeight="25.0" prefWidth="481.0" />
+                <Label layoutX="61.0" layoutY="35.0" text="Pesquisar:">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Label>
+                <CheckBox fx:id="chkInactive" layoutX="642.0" layoutY="35.0" mnemonicParsing="false" onAction="#filterByActive" text="Inativos">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </CheckBox>
+                <Button fx:id="btnAddVeterinary" layoutX="642.0" layoutY="70.0" mnemonicParsing="false" onAction="#addNewClient" text="+ Adicionar Novo" />
+            </children>
+        </AnchorPane>
+        <AnchorPane layoutY="109.0" prefHeight="491.0" prefWidth="800.0">
+            <children>
+                <TableView fx:id="tblClient" prefHeight="491.0" prefWidth="800.0">
+                    <columns>
+                        <TableColumn fx:id="clnCpf" prefWidth="123.0" text="CPF" />
+                        <TableColumn fx:id="clnName" prefWidth="245.0" text="Nome" />
+                        <TableColumn fx:id="clnEmail" minWidth="0.0" prefWidth="201.0" text="E-mail" />
+                        <TableColumn fx:id="clnPhone" prefWidth="114.0" text="Telefone" />
+                        <TableColumn fx:id="clnCell" prefWidth="116.0" text="Celular" />
+                    </columns>
+                </TableView>
+            </children>
+        </AnchorPane>
+    </children>
+
+</AnchorPane>

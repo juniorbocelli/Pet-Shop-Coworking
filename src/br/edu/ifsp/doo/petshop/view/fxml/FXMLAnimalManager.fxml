@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifsp.doo.petshop.view.loaders.FXMLAnimalManager">
+
+    <children>
+        <AnchorPane prefHeight="109.0" prefWidth="800.0">
+            <children>
+                <TextField fx:id="txtSearch" layoutX="134.0" layoutY="33.0" onAction="#search" prefHeight="25.0" prefWidth="481.0" />
+                <Label layoutX="61.0" layoutY="35.0" text="Pesquisar:">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Label>
+                <CheckBox fx:id="chkInactive" layoutX="642.0" layoutY="35.0" mnemonicParsing="false" onAction="#filterByActive" text="Inativos">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </CheckBox>
+                <Button fx:id="btnAddVeterinary" layoutX="642.0" layoutY="70.0" mnemonicParsing="false" onAction="#addNewAnimal" text="+ Adicionar Novo" />
+            <ComboBox fx:id="cbxOwner" layoutX="134.0" layoutY="70.0" onAction="#filterByOwner" prefHeight="25.0" prefWidth="481.0" />
+            <Label layoutX="46.0" layoutY="72.0" text="Proprietário:">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            </children>
+        </AnchorPane>
+        <AnchorPane layoutY="109.0" prefHeight="491.0" prefWidth="800.0">
+            <children>
+                <TableView fx:id="tblAnimal" prefHeight="491.0" prefWidth="800.0">
+                    <columns>
+                        <TableColumn fx:id="clnName" prefWidth="123.0" text="Nome" />
+                        <TableColumn fx:id="clnOwner" prefWidth="424.0" text="Proprietário" />
+                        <TableColumn fx:id="clnType" minWidth="0.0" prefWidth="90.0" text="Tipo" />
+                        <TableColumn fx:id="clnGender" text="Sexo" />
+                        <TableColumn fx:id="clnAge" prefWidth="82.0" text="Idade" />
+                    </columns>
+                </TableView>
+            </children>
+        </AnchorPane>
+    </children>
+
+</AnchorPane>
