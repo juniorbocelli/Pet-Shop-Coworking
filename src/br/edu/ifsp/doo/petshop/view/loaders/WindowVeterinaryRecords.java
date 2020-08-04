@@ -2,7 +2,13 @@ package br.edu.ifsp.doo.petshop.view.loaders;
 
 import javafx.event.ActionEvent;
 
-public class FXMLProduct {
+public class WindowVeterinaryRecords {
+    public void openAnimal(ActionEvent actionEvent) {
+    }
+
+    public void addConsultation(ActionEvent actionEvent) {
+    }
+
     public void save(ActionEvent actionEvent) {
     }
 

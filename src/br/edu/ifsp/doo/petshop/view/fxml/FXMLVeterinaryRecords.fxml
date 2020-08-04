@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifsp.doo.petshop.view.loaders.WindowVeterinaryRecords">
+   <children>
+      <AnchorPane prefHeight="54.0" prefWidth="800.0">
+         <children>
+            <ComboBox fx:id="cbxAnimal" layoutX="83.0" layoutY="21.0" prefHeight="25.0" prefWidth="582.0" />
+            <Label layoutX="21.0" layoutY="23.0" text="Animal:">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Button fx:id="btnOpenAnimal" layoutX="681.0" layoutY="21.0" mnemonicParsing="false" onAction="#openAnimal" text="Abrir Cadastro" />
+         </children></AnchorPane>
+      <AnchorPane layoutX="-1.0" layoutY="54.0" prefHeight="247.0" prefWidth="800.0">
+         <children>
+            <Label layoutX="15.0" layoutY="18.0" text="Consultas">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <TableView fx:id="tblConsultations" layoutX="14.0" layoutY="43.0" prefHeight="200.0" prefWidth="773.0">
+              <columns>
+                <TableColumn fx:id="clnDate" prefWidth="91.0" text="Data" />
+                <TableColumn fx:id="clnStartTime" prefWidth="70.0" text="Início" />
+                  <TableColumn fx:id="clnEndTime" prefWidth="66.0" text="Fim" />
+                  <TableColumn fx:id="clnVeterinary" prefWidth="392.0" text="Veterinário" />
+                  <TableColumn fx:id="clnPrice" prefWidth="75.0" text="Preço" />
+                  <TableColumn fx:id="clnFinalized" prefWidth="78.0" text="Finalizada" />
+              </columns>
+            </TableView>
+            <Button fx:id="btnAddConsultation" layoutX="658.0" layoutY="13.0" mnemonicParsing="false" onAction="#addConsultation" text="+ Adicionar Consulta" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="-1.0" layoutY="300.0" prefHeight="236.0" prefWidth="800.0">
+         <children>
+            <Label layoutX="14.0" layoutY="12.0" text="Histórico">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <TextArea fx:id="txaGeneralAnnotations" editable="false" layoutX="14.0" layoutY="35.0" prefHeight="200.0" prefWidth="773.0" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutY="546.0" prefHeight="54.0" prefWidth="800.0">
+         <children>
+            <Button fx:id="btnSave" layoutX="460.0" layoutY="12.0" mnemonicParsing="false" onAction="#save" text="Salvar">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
+            <Button fx:id="bntClose" layoutX="689.0" layoutY="12.0" mnemonicParsing="false" onAction="#close" text="Fechar">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
