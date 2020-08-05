@@ -1,17 +1,30 @@
 package br.edu.ifsp.doo.petshop.view.loaders;
 
-import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class WindowAnimalManager {
-    public void search(ActionEvent actionEvent) {
-    }
+    public void startModal(){
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            Pane pane = loader.load(getClass().getResource("/br/edu/ifsp/doo/petshop/view/fxml/FXMLAnimalManager.fxml").openStream());
 
-    public void addNewAnimal(ActionEvent actionEvent) {
-    }
+            Stage stage = new Stage();
 
-    public void filterByOwner(ActionEvent actionEvent) {
-    }
-
-    public void filterByActive(ActionEvent actionEvent) {
+            stage.getIcons().add(new Image("/br/edu/ifsp/doo/petshop/view/image/logo.png"));
+            stage.setTitle("Lista de Animais");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(pane, 800, 600));
+            stage.setResizable(false);
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

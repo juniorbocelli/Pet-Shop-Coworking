@@ -1,30 +1,25 @@
 package br.edu.ifsp.doo.petshop.view.loaders;
 
-import javafx.event.ActionEvent;
-import javafx.scene.input.MouseEvent;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 
-public class WindowSecretaryDashboard {
-    public void showClientsList(ActionEvent actionEvent) {
+public class WindowSecretaryDashboard extends Application {
+    @Override
+    public void start(Stage primaryStage) throws Exception{
+        Parent root = FXMLLoader.load(getClass().getResource("/br/edu/ifsp/doo/petshop/view/fxml/FXMLSecretaryDashboard.fxml"));
+
+        primaryStage.getIcons().add(new Image("/br/edu/ifsp/doo/petshop/view/image/logo.png"));
+        primaryStage.setTitle("Pet Shop Coworking - Login");
+        primaryStage.setScene(new Scene(root, 800, 600));
+        primaryStage.setResizable(false);
+        primaryStage.show();
     }
 
-    public void showVetsList(ActionEvent actionEvent) {
-    }
-
-    public void showProductsList(ActionEvent actionEvent) {
-    }
-
-    public void showAnimalsList(ActionEvent actionEvent) {
-    }
-
-    public void showUserData(MouseEvent mouseEvent) {
-    }
-
-    public void goToDate(ActionEvent actionEvent) {
-    }
-
-    public void goToToday(ActionEvent actionEvent) {
-    }
-
-    public void goToVeterinary(ActionEvent actionEvent) {
+    public static void main(String[] args) {
+        launch(args);
     }
 }
