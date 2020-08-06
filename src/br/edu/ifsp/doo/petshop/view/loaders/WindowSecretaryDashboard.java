@@ -15,7 +15,7 @@ public class WindowSecretaryDashboard extends Application {
         primaryStage.getIcons().add(new Image("/br/edu/ifsp/doo/petshop/view/image/logo.png"));
         primaryStage.setTitle("Pet Shop Coworking - Login");
         primaryStage.setScene(new Scene(root, 800, 600));
-        primaryStage.setResizable(false);
+        //primaryStage.setResizable(false);
         primaryStage.show();
     }
 
