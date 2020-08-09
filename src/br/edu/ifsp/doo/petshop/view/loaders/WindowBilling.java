@@ -9,17 +9,16 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class WindowVeterinaryRecords {
-
-    public void startModal(String title) {
+public class WindowBilling {
+    public void startModal(){
         try {
             FXMLLoader loader = new FXMLLoader();
-            Pane pane = loader.load(getClass().getResource("/br/edu/ifsp/doo/petshop/view/fxml/FXMLVeterinary.fxml").openStream());
+            Pane pane = loader.load(getClass().getResource("/br/edu/ifsp/doo/petshop/view/fxml/FXMLBilling.fxml").openStream());
 
             Stage stage = new Stage();
 
             stage.getIcons().add(new Image("/br/edu/ifsp/doo/petshop/view/image/logo.png"));
-            stage.setTitle("Prontuário - " + title);
+            stage.setTitle("Faturamentos");
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(pane, 800, 600));
             stage.setResizable(false);

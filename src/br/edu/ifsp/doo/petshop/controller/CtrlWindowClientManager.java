@@ -1,5 +1,6 @@
 package br.edu.ifsp.doo.petshop.controller;
 
+import br.edu.ifsp.doo.petshop.view.loaders.WindowClient;
 import javafx.event.ActionEvent;
 
 public class CtrlWindowClientManager {
@@ -10,5 +11,7 @@ public class CtrlWindowClientManager {
     }
 
     public void addNewClient(ActionEvent actionEvent) {
+        WindowClient windowClient = new WindowClient();
+        windowClient.startModal();
     }
 }

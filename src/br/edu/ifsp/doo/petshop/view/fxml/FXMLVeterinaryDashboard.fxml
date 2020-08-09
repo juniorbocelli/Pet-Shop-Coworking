@@ -20,22 +20,22 @@
                         <Font name="System Bold" size="30.0" />
                     </font>
                 </Label>
-                <Button fx:id="btnManageClients" layoutX="29.0" layoutY="266.0" mnemonicParsing="false" onAction="#showClientsList" prefHeight="37.0" prefWidth="179.0" text="Gerenciar Consultas">
+                <Button fx:id="btnManageVeterinaryConsultations" layoutX="29.0" layoutY="266.0" mnemonicParsing="false" onAction="#manageVeterinaryConsultations" prefHeight="37.0" prefWidth="179.0" text="Gerenciar Consultas">
                     <font>
                         <Font size="16.0" />
                     </font>
                 </Button>
-                <Button fx:id="btnManageVets" layoutX="29.0" layoutY="194.0" mnemonicParsing="false" onAction="#showVetsList" prefHeight="37.0" prefWidth="179.0" text="Gerenciar Prontuários">
+                <Button fx:id="btnManageVeterinaryRecords" layoutX="29.0" layoutY="194.0" mnemonicParsing="false" onAction="#manageVeterinaryRecords" prefHeight="37.0" prefWidth="179.0" text="Gerenciar Prontuários">
                     <font>
                         <Font size="16.0" />
                     </font>
                 </Button>
-                <Button fx:id="btnBilling" layoutX="29.0" layoutY="416.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="179.0" text="Faturamento">
+                <Button fx:id="btnBilling" layoutX="29.0" layoutY="416.0" mnemonicParsing="false" onAction="#showBilling" prefHeight="37.0" prefWidth="179.0" text="Faturamento">
                     <font>
                         <Font size="16.0" />
                     </font>
                 </Button>
-                <Button fx:id="btnManageAnimals" layoutX="29.0" layoutY="342.0" mnemonicParsing="false" onAction="#showAnimalsList" prefHeight="37.0" prefWidth="179.0" text="Gerenciar Animais">
+                <Button fx:id="btnManageAnimals" layoutX="29.0" layoutY="342.0" mnemonicParsing="false" onAction="#manageAnimals" prefHeight="37.0" prefWidth="179.0" text="Gerenciar Animais">
                     <font>
                         <Font size="16.0" />
                     </font>

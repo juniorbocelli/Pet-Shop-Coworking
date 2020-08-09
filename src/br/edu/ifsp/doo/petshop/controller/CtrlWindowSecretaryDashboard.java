@@ -1,9 +1,6 @@
 package br.edu.ifsp.doo.petshop.controller;
 
-import br.edu.ifsp.doo.petshop.view.loaders.WindowAnimalManager;
-import br.edu.ifsp.doo.petshop.view.loaders.WindowClientManager;
-import br.edu.ifsp.doo.petshop.view.loaders.WindowProductManager;
-import br.edu.ifsp.doo.petshop.view.loaders.WindowVeterinaryManager;
+import br.edu.ifsp.doo.petshop.view.loaders.*;
 import javafx.event.ActionEvent;
 import javafx.scene.input.MouseEvent;
 
@@ -26,6 +23,11 @@ public class CtrlWindowSecretaryDashboard {
     public void showAnimalsList(ActionEvent actionEvent) {
         WindowAnimalManager windowAnimalManager = new WindowAnimalManager();
         windowAnimalManager.startModal();
+    }
+
+    public void showBilling(ActionEvent actionEvent) {
+        WindowBilling windowBilling = new WindowBilling();
+        windowBilling.startModal();
     }
 
     public void showUserData(MouseEvent mouseEvent) {

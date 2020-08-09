@@ -1,17 +1,12 @@
 package br.edu.ifsp.doo.petshop.controller;
 
+import br.edu.ifsp.doo.petshop.view.loaders.WindowAnimalManager;
+import br.edu.ifsp.doo.petshop.view.loaders.WindowBilling;
+import br.edu.ifsp.doo.petshop.view.loaders.WindowVeterinaryRecords;
 import javafx.event.ActionEvent;
 import javafx.scene.input.MouseEvent;
 
 public class CtrlWindowVeterinaryDashboard {
-    public void showClientsList(ActionEvent actionEvent) {
-    }
-
-    public void showVetsList(ActionEvent actionEvent) {
-    }
-
-    public void showAnimalsList(ActionEvent actionEvent) {
-    }
 
     public void showUserData(MouseEvent mouseEvent) {
     }
@@ -20,5 +15,23 @@ public class CtrlWindowVeterinaryDashboard {
     }
 
     public void goToToday(ActionEvent actionEvent) {
+    }
+
+    public void manageVeterinaryConsultations(ActionEvent actionEvent) {
+        WindowVeterinaryRecords windowVeterinaryRecords = new WindowVeterinaryRecords();
+        windowVeterinaryRecords.startModal("Título do Prontuário");
+    }
+
+    public void manageVeterinaryRecords(ActionEvent actionEvent) {
+    }
+
+    public void showBilling(ActionEvent actionEvent) {
+        WindowBilling windowBilling = new WindowBilling();
+        windowBilling.startModal();
+    }
+
+    public void manageAnimals(ActionEvent actionEvent) {
+        WindowAnimalManager windowAnimalManager = new WindowAnimalManager();
+        windowAnimalManager.startModal();
     }
 }
