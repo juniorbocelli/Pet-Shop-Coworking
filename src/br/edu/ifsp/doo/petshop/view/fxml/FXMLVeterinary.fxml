@@ -48,12 +48,12 @@
       </AnchorPane>
       <AnchorPane layoutY="581.0" prefHeight="67.0" prefWidth="800.0">
          <children>
-            <Button fx:id="btnSave" layoutX="472.0" layoutY="21.0" mnemonicParsing="false" onAction="#save" text="Salvar">
+            <Button fx:id="btnSaveVeterinary" layoutX="472.0" layoutY="21.0" mnemonicParsing="false" onAction="#saveVeterinary" text="Salvar">
                <font>
                   <Font size="15.0" />
                </font>
             </Button>
-            <Button fx:id="btnClose" layoutX="676.0" layoutY="21.0" mnemonicParsing="false" onAction="#close" text="Fechar">
+            <Button fx:id="btnCloseVeterinary" layoutX="676.0" layoutY="21.0" mnemonicParsing="false" onAction="#closeVeterinary" text="Fechar">
                <font>
                   <Font size="15.0" />
                </font>

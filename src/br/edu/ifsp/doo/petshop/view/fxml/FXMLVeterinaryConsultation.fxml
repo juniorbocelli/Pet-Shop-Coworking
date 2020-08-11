@@ -65,12 +65,12 @@
                   <Font size="15.0" />
                </font>
             </Button>
-            <Button fx:id="btnSave" layoutX="558.0" layoutY="20.0" mnemonicParsing="false" onAction="#save" text="Salvar">
+            <Button fx:id="btnSaveVeterinaryConsultant" layoutX="558.0" layoutY="20.0" mnemonicParsing="false" onAction="#saveVeterinaryConsultant" text="Salvar">
                <font>
                   <Font size="15.0" />
                </font>
             </Button>
-            <Button fx:id="btnClose" layoutX="701.0" layoutY="20.0" mnemonicParsing="false" onAction="#close" text="Fechar">
+            <Button fx:id="btnCloseVeterinaryConsultant" layoutX="701.0" layoutY="20.0" mnemonicParsing="false" onAction="#closeVeterinaryConsultant" text="Fechar">
                <font>
                   <Font size="15.0" />
                </font>

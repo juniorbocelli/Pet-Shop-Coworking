@@ -13,7 +13,7 @@ public class WindowVeterinaryConsultation {
     public void startModal(){
         try {
             FXMLLoader loader = new FXMLLoader();
-            Pane pane = loader.load(getClass().getResource("/br/edu/ifsp/doo/petshop/view/fxml/FXMLVeterinary.fxml").openStream());
+            Pane pane = loader.load(getClass().getResource("/br/edu/ifsp/doo/petshop/view/fxml/FXMLVeterinaryConsultation.fxml").openStream());
 
             Stage stage = new Stage();
 
@@ -31,7 +31,7 @@ public class WindowVeterinaryConsultation {
     public void startModal(String title) {
         try {
             FXMLLoader loader = new FXMLLoader();
-            Pane pane = loader.load(getClass().getResource("/br/edu/ifsp/doo/petshop/view/fxml/FXMLVeterinary.fxml").openStream());
+            Pane pane = loader.load(getClass().getResource("/br/edu/ifsp/doo/petshop/view/fxml/FXMLVeterinaryConsultation.fxml").openStream());
 
             Stage stage = new Stage();
 

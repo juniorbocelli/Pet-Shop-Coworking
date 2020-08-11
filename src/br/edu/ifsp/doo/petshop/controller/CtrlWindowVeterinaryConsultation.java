@@ -21,9 +21,9 @@ public class CtrlWindowVeterinaryConsultation {
     public void finalize(ActionEvent actionEvent) {
     }
 
-    public void save(ActionEvent actionEvent) {
+    public void saveVeterinaryConsultant(ActionEvent actionEvent) {
     }
 
-    public void close(ActionEvent actionEvent) {
+    public void closeVeterinaryConsultant(ActionEvent actionEvent) {
     }
 }

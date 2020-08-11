@@ -23,10 +23,10 @@ public class Client {
     }
 
     // Construtor para caso de agendamento de Cliente sem cadastro
-    public Client(String cpf, String name, String phone) {
+    public Client(String cpf, String name, String cell) {
         this.cpf = cpf;
         this.name = name;
-        this.phone = phone;
+        this.phone = cell;
     }
 
     public String getCpf() {

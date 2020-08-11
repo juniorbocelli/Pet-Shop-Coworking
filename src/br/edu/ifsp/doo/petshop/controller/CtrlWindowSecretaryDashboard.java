@@ -31,6 +31,8 @@ public class CtrlWindowSecretaryDashboard {
     }
 
     public void showUserData(MouseEvent mouseEvent) {
+        WindowSecretary windowSecretary = new WindowSecretary();
+        windowSecretary.startModal("Nome da Secretária");
     }
 
     public void goToDate(ActionEvent actionEvent) {

@@ -18,12 +18,12 @@
       </AnchorPane>
       <AnchorPane layoutY="58.0" prefHeight="46.0" prefWidth="600.0">
          <children>
-            <Button fx:id="btnSabe" layoutX="331.0" layoutY="8.0" mnemonicParsing="false" onAction="#save" text="Salvar">
+            <Button fx:id="btnSaveProduct" layoutX="331.0" layoutY="8.0" mnemonicParsing="false" onAction="#saveProduct" text="Salvar">
                <font>
                   <Font size="15.0" />
                </font>
             </Button>
-            <Button fx:id="bntClose" layoutX="495.0" layoutY="8.0" mnemonicParsing="false" onAction="#close" text="Fechar">
+            <Button fx:id="bntCloseProduct" layoutX="495.0" layoutY="8.0" mnemonicParsing="false" onAction="#closeProduct" text="Fechar">
                <font>
                   <Font size="15.0" />
                </font>

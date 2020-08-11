@@ -14,7 +14,7 @@ public class WindowVeterinaryRecords {
     public void startModal(String title) {
         try {
             FXMLLoader loader = new FXMLLoader();
-            Pane pane = loader.load(getClass().getResource("/br/edu/ifsp/doo/petshop/view/fxml/FXMLVeterinary.fxml").openStream());
+            Pane pane = loader.load(getClass().getResource("/br/edu/ifsp/doo/petshop/view/fxml/FXMLVeterinaryRecords.fxml").openStream());
 
             Stage stage = new Stage();
 
