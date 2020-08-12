@@ -20,10 +20,13 @@
          </font>
       </Label>
       <Label layoutX="344.0" layoutY="142.0" text="Login" />
-      <TextField fx:id="txtUsername" layoutX="344.0" layoutY="161.0" prefHeight="25.0" prefWidth="236.0" promptText="Login...." />
+      <TextField fx:id="txtLogin" layoutX="344.0" layoutY="161.0" prefHeight="25.0" prefWidth="236.0" promptText="Login...." />
       <Label layoutX="344.0" layoutY="206.0" text="Senha" />
       <PasswordField id="txtPassword" fx:id="txtPassword" layoutX="344.0" layoutY="223.0" prefHeight="25.0" prefWidth="236.0" promptText="Senha..." />
-      <Button layoutX="438.0" layoutY="274.0" mnemonicParsing="false" onAction="#sendLogin" text="Enviar" />
+      <Button fx:id="btnSendLogin" layoutX="431.0" layoutY="274.0" mnemonicParsing="false" onAction="#sendLogin" text="Enviar">
+         <font>
+            <Font size="15.0" />
+         </font></Button>
       <ImageView fitHeight="114.0" fitWidth="154.0" layoutX="94.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../image/logo.png" />

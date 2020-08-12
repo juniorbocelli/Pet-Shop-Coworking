@@ -11,11 +11,23 @@ public class User {
     private String email;
     private String address;
 
+    private boolean isSuperUser;
+
     public User(String cpf, String name, String password, String email, String address) {
         this.cpf = cpf;
         this.name = name;
         this.password = password;
         this.email = email;
+        this.address = address;
+    }
+
+    // Para iniciar com dados do banco
+    public User(String cpf, String name, String email, String phone, String cell, String address) {
+        this.cpf = cpf;
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.phone = cell;
         this.address = address;
     }
 

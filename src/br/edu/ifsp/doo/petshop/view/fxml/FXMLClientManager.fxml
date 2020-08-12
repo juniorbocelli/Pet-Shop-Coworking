@@ -20,7 +20,7 @@
                         <Font size="15.0" />
                     </font>
                 </CheckBox>
-                <Button fx:id="btnAddVeterinary" layoutX="642.0" layoutY="70.0" mnemonicParsing="false" onAction="#addNewClient" text="+ Adicionar Novo" />
+                <Button fx:id="btnAddNewClient" layoutX="642.0" layoutY="70.0" mnemonicParsing="false" onAction="#addNewClient" text="+ Adicionar Novo" />
             </children>
         </AnchorPane>
         <AnchorPane layoutY="109.0" prefHeight="491.0" prefWidth="800.0">

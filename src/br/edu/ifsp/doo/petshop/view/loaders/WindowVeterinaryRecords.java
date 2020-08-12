@@ -23,6 +23,7 @@ public class WindowVeterinaryRecords {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(pane, 800, 600));
             stage.setResizable(false);
+            stage.sizeToScene();
             stage.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();

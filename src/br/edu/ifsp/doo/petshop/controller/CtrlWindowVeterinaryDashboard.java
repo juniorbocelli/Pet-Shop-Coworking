@@ -5,19 +5,40 @@ import br.edu.ifsp.doo.petshop.view.loaders.WindowBilling;
 import br.edu.ifsp.doo.petshop.view.loaders.WindowVeterinary;
 import br.edu.ifsp.doo.petshop.view.loaders.WindowVeterinaryRecords;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 
+import java.time.LocalDate;
+
 public class CtrlWindowVeterinaryDashboard {
+    @FXML DatePicker txtDate;
+
+    @FXML Button btnToday;
+    @FXML Button btnManageVeterinaryRecords;
+    @FXML Button btnManageVeterinaryConsultations;
+    @FXML Button btnManageAnimals;
+    @FXML Button btnBilling;
+
+    @FXML Label lblCurrentTime;
+    @FXML Label lblCurrentDate;
+    @FXML Label lblUserName;
+
+    @FXML
+    private void initialize() {
+        txtDate.setValue(LocalDate.now());
+    }
 
     public void showUserData(MouseEvent mouseEvent) {
         WindowVeterinary windowVeterinary = new WindowVeterinary();
         windowVeterinary.startModal("Nome do Veterinário");
     }
 
-    public void goToDate(ActionEvent actionEvent) {
+    public void changeDate(ActionEvent actionEvent) {
     }
 
     public void goToToday(ActionEvent actionEvent) {
+        txtDate.setValue(LocalDate.now());
     }
 
     public void manageVeterinaryConsultations(ActionEvent actionEvent) {

@@ -40,6 +40,7 @@ public class WindowProduct {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(pane, 800, 100));
             stage.setResizable(false);
+            stage.sizeToScene();
             stage.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();

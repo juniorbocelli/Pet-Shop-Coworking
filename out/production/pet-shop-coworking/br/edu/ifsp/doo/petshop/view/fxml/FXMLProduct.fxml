@@ -6,24 +6,30 @@
 
 <AnchorPane prefHeight="73.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifsp.doo.petshop.controller.CtrlWindowProduct">
    <children>
-      <AnchorPane prefHeight="58.0" prefWidth="600.0">
+      <AnchorPane prefHeight="90.0" prefWidth="600.0">
          <children>
-            <TextField fx:id="clnName" layoutX="89.0" layoutY="19.0" prefHeight="25.0" prefWidth="474.0" />
+            <TextField fx:id="txtName" layoutX="89.0" layoutY="19.0" prefHeight="25.0" prefWidth="474.0" promptText="Nome..." />
             <Label layoutX="34.0" layoutY="21.0" text="Nome:">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
+            <Label layoutX="36.0" layoutY="55.0" text="Preço:">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtPrice" layoutX="89.0" layoutY="53.0" prefHeight="25.0" prefWidth="474.0" promptText="0,00" />
          </children>
       </AnchorPane>
-      <AnchorPane layoutY="58.0" prefHeight="46.0" prefWidth="600.0">
+      <AnchorPane layoutY="90.0" prefHeight="46.0" prefWidth="600.0">
          <children>
             <Button fx:id="btnSaveProduct" layoutX="331.0" layoutY="8.0" mnemonicParsing="false" onAction="#saveProduct" text="Salvar">
                <font>
                   <Font size="15.0" />
                </font>
             </Button>
-            <Button fx:id="bntCloseProduct" layoutX="495.0" layoutY="8.0" mnemonicParsing="false" onAction="#closeProduct" text="Fechar">
+            <Button fx:id="btnCloseProduct" layoutX="495.0" layoutY="8.0" mnemonicParsing="false" onAction="#closeProduct" text="Fechar">
                <font>
                   <Font size="15.0" />
                </font>

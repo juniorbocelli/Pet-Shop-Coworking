@@ -55,10 +55,10 @@
         <AnchorPane layoutX="235.0" prefHeight="49.0" prefWidth="565.0">
             <children>
                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e4e4e4" height="49.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="565.0" />
-                <DatePicker fx:id="txtDate" layoutX="7.0" layoutY="12.0" onAction="#goToDate" prefHeight="25.0" prefWidth="139.0" />
+                <DatePicker fx:id="txtDate" layoutX="7.0" layoutY="12.0" onAction="#changeDate" prefHeight="25.0" prefWidth="139.0" />
                 <Button fx:id="btnToday" layoutX="154.0" layoutY="12.0" mnemonicParsing="false" onAction="#goToToday" text="Hoje" />
-                <Label fx:id="lblDate" layoutX="489.0" layoutY="16.0" text="04/08/2020" />
-                <Label fx:id="lblTime" layoutX="434.0" layoutY="16.0" text="10:36" />
+                <Label fx:id="lblCurrentDate" layoutX="489.0" layoutY="16.0" text="04/08/2020" />
+                <Label fx:id="lblCurrentTime" layoutX="434.0" layoutY="16.0" text="10:36" />
             </children>
         </AnchorPane>
         <AnchorPane layoutX="235.0" layoutY="575.0" prefHeight="25.0" prefWidth="565.0">

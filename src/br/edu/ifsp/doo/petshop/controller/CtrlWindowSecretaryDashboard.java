@@ -2,9 +2,41 @@ package br.edu.ifsp.doo.petshop.controller;
 
 import br.edu.ifsp.doo.petshop.view.loaders.*;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 
+import java.time.LocalDate;
+
 public class CtrlWindowSecretaryDashboard {
+    @FXML DatePicker txtDate;
+
+    @FXML Button btnToday;
+    @FXML Button btnManageVets;
+    @FXML Button btnManageClients;
+    @FXML Button btnManageAnimals;
+    @FXML Button btnManageProducts;
+    @FXML Button btnBilling;
+
+    @FXML ComboBox<String> cbxVeterinary;
+
+    @FXML Label lblUserName;
+    @FXML Label lblCurrentDate;
+    @FXML Label lblCurrentTime;
+
+    @FXML TableView tblSchedule;
+
+    @FXML TableColumn clnStartTime;
+    @FXML TableColumn clnEndTime;
+    @FXML TableColumn clnClient;
+    @FXML TableColumn clnAnimal;
+    @FXML TableColumn clnStatus;
+
+    @FXML
+    private void initialize() {
+        goToToday();
+    }
+
     public void showClientsList(ActionEvent actionEvent) {
         WindowClientManager windowClientManager = new WindowClientManager();
         windowClientManager.startModal();
@@ -35,10 +67,16 @@ public class CtrlWindowSecretaryDashboard {
         windowSecretary.startModal("Nome da Secretária");
     }
 
-    public void goToDate(ActionEvent actionEvent) {
+    public void changeDate(ActionEvent actionEvent) {
     }
 
     public void goToToday(ActionEvent actionEvent) {
+        goToToday();
+    }
+
+    public void goToToday() {
+        LocalDate currentDate = LocalDate.now();
+        txtDate.setValue(currentDate);
     }
 
     public void goToVeterinary(ActionEvent actionEvent) {

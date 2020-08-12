@@ -30,7 +30,7 @@
       </AnchorPane>
       <AnchorPane layoutY="90.0" prefHeight="510.0" prefWidth="800.0">
          <children>
-            <TableView fx:id="lblBilling" layoutX="9.0" layoutY="7.0" prefHeight="494.0" prefWidth="780.0">
+            <TableView fx:id="tblBilling" layoutX="9.0" layoutY="7.0" prefHeight="494.0" prefWidth="780.0">
               <columns>
                 <TableColumn fx:id="clnDate" prefWidth="94.0" text="Data" />
                 <TableColumn fx:id="clnClient" prefWidth="320.0" text="Cliente" />

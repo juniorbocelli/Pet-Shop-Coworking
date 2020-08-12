@@ -37,7 +37,8 @@
          <children>
             <TableView fx:id="tblProducts" layoutX="14.0" layoutY="39.0" prefHeight="153.0" prefWidth="771.0">
               <columns>
-                <TableColumn fx:id="clnName" prefWidth="770.0" text="Nome" />
+                <TableColumn fx:id="clnName" prefWidth="667.0" text="Nome" />
+                  <TableColumn fx:id="clnPrice" prefWidth="103.0" text="Preço" />
               </columns>
             </TableView>
             <Label layoutX="14.0" layoutY="12.0" prefHeight="21.0" prefWidth="65.0" text="Produtos">
@@ -60,7 +61,7 @@
                   <Font size="15.0" />
                </font>
             </TextField>
-            <Button fx:id="btnFinalize" layoutX="390.0" layoutY="20.0" mnemonicParsing="false" onAction="#finalize" text="Finalizar">
+            <Button fx:id="btnFinalizeConsultant" layoutX="390.0" layoutY="20.0" mnemonicParsing="false" onAction="#finalizeConsultant" text="Finalizar">
                <font>
                   <Font size="15.0" />
                </font>

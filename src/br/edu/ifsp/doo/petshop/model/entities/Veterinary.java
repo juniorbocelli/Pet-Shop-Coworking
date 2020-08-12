@@ -5,12 +5,17 @@ import java.util.TreeMap;
 
 public class Veterinary extends User {
     private boolean active = true;
+    private boolean isSuperUser = false;
 
     // Lista de Consultas
     private Map<TimeLapse, ClinicalConsultation> schedule = new TreeMap<>();
 
     public Veterinary(String cpf, String name, String password, String email, String address) {
         super(cpf, name, password, email, address);
+    }
+
+    public Veterinary(String cpf, String name, String email, String phone, String cell, String address) {
+        super(cpf, name, email, phone, cell, address);
     }
 
     public boolean isActive() {

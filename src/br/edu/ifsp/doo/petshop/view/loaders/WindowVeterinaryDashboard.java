@@ -16,6 +16,7 @@ public class WindowVeterinaryDashboard extends Application {
         primaryStage.setTitle("Pet Shop Coworking - Dashboard");
         primaryStage.setScene(new Scene(root, 800, 600));
         primaryStage.setResizable(false);
+        primaryStage.sizeToScene();
         primaryStage.show();
     }
 

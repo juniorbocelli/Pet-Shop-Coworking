@@ -26,7 +26,8 @@
             <children>
                 <TableView fx:id="tblProduct" prefHeight="491.0" prefWidth="800.0">
                     <columns>
-                        <TableColumn fx:id="clnName" prefWidth="799.0" text="Nome" />
+                        <TableColumn fx:id="clnName" prefWidth="642.0" text="Nome" />
+                  <TableColumn fx:id="clnPrice" prefWidth="157.0" text="Preço" />
                     </columns>
                 </TableView>
             </children>

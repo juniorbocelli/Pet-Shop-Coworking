@@ -3,6 +3,8 @@ package br.edu.ifsp.doo.petshop.controller;
 import br.edu.ifsp.doo.petshop.model.entities.Animal;
 import br.edu.ifsp.doo.petshop.model.entities.Client;
 import br.edu.ifsp.doo.petshop.view.loaders.WindowVeterinaryRecords;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -35,23 +37,12 @@ public class CtrlWindowAnimal {
     @FXML TextArea txaGeneralAnnotations;
 
     private Animal animal;
-    /*
-    public CtrlWindowAnimal(Animal animal) {
-        this.animal = animal;
-    }
-
-    public CtrlWindowAnimal() {
-
-    }
+    private  Client client;
 
     @FXML
-    private void initialize(){
-        if (animal == null) {
-            // Bloqueia botão que mostra Prontuário
-            btnVeterinaryRecord.disabledProperty();
-        }
+    private void initialize() {
+        populaSexo();
     }
-    */
 
     public void openVeterinaryRecord(ActionEvent actionEvent) {
         WindowVeterinaryRecords windowVeterinaryRecords = new WindowVeterinaryRecords();
@@ -64,5 +55,10 @@ public class CtrlWindowAnimal {
     public void closeAnimal(ActionEvent actionEvent) {
         Stage stage = (Stage) btnCloseAnimal.getScene().getWindow();
         stage.close();
+    }
+
+    public void populaSexo() {
+        ObservableList<Animal.Genders> options = FXCollections.observableArrayList(Animal.Genders.values());
+        cbxOwner.setItems(options);
     }
 }

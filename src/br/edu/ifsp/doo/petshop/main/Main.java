@@ -10,12 +10,12 @@ public class Main {
         DatabaseBuilder dbBuilder = new DatabaseBuilder();
         dbBuilder.buildDatabaseIfMissing();
         // Testar Login
-        //WindowLogin.main(args);
+        WindowLogin.main(args);
 
         // Testar Dashboard da Secretária
         //WindowSecretaryDashboard.main(args);
 
         // Testar Dashboard do Veterinário
-        WindowVeterinaryDashboard.main(args);
+        //WindowVeterinaryDashboard.main(args);
     }
 }

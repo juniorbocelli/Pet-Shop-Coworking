@@ -57,7 +57,7 @@ public class DatabaseBuilder {
     private String createVeterinaryTableSql(){
         StringBuilder builder = new StringBuilder();
 
-        builder.append("CREATE TABLE secretary (\n");
+        builder.append("CREATE TABLE veterinary (\n");
         builder.append("cpf\tTEXT NOT NULL, \n");
         builder.append("name\tTEXT NOT NULL, \n");
         builder.append("email\tTEXT NOT NULL UNIQUE, \n");
@@ -132,6 +132,7 @@ public class DatabaseBuilder {
         builder.append("CREATE TABLE  product (\n");
         builder.append("id\tINTEGER NOT NULL, \n");
         builder.append("name\tTEXT NOT NULL, \n");
+        builder.append("price\tNUMERIC(6, 2) NOT NULL DEFAULT 0.00, \n");
         builder.append("active\tINTEGER NOT NULL DEFAULT 1, \n");
         builder.append("PRIMARY KEY(id AUTOINCREMENT) \n");
         builder.append("); \n");
@@ -149,7 +150,7 @@ public class DatabaseBuilder {
         builder.append("cpf_veterinary\tTEXT NOT NULL, \n");
         builder.append("start_time\tTEXT NOT NULL, \n");
         builder.append("end_time\tTEXT, \n");
-        builder.append("price\tREAL, \n");
+        builder.append("price\tNUMERIC(6, 2), \n");
         builder.append("annotations\tTEXT, \n");
         builder.append("paid\tINTEGER NOT NULL DEFAULT 0, \n");
         builder.append("PRIMARY KEY(id AUTOINCREMENT), \n");
