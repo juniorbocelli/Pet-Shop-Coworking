@@ -111,4 +111,8 @@ public class User {
     public void setAddress(String address) {
         this.address = address;
     }
+
+    public boolean isSuperUser() {
+        return isSuperUser;
+    }
 }

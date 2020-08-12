@@ -6,6 +6,7 @@ import br.edu.ifsp.doo.petshop.view.loaders.WindowSecretaryDashboard;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
@@ -25,15 +26,23 @@ public class CtrlWindowLogin {
     @FXML
     private void initialize () {
         ucManageUser = new UCManageUser();
-        user = new User();
+        //user = new User();
     }
 
     public void sendLogin(ActionEvent actionEvent) throws UnsupportedEncodingException, NoSuchAlgorithmException, SQLException {
         identifyErrorsAndBuildMsg();
         if(allViewDataIsOk()) {
             user = ucManageUser.performLogin(txtLogin.getText(), txtPassword.getText());
-            if (user != null)
-                WindowSecretaryDashboard.main(user);
+            if (user != null){
+                String[] userData = {txtLogin.getText(), txtPassword.getText(), Boolean.toString(user.isSuperUser())};
+                Stage stage = (Stage) btnSendLogin.getScene().getWindow();
+                stage.close();
+                WindowSecretaryDashboard.main(userData);
+            } else {
+                errorMessage = null;
+                appendErrorMessage("Login inválido!");
+                showErrorMessage("Erro");
+            }
         } else
             showErrorMessage("Erro");
     }

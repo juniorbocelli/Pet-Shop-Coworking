@@ -10,6 +10,8 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DAOSecretary extends AbstractTemplateSqlDAO<Secretary, String> {
     @Override
@@ -29,12 +31,12 @@ public class DAOSecretary extends AbstractTemplateSqlDAO<Secretary, String> {
 
     @Override
     protected String createSelectSql() {
-        return null;
+        return "SELECT * FROM secretary WHERE cpf = ?";
     }
 
     @Override
     protected String createSelectAllSql() {
-        return null;
+        return "SELECT * FROM secretary";
     }
 
     @Override
@@ -88,5 +90,15 @@ public class DAOSecretary extends AbstractTemplateSqlDAO<Secretary, String> {
         }
 
         return null;
+    }
+
+    public boolean existSecretary(){
+        List<Secretary> secretaries = new ArrayList<>();
+        secretaries = selectAll();
+
+        if (secretaries.size() > 0)
+            return true;
+
+        return false;
     }
 }

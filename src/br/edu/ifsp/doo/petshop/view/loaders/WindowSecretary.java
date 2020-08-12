@@ -1,6 +1,8 @@
 package br.edu.ifsp.doo.petshop.view.loaders;
 
+import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
@@ -9,7 +11,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class WindowSecretary {
+public class WindowSecretary extends Application {
     public void startModal(){
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -45,5 +47,21 @@ public class WindowSecretary {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception{
+        Parent root = FXMLLoader.load(getClass().getResource("/br/edu/ifsp/doo/petshop/view/fxml/FXMLSecretary.fxml"));
+
+        primaryStage.getIcons().add(new Image("/br/edu/ifsp/doo/petshop/view/image/logo.png"));
+        primaryStage.setTitle("Cadastro de Super Usuário - Secretária");
+        primaryStage.setScene(new Scene(root, 800, 300));
+        primaryStage.setResizable(false);
+        primaryStage.sizeToScene();
+        primaryStage.show();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
     }
 }

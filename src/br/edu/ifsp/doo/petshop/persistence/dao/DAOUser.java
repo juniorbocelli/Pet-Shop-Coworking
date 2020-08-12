@@ -19,4 +19,8 @@ public class DAOUser {
 
         return null;
     }
+
+    public boolean existSecretary() {
+        return false;
+    }
 }
