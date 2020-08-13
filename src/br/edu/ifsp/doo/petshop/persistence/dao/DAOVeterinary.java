@@ -72,15 +72,17 @@ public class DAOVeterinary extends AbstractTemplateSqlDAO<Veterinary, String> {
         return null;
     }
 
-    public ResultSet hasFromLogin(String login, String password) {
-        String sql = "SELECT * FROM secretary WHERE cpf = ? AND password = ?";
+    public Veterinary getFromLogin(String login, String password) {
+        String sql = "SELECT * FROM veterinary WHERE cpf = ? AND password = ?";
 
         try(PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)){
             stmt.setString(1, login.replace(".", "").replace("-", ""));
             stmt.setString(2, password);
             ResultSet rs = stmt.executeQuery();
             if (rs.next())
-                return  rs;
+                return getEntityFromResultSet(rs);
+            else
+                return null;
         } catch (SQLException e) {
             e.printStackTrace();
         }

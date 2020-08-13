@@ -1,26 +1,22 @@
 package br.edu.ifsp.doo.petshop.persistence.dao;
 
+import br.edu.ifsp.doo.petshop.model.entities.Secretary;
 import br.edu.ifsp.doo.petshop.model.entities.User;
+import br.edu.ifsp.doo.petshop.model.entities.Veterinary;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DAOUser {
+
     public User returnUserIfExist(String login, String password) throws  SQLException {
         DAOSecretary daoSecretary = new DAOSecretary();
-        ResultSet secretaryRS = new DAOSecretary().hasFromLogin(login, password);
-        if (secretaryRS != null)
-            return daoSecretary.getEntityFromResultSet(secretaryRS);
+        Secretary secretary = daoSecretary.getFromLogin(login, password);
+            if (secretary != null)
+                return secretary;
 
         DAOVeterinary daoVeterinary = new DAOVeterinary();
-        ResultSet veterinaryRS = new DAOVeterinary().hasFromLogin(login, password);
-        if (veterinaryRS != null)
-            return daoVeterinary.getEntityFromResultSet(veterinaryRS);
+        Veterinary veterinary = daoVeterinary.getFromLogin(login, password);
 
-        return null;
-    }
-
-    public boolean existSecretary() {
-        return false;
+        return veterinary;
     }
 }

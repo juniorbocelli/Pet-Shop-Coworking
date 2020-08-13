@@ -5,8 +5,6 @@ import br.edu.ifsp.doo.petshop.persistence.utils.AbstractTemplateSqlDAO;
 import br.edu.ifsp.doo.petshop.persistence.utils.ConnectionFactory;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,17 +14,19 @@ import java.util.List;
 public class DAOSecretary extends AbstractTemplateSqlDAO<Secretary, String> {
     @Override
     protected String createSaveSql() {
-        return null;
+        return "INSERT INTO secretary (cpf, name, email, phone, cell, address, password) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?)";
     }
 
     @Override
     protected String createUpdateSql() {
-        return null;
+        return "UPDATE secretary SET cpf = ?, name = ?, email = ?, phone = ?, cell = ?, address = ?, password = ? "
+                + "WHERE cpf = ?";
     }
 
     @Override
     protected String createDeleteSql() {
-        return null;
+        return "DELETE FROM secretary WHERE cpf = ?";
     }
 
     @Override
@@ -41,17 +41,23 @@ public class DAOSecretary extends AbstractTemplateSqlDAO<Secretary, String> {
 
     @Override
     protected String createSelectBySql(String field) {
-        return null;
+        return "SELECT * FROM secretary WHERE "+ field +" = ?";
     }
 
     @Override
     protected void setEntityToPreparedStatement(@NotNull Secretary entity, @NotNull PreparedStatement stmt) throws SQLException {
-
+        stmt.setString(1, entity.getCpf());
+        stmt.setString(2, entity.getName());
+        stmt.setString(3, entity.getEmail());
+        stmt.setString(4, entity.getPhone());
+        stmt.setString(5, entity.getCell());
+        stmt.setString(6, entity.getAddress());
+        stmt.setString(7, entity.getPassword());
     }
 
     @Override
     protected void setKeyToPreparedStatement(@NotNull String key, @NotNull PreparedStatement stmt) throws SQLException {
-
+        stmt.setString(1, key);
     }
 
     @Override
@@ -67,7 +73,8 @@ public class DAOSecretary extends AbstractTemplateSqlDAO<Secretary, String> {
                 rs.getString("email"),
                 rs.getString("phone"),
                 rs.getString("cell"),
-                rs.getString("address"));
+                rs.getString("address"),
+                rs.getString("password"));
         return secretary;
     }
 
@@ -76,7 +83,8 @@ public class DAOSecretary extends AbstractTemplateSqlDAO<Secretary, String> {
         return entity.getCpf();
     }
 
-    public ResultSet hasFromLogin(String login, String password) {
+
+    public Secretary getFromLogin(String login, String password) {
         String sql = "SELECT * FROM secretary WHERE cpf = ? AND password = ?";
 
         try(PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)){
@@ -84,7 +92,9 @@ public class DAOSecretary extends AbstractTemplateSqlDAO<Secretary, String> {
             stmt.setString(2, password);
             ResultSet rs = stmt.executeQuery();
             if (rs.next())
-                return  rs;
+                return getEntityFromResultSet(rs);
+            else
+                return null;
         } catch (SQLException e) {
             e.printStackTrace();
         }

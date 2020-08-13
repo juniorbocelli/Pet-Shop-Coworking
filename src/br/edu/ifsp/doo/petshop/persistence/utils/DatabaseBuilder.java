@@ -168,6 +168,7 @@ public class DatabaseBuilder {
         builder.append("CREATE TABLE  products_of_consultations (\n");
         builder.append("id_consultation\tINTEGER NOT NULL, \n");
         builder.append("id_product\tINTEGER NOT NULL, \n");
+        builder.append("price\tNUMERIC(6, 2) NOT NULL DEFAULT 0.00, \n");
         builder.append("PRIMARY KEY(id_consultation,id_product) \n");
         builder.append("); \n");
 

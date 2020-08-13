@@ -1,6 +1,10 @@
 package br.edu.ifsp.doo.petshop.model.entities;
 
 import br.edu.ifsp.doo.petshop.model.utils.CheckCpf;
+import br.edu.ifsp.doo.petshop.model.utils.EncryptString;
+
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 
 public class User {
     private String cpf;
@@ -13,15 +17,10 @@ public class User {
 
     private boolean isSuperUser;
 
-    public User(String cpf, String name, String password, String email, String address) {
-        this.cpf = cpf;
-        this.name = name;
-        this.password = password;
-        this.email = email;
-        this.address = address;
+    public User() {
+
     }
 
-    // Para iniciar com dados do banco
     public User(String cpf, String name, String email, String phone, String cell, String address) {
         this.cpf = cpf;
         this.name = name;
@@ -29,6 +28,16 @@ public class User {
         this.phone = phone;
         this.phone = cell;
         this.address = address;
+    }
+
+    public User(String cpf, String name, String email, String phone, String cell, String address, String password) {
+        this.cpf = cpf;
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.phone = cell;
+        this.address = address;
+        this.password = password;
     }
 
     public String getCpf() {
@@ -46,10 +55,10 @@ public class User {
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(String password) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         if (password.length() < 6)
             throw new IllegalArgumentException("A Senha deve ter no mínimo 6 caracteres!");
-        this.password = password;
+        this.password = EncryptString.encryptPassword(password);
     }
 
     public String getName() {

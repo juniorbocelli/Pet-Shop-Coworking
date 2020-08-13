@@ -1,8 +1,9 @@
 package br.edu.ifsp.doo.petshop.controller;
 
+import br.edu.ifsp.doo.petshop.main.Main;
 import br.edu.ifsp.doo.petshop.model.entities.User;
 import br.edu.ifsp.doo.petshop.model.usecases.UCManageUser;
-import br.edu.ifsp.doo.petshop.view.loaders.WindowSecretaryDashboard;
+import br.edu.ifsp.doo.petshop.view.util.InputTextMask;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -23,10 +24,19 @@ public class CtrlWindowLogin {
     private UCManageUser ucManageUser;
     private User user;
 
+    private CtrlWindowLogin() {
+        ucManageUser = new UCManageUser();
+    }
+
     @FXML
     private void initialize () {
-        ucManageUser = new UCManageUser();
-        //user = new User();
+        InputTextMask.maskCPF(txtLogin);
+    }
+
+    @FXML
+    public void close(){
+        Stage stage = (Stage)btnSendLogin.getScene().getWindow();
+        stage.close();
     }
 
     public void sendLogin(ActionEvent actionEvent) throws UnsupportedEncodingException, NoSuchAlgorithmException, SQLException {
@@ -35,9 +45,8 @@ public class CtrlWindowLogin {
             user = ucManageUser.performLogin(txtLogin.getText(), txtPassword.getText());
             if (user != null){
                 String[] userData = {txtLogin.getText(), txtPassword.getText(), Boolean.toString(user.isSuperUser())};
-                Stage stage = (Stage) btnSendLogin.getScene().getWindow();
-                stage.close();
-                WindowSecretaryDashboard.main(userData);
+                //sendUser();
+                Main.getInstance().userLogging(user);
             } else {
                 errorMessage = null;
                 appendErrorMessage("Login inválido!");
@@ -45,6 +54,10 @@ public class CtrlWindowLogin {
             }
         } else
             showErrorMessage("Erro");
+    }
+
+    public User sendUser() {
+        return this.user;
     }
 
     // Métodos gerais para validação

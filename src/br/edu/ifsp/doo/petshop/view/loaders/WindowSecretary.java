@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class WindowSecretary extends Application {
+
     public void startModal(){
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -63,5 +64,8 @@ public class WindowSecretary extends Application {
 
     public static void main(String[] args) {
         launch(args);
+        if (args.length > 0)
+            if (args[0] == "true")
+                WindowLogin.main(args);
     }
 }
