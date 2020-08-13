@@ -24,7 +24,7 @@ public class CtrlWindowLogin {
     private UCManageUser ucManageUser;
     private User user;
 
-    private CtrlWindowLogin() {
+    public CtrlWindowLogin() {
         ucManageUser = new UCManageUser();
     }
 

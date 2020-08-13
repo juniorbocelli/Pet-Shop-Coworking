@@ -1,5 +1,6 @@
 package br.edu.ifsp.doo.petshop.controller;
 
+import br.edu.ifsp.doo.petshop.main.Main;
 import br.edu.ifsp.doo.petshop.model.entities.Secretary;
 import br.edu.ifsp.doo.petshop.model.usecases.UCManageSecretary;
 import br.edu.ifsp.doo.petshop.persistence.dao.DAOSecretary;
@@ -67,7 +68,10 @@ public class CtrlWindowSecretary {
 
     private void requestSaveOrUpdate() {
         ucManageSecretary.saveOrUpdate(secretary);
-        closeStage();
+        if (Main.getInstance().isFirstExecution) {
+            Main.getInstance().gotoLogin();
+        } else
+            closeStage();
     }
 
     public void closeViewSecretary(ActionEvent actionEvent) {

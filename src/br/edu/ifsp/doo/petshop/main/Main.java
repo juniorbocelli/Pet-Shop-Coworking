@@ -14,9 +14,11 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     private Stage stage;
-    private Object loggedUser;
+    private User loggedUser;
 
     private static Main instance;
+
+    public boolean isFirstExecution = false;
 
     public Main() {
         instance = this;
@@ -46,18 +48,17 @@ public class Main extends Application {
             if (daoSecretary.existSecretary())
                 gotoLogin();
             else {
-                String[] params = {"true"};
-                gotoSecretaryProfile();
+                isFirstExecution = true;
+                gotoSecretaryRegistration();
             }
 
-            gotoLogin();
             primaryStage.show();
         } catch (Exception ex) {
             System.out.println(ex.toString());
         }
     }
 
-    public Object getLoggedUser() {
+    public User getLoggedUser() {
         return loggedUser;
     }
 
@@ -67,6 +68,7 @@ public class Main extends Application {
         System.out.println(loggedUser);
 
         if (loggedUser != null) {
+            System.out.println(loggedUser.isSuperUser());
             if (loggedUser.isSuperUser())
                 gotoSecretaryProfile();
             else
@@ -80,6 +82,14 @@ public class Main extends Application {
     public void userLogout(){
         loggedUser = null;
         gotoLogin();
+    }
+
+    private  void gotoSecretaryRegistration() {
+        try {
+            replaceSceneContent("/br/edu/ifsp/doo/petshop/view/fxml/FXMLSecretary.fxml", "Cadastro de Super Usuário - Secretária", 800.0, 300.0);
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
+        }
     }
 
     private void gotoSecretaryProfile() {
@@ -98,7 +108,7 @@ public class Main extends Application {
         }
     }
 
-    private void gotoLogin() {
+    public void gotoLogin() {
         try {
             replaceSceneContent("/br/edu/ifsp/doo/petshop/view/fxml/FXMLLogin.fxml", "Pet Shop Coworking - Login", 600.0, 400.0);
         } catch (Exception ex) {
