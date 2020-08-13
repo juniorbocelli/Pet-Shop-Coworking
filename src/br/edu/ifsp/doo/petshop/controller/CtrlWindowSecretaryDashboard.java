@@ -1,5 +1,7 @@
 package br.edu.ifsp.doo.petshop.controller;
 
+import br.edu.ifsp.doo.petshop.main.Main;
+import br.edu.ifsp.doo.petshop.model.entities.Secretary;
 import br.edu.ifsp.doo.petshop.view.loaders.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -32,8 +34,15 @@ public class CtrlWindowSecretaryDashboard {
     @FXML TableColumn clnAnimal;
     @FXML TableColumn clnStatus;
 
+    private Secretary secretary;
+
+    public CtrlWindowSecretaryDashboard() {
+        secretary = (Secretary)Main.getInstance().getLoggedUser();
+    }
+
     @FXML
     private void initialize() {
+        lblUserName.setText(secretary.getName());
         goToToday();
     }
 

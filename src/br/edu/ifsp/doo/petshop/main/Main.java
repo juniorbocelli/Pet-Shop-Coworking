@@ -1,6 +1,8 @@
 package br.edu.ifsp.doo.petshop.main;
 
 import br.edu.ifsp.doo.petshop.model.entities.User;
+import br.edu.ifsp.doo.petshop.persistence.dao.DAOSecretary;
+import br.edu.ifsp.doo.petshop.persistence.utils.DatabaseBuilder;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
@@ -12,7 +14,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     private Stage stage;
-    private User loggedUser;
+    private Object loggedUser;
 
     private static Main instance;
 
@@ -29,12 +31,25 @@ public class Main extends Application {
      */
     public static void main(String[] args) {
         launch(args);
-
     }
 
     @Override public void start(Stage primaryStage) {
         try {
             stage = primaryStage;
+
+            // Constrói banco caso não exista
+            DatabaseBuilder dbBuilder = new DatabaseBuilder();
+            dbBuilder.buildDatabaseIfMissing();
+
+            // Cadastro inicial de secretária ou tela de login
+            DAOSecretary daoSecretary = new DAOSecretary();
+            if (daoSecretary.existSecretary())
+                gotoLogin();
+            else {
+                String[] params = {"true"};
+                gotoSecretaryProfile();
+            }
+
             gotoLogin();
             primaryStage.show();
         } catch (Exception ex) {
@@ -42,7 +57,7 @@ public class Main extends Application {
         }
     }
 
-    public User getLoggedUser() {
+    public Object getLoggedUser() {
         return loggedUser;
     }
 

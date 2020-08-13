@@ -1,5 +1,8 @@
 package br.edu.ifsp.doo.petshop.controller;
 
+import br.edu.ifsp.doo.petshop.main.Main;
+import br.edu.ifsp.doo.petshop.model.entities.Secretary;
+import br.edu.ifsp.doo.petshop.model.entities.Veterinary;
 import br.edu.ifsp.doo.petshop.view.loaders.WindowAnimalManager;
 import br.edu.ifsp.doo.petshop.view.loaders.WindowBilling;
 import br.edu.ifsp.doo.petshop.view.loaders.WindowVeterinary;
@@ -23,6 +26,12 @@ public class CtrlWindowVeterinaryDashboard {
     @FXML Label lblCurrentTime;
     @FXML Label lblCurrentDate;
     @FXML Label lblUserName;
+
+    private Veterinary veterinary;
+
+    public CtrlWindowVeterinaryDashboard() {
+        veterinary = (Veterinary) Main.getInstance().getLoggedUser();
+    }
 
     @FXML
     private void initialize() {
