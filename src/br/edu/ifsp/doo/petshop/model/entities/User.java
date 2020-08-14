@@ -26,7 +26,7 @@ public class User {
         this.name = name;
         this.email = email;
         this.phone = phone;
-        this.phone = cell;
+        this.cell = cell;
         this.address = address;
     }
 
@@ -35,7 +35,7 @@ public class User {
         this.name = name;
         this.email = email;
         this.phone = phone;
-        this.phone = cell;
+        this.cell = cell;
         this.address = address;
         this.password = password;
     }
@@ -100,8 +100,9 @@ public class User {
                 .replace(" ", "");
 
         // Faz verificações
-        if(cell.length() < 11 || !cell.chars().allMatch( Character::isDigit ))
+        if(cell.length() < 11 || !cell.chars().allMatch( Character::isDigit )){
             throw  new  IllegalArgumentException("Celular inválido!");
+        }
         this.cell = cell;
     }
 

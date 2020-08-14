@@ -6,10 +6,6 @@ public class Secretary extends User {
     public Secretary() {
     }
 
-    public Secretary(String cpf, String name, String email, String phone, String cell, String address) {
-        super(cpf, name, email, phone, cell, address);
-    }
-
     public Secretary(String cpf, String name, String email, String phone, String cell, String address, String password) {
         super(cpf, name, email, phone, cell, address, password);
     }

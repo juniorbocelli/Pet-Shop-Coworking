@@ -31,23 +31,27 @@ public class CtrlWindowSecretary {
     @FXML Button btnSaveSecretary;
     @FXML Button btnCloseSecretary;
 
-    String errorMessage;
+    private String errorMessage;
 
     private Secretary secretary;
     private UCManageSecretary ucManageSecretary;
 
-    public CtrlWindowSecretary() {
-        secretary = new Secretary();
-        ucManageSecretary = new UCManageSecretary(new DAOSecretary());
-    }
-
     @FXML
     private void initialize() {
-
         InputTextMask.maskCPF(txtCpf);
         InputTextMask.maskEmail(txtEmail);
         InputTextMask.maskPhoneOrCell(txtPhone);
         InputTextMask.maskPhoneOrCell(txtCell);
+        //configureTextFields();
+    }
+
+    private void instanceEntityIfNull() {
+        if (secretary == null)
+            secretary = new Secretary();
+    }
+
+    public CtrlWindowSecretary() {
+        ucManageSecretary = new UCManageSecretary(new DAOSecretary());
     }
 
     public void sendViewSecretary(ActionEvent actionEvent) {
@@ -74,6 +78,12 @@ public class CtrlWindowSecretary {
             closeStage();
     }
 
+    private void configureTextFields() {
+        TextFieldFormater.formatAsRG(txtCpf);
+        TextFieldFormater.formatAsPhoneNumber(txtPhone);
+        //TextFieldFormater.formatAsPhoneNumber(txtCell);
+    }
+
     public void closeViewSecretary(ActionEvent actionEvent) {
         closeStage();
     }
@@ -84,6 +94,7 @@ public class CtrlWindowSecretary {
     }
 
     private String getEntityFromView () {
+        instanceEntityIfNull();
         try {
             secretary.setCpf(txtCpf.getText().trim());
             secretary.setName(txtName.getText().trim());
@@ -96,6 +107,19 @@ public class CtrlWindowSecretary {
             return e.getMessage();
         }
         return null;
+    }
+
+    public void setEntityToView(Secretary secretary) {
+        this.secretary = secretary;
+
+        System.out.println(secretary.getCell());
+
+        txtCpf.setText(secretary.getCpf());
+        txtName.setText(secretary.getName());
+        txtEmail.setText(secretary.getEmail());
+        txtPhone.setText(secretary.getPhone());
+        txtCell.setText(secretary.getCell());
+        txaAddress.setText(secretary.getAddress());
     }
 
     /**
@@ -147,7 +171,7 @@ public class CtrlWindowSecretary {
         return errorMessage == null;
     }
 
-    private List<String> getAllDataFormAsString() {
+    private List<String> getAllDataViewAsList() {
         List<String> dataList = Arrays.asList(txtCpf.getText(), txtName.getText(), txtEmail.getText(),
                 txtPhone.getText(), txtCell.getText(), txaAddress.getText(),
                 txtPassword.getText());
@@ -156,7 +180,7 @@ public class CtrlWindowSecretary {
 
     // Métodos específicos para validação de dados
     private boolean secretaryInfoIsIncomplete() {
-        return someStringsAreNotFilled(getAllDataFormAsString()) || !allStringsAreFilled(getAllDataFormAsString());
+        return someStringsAreNotFilled(getAllDataViewAsList()) || !allStringsAreFilled(getAllDataViewAsList());
     }
 
     private boolean confirmPasswordIsOk() {

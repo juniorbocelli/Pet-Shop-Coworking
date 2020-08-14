@@ -1,5 +1,7 @@
 package br.edu.ifsp.doo.petshop.view.loaders;
 
+import br.edu.ifsp.doo.petshop.controller.CtrlWindowSecretary;
+import br.edu.ifsp.doo.petshop.model.entities.Secretary;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -31,17 +33,23 @@ public class WindowSecretary extends Application {
         }
     }
 
-    public void startModal(String name) {
+    public void startModal(Secretary secretary, String name) {
         try {
             FXMLLoader loader = new FXMLLoader();
             Pane pane = loader.load(getClass().getResource("/br/edu/ifsp/doo/petshop/view/fxml/FXMLSecretary.fxml").openStream());
 
+            CtrlWindowSecretary ctrlWindowSecretary = loader.getController();
+
             Stage stage = new Stage();
+
+            if(secretary != null) {
+                ctrlWindowSecretary.setEntityToView(secretary);
+            }
 
             stage.getIcons().add(new Image("/br/edu/ifsp/doo/petshop/view/image/logo.png"));
             stage.setTitle("Editar Secretária - " + name);
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setScene(new Scene(pane, 800, 600));
+            stage.setScene(new Scene(pane, 800, 300));
             stage.setResizable(false);
             stage.sizeToScene();
             stage.showAndWait();

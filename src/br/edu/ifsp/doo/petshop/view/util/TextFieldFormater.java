@@ -40,6 +40,10 @@ public class TextFieldFormater {
         applyPattern(textField, pattern);
     }
 
+    public static void formatAsRG(TextField textField){
+        String pattern = "[0-9a-zA-Z\\-\\./]";
+        applyPattern(textField, pattern);
+    }
 
     public static void formatAsPhoneNumber(TextField textField){
         String pattern = "[\\d\\s\\-()]";

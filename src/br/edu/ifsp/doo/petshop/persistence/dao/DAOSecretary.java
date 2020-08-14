@@ -53,6 +53,7 @@ public class DAOSecretary extends AbstractTemplateSqlDAO<Secretary, String> {
         stmt.setString(5, entity.getCell());
         stmt.setString(6, entity.getAddress());
         stmt.setString(7, entity.getPassword());
+        stmt.setString(8, entity.getCpf());
     }
 
     @Override

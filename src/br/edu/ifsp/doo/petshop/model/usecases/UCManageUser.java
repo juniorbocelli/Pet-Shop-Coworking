@@ -5,7 +5,6 @@ import br.edu.ifsp.doo.petshop.persistence.dao.DAOUser;
 import br.edu.ifsp.doo.petshop.model.utils.EncryptString;
 
 import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 

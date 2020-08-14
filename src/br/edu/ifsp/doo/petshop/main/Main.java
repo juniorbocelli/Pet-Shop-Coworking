@@ -65,7 +65,7 @@ public class Main extends Application {
     public boolean userLogging(User loggedUser) {
         this.loggedUser = loggedUser;
 
-        System.out.println(loggedUser);
+        System.out.println(loggedUser.getCell());
 
         if (loggedUser != null) {
             System.out.println(loggedUser.isSuperUser());
