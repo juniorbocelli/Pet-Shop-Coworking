@@ -27,9 +27,9 @@
             <PasswordField fx:id="txtConfirmPassword" layoutX="564.0" layoutY="95.0" prefHeight="25.0" prefWidth="202.0" />
          </children>
       </AnchorPane>
-      <AnchorPane layoutY="245.0" prefHeight="289.0" prefWidth="800.0">
+      <AnchorPane layoutY="245.0" prefHeight="287.0" prefWidth="800.0">
          <children>
-            <TableView fx:id="tblSchedule" layoutX="11.0" layoutY="49.0" prefHeight="286.0" prefWidth="777.0">
+            <TableView fx:id="tblSchedule" disable="true" layoutX="11.0" layoutY="49.0" prefHeight="232.0" prefWidth="777.0">
               <columns>
                 <TableColumn fx:id="clnDate" prefWidth="75.0" text="Data" />
                 <TableColumn fx:id="clnStartTime" prefWidth="88.0" text="Início" />
@@ -43,10 +43,10 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <Button fx:id="btnAddNewConsultant" layoutX="676.0" layoutY="18.0" mnemonicParsing="false" onAction="#addNewConsultantion" text="+ Adicionar Novo" />
+            <Button fx:id="btnAddNewConsultant" disable="true" layoutX="676.0" layoutY="18.0" mnemonicParsing="false" onAction="#addNewConsultantion" text="+ Adicionar Novo" />
          </children>
       </AnchorPane>
-      <AnchorPane layoutY="581.0" prefHeight="67.0" prefWidth="800.0">
+      <AnchorPane layoutY="532.0" prefHeight="67.0" prefWidth="800.0">
          <children>
             <Button fx:id="btnSaveVeterinary" layoutX="472.0" layoutY="21.0" mnemonicParsing="false" onAction="#saveVeterinary" text="Salvar">
                <font>

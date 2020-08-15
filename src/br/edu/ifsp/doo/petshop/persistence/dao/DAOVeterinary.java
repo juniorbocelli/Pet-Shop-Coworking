@@ -12,42 +12,52 @@ import java.sql.SQLException;
 public class DAOVeterinary extends AbstractTemplateSqlDAO<Veterinary, String> {
     @Override
     protected String createSaveSql() {
-        return null;
+        return "INSERT INTO veterinary (cpf, name, email, phone, cell, address, password, active) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     }
 
     @Override
     protected String createUpdateSql() {
-        return null;
+        return "UPDATE veterinary SET cpf = ?, name = ?, email = ?, phone = ?, cell = ?, address = ?, password = ?, active = ? "
+                + "WHERE cpf = ?";
     }
 
     @Override
     protected String createDeleteSql() {
-        return null;
+        return "DELETE FROM veterinary WHERE cpf = ?";
     }
 
     @Override
     protected String createSelectSql() {
-        return null;
+        return "SELECT * FROM veterinary WHERE cpf = ?";
     }
 
     @Override
     protected String createSelectAllSql() {
-        return null;
+        return "SELECT * FROM veterinary";
     }
 
     @Override
     protected String createSelectBySql(String field) {
-        return null;
+        return "SELECT * FROM veterinary WHERE "+ field +" = ?";
     }
 
     @Override
     protected void setEntityToPreparedStatement(@NotNull Veterinary entity, @NotNull PreparedStatement stmt) throws SQLException {
-
+        stmt.setString(1, entity.getCpf());
+        stmt.setString(2, entity.getName());
+        stmt.setString(3, entity.getEmail());
+        stmt.setString(4, entity.getPhone());
+        stmt.setString(5, entity.getCell());
+        stmt.setString(6, entity.getAddress());
+        stmt.setString(7, entity.getPassword());
+        stmt.setInt(8, entity.getActive() == true ? 1 : 0);
+        stmt.setString(9, entity.getCpf());
     }
 
     @Override
     protected void setKeyToPreparedStatement(@NotNull String key, @NotNull PreparedStatement stmt) throws SQLException {
-
+        stmt.setString(1, key);
     }
 
     @Override
@@ -63,13 +73,15 @@ public class DAOVeterinary extends AbstractTemplateSqlDAO<Veterinary, String> {
                 rs.getString("email"),
                 rs.getString("phone"),
                 rs.getString("cell"),
-                rs.getString("address"));
+                rs.getString("address"),
+                rs.getInt("active") == 1 ? true : false,
+                rs.getString("password"));
         return veterinary;
     }
 
     @Override
     protected String getEntityKey(@NotNull Veterinary entity) {
-        return null;
+        return entity.getCpf();
     }
 
     public Veterinary getFromLogin(String login, String password) {

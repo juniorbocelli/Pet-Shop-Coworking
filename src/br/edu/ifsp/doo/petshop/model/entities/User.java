@@ -58,7 +58,9 @@ public class User {
     public void setPassword(String password) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         if (password.length() < 6)
             throw new IllegalArgumentException("A Senha deve ter no mínimo 6 caracteres!");
-        this.password = EncryptString.encryptPassword(password);
+        // Para evitar sobrescrever a senha correta gravando um hash de um outro hash
+        if(password != this.password)
+            this.password = EncryptString.encryptPassword(password);
     }
 
     public String getName() {

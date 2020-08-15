@@ -45,11 +45,6 @@ public class CtrlWindowSecretary {
         //configureTextFields();
     }
 
-    private void instanceEntityIfNull() {
-        if (secretary == null)
-            secretary = new Secretary();
-    }
-
     public CtrlWindowSecretary() {
         ucManageSecretary = new UCManageSecretary(new DAOSecretary());
     }
@@ -60,14 +55,6 @@ public class CtrlWindowSecretary {
             saveOrUpdateSecretary ();
         else
             showErrorMessage("Erro");
-    }
-
-    private void saveOrUpdateSecretary () {
-        errorMessage = getEntityFromView();
-        if (!allViewDataIsOk())
-            showErrorMessage("Erro");
-        else
-            requestSaveOrUpdate();
     }
 
     private void requestSaveOrUpdate() {
@@ -91,6 +78,20 @@ public class CtrlWindowSecretary {
     private void closeStage() {
         Stage stage = (Stage) btnCloseSecretary.getScene().getWindow();
         stage.close();
+    }
+
+
+    private void instanceEntityIfNull() {
+        if (secretary == null)
+            secretary = new Secretary();
+    }
+
+    private void saveOrUpdateSecretary () {
+        errorMessage = getEntityFromView();
+        if (!allViewDataIsOk())
+            showErrorMessage("Erro");
+        else
+            requestSaveOrUpdate();
     }
 
     private String getEntityFromView () {
