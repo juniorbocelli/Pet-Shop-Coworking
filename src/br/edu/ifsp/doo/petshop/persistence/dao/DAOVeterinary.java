@@ -12,13 +12,13 @@ import java.sql.SQLException;
 public class DAOVeterinary extends AbstractTemplateSqlDAO<Veterinary, String> {
     @Override
     protected String createSaveSql() {
-        return "INSERT INTO veterinary (cpf, name, email, phone, cell, address, password, active) " +
+        return "INSERT INTO veterinary (name, email, phone, cell, address, password, active, cpf) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     }
 
     @Override
     protected String createUpdateSql() {
-        return "UPDATE veterinary SET cpf = ?, name = ?, email = ?, phone = ?, cell = ?, address = ?, password = ?, active = ? "
+        return "UPDATE veterinary SET name = ?, email = ?, phone = ?, cell = ?, address = ?, password = ?, active = ? "
                 + "WHERE cpf = ?";
     }
 
@@ -44,15 +44,14 @@ public class DAOVeterinary extends AbstractTemplateSqlDAO<Veterinary, String> {
 
     @Override
     protected void setEntityToPreparedStatement(@NotNull Veterinary entity, @NotNull PreparedStatement stmt) throws SQLException {
-        stmt.setString(1, entity.getCpf());
-        stmt.setString(2, entity.getName());
-        stmt.setString(3, entity.getEmail());
-        stmt.setString(4, entity.getPhone());
-        stmt.setString(5, entity.getCell());
-        stmt.setString(6, entity.getAddress());
-        stmt.setString(7, entity.getPassword());
-        stmt.setInt(8, entity.getActive() == true ? 1 : 0);
-        stmt.setString(9, entity.getCpf());
+        stmt.setString(1, entity.getName());
+        stmt.setString(2, entity.getEmail());
+        stmt.setString(3, entity.getPhone());
+        stmt.setString(4, entity.getCell());
+        stmt.setString(5, entity.getAddress());
+        stmt.setString(6, entity.getPassword());
+        stmt.setInt(7, entity.getActive() == true ? 1 : 0);
+        stmt.setString(8, entity.getCpf());
     }
 
     @Override

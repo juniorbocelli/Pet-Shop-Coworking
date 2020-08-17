@@ -13,7 +13,7 @@ public class CtrlWindowClient {
     @FXML TextField txtPhone;
     @FXML TextField txtCelular;
 
-    @FXML CheckBox chkActive;
+    @FXML CheckBox chkTemporaryRegistration;
 
     @FXML TextArea txaAddress;
 
@@ -40,5 +40,8 @@ public class CtrlWindowClient {
     public void closeClient(ActionEvent actionEvent) {
         Stage stage = (Stage) btnCloseClient.getScene().getWindow();
         stage.close();
+    }
+
+    public void checkTemporaryRegistration(ActionEvent actionEvent) {
     }
 }

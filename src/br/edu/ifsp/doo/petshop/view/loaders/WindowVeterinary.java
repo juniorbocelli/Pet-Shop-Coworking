@@ -1,5 +1,7 @@
 package br.edu.ifsp.doo.petshop.view.loaders;
 
+import br.edu.ifsp.doo.petshop.controller.CtrlWindowVeterinary;
+import br.edu.ifsp.doo.petshop.model.entities.Veterinary;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -28,10 +30,16 @@ public class WindowVeterinary {
         }
     }
 
-    public void startModal(String name) {
+    public void startModal(Veterinary veterinary, String name) {
         try {
             FXMLLoader loader = new FXMLLoader();
             Pane pane = loader.load(getClass().getResource("/br/edu/ifsp/doo/petshop/view/fxml/FXMLVeterinary.fxml").openStream());
+
+            CtrlWindowVeterinary ctrlWindowVeterinary = loader.getController();
+
+            if (veterinary != null) {
+                ctrlWindowVeterinary.setEntityToView(veterinary);
+            }
 
             Stage stage = new Stage();
 

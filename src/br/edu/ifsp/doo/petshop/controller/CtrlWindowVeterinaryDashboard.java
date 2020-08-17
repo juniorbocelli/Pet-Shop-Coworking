@@ -1,7 +1,6 @@
 package br.edu.ifsp.doo.petshop.controller;
 
 import br.edu.ifsp.doo.petshop.main.Main;
-import br.edu.ifsp.doo.petshop.model.entities.Secretary;
 import br.edu.ifsp.doo.petshop.model.entities.Veterinary;
 import br.edu.ifsp.doo.petshop.view.loaders.WindowAnimalManager;
 import br.edu.ifsp.doo.petshop.view.loaders.WindowBilling;
@@ -36,11 +35,12 @@ public class CtrlWindowVeterinaryDashboard {
     @FXML
     private void initialize() {
         txtDate.setValue(LocalDate.now());
+        lblUserName.setText(veterinary.getName());
     }
 
     public void showUserData(MouseEvent mouseEvent) {
         WindowVeterinary windowVeterinary = new WindowVeterinary();
-        windowVeterinary.startModal("Nome do Veterinário");
+        windowVeterinary.startModal(veterinary, veterinary.getName());
     }
 
     public void changeDate(ActionEvent actionEvent) {

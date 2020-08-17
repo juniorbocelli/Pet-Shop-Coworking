@@ -12,21 +12,27 @@ public class Client {
     private String email;
     private String address;
 
+    private boolean temporaryRegistration;
+
     // Lista de Animais do Cliente
     private ArrayList<Animal> animals = new ArrayList<>();
 
-    public Client(String cpf, String name, String phone, String address) {
+    public Client(String cpf, String name, String email, String phone, String cell, String address, boolean temporaryRegistration) {
         this.cpf = cpf;
         this.name = name;
+        this.email = email;
         this.phone = phone;
+        this.cell = cell;
         this.address = address;
+        this.temporaryRegistration = temporaryRegistration;
     }
 
     // Construtor para caso de agendamento de Cliente sem cadastro
-    public Client(String cpf, String name, String cell) {
+    public Client(String cpf, String name, String cell, boolean temporaryRegistration) {
         this.cpf = cpf;
         this.name = name;
         this.phone = cell;
+        this.temporaryRegistration = temporaryRegistration;
     }
 
     public String getCpf() {
@@ -100,6 +106,14 @@ public class Client {
         this.address = address;
     }
 
+    public boolean isTemporaryRegistration() {
+        return temporaryRegistration;
+    }
+
+    public void setTemporaryRegistration(boolean temporaryRegistration) {
+        this.temporaryRegistration = temporaryRegistration;
+    }
+
     // Método que adiciona Animal
     public void addAnimal(Animal animal) throws Exception{
         // Verifica se o Animal já pertence a lista
@@ -128,5 +142,22 @@ public class Client {
                 animalsList.add(a);
 
         return animalsList;
+    }
+
+    public boolean matchesSearchString(String substring){
+        String cpf = getCpf().toLowerCase();
+        String nameLowerCase = getName().toLowerCase();
+        String emailLowerCase = getEmail().toLowerCase();
+        String subStringLowerCase = substring.toLowerCase().replace(".", "").replace("-", "");
+
+        boolean isContainedInCpf = cpf.contains(subStringLowerCase);
+        boolean isContainedInName = nameLowerCase.contains(subStringLowerCase);
+        boolean isContainedInEmail = emailLowerCase.contains(subStringLowerCase);
+
+        return isContainedInCpf || isContainedInName || isContainedInEmail;
+    }
+
+    public boolean matchesTemporaryRegistration(boolean temporaryRegistration){
+        return !this.temporaryRegistration || this.temporaryRegistration != temporaryRegistration;
     }
 }

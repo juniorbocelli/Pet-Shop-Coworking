@@ -84,6 +84,7 @@ public class DatabaseBuilder {
         builder.append("phone\tTEXT, \n");
         builder.append("cell\tTEXT NOT NULL, \n");
         builder.append("address\tTEXT, \n");
+        builder.append("is_temporary_registration\tINTEGER NOT NULL DEFAULT 0, \n");
         builder.append("PRIMARY KEY(cpf) \n");
         builder.append("); \n");
 

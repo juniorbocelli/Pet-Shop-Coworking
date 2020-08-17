@@ -54,7 +54,11 @@ public class CtrlWindowVeterinary {
     }
 
     public void saveVeterinary(ActionEvent actionEvent) {
-
+        identifyErrorsAndBuildMsg();
+        if (allViewDataIsOk())
+            saveOrUpdateVeterinary ();
+        else
+            showErrorMessage("Erro");
     }
 
     public void closeVeterinary(ActionEvent actionEvent) {
@@ -102,10 +106,8 @@ public class CtrlWindowVeterinary {
 
     private void requestSaveOrUpdate () {
         ucManageVeterinary.saveOrUpdate(veterinary);
-        if (Main.getInstance().isFirstExecution) {
-            Main.getInstance().gotoLogin();
-        } else
-            closeStage();
+        // TODO: Atualizar tabela de veterinários
+        closeStage();
     }
 
     private void configureTextFields() {

@@ -20,7 +20,7 @@
                 <Label layoutX="319.0" layoutY="111.0" text="Endereço" />
                 <Label layoutX="28.0" layoutY="62.0" text="E-mail:" />
                 <TextField fx:id="txtEmail" layoutX="78.0" layoutY="58.0" prefHeight="25.0" prefWidth="352.0" />
-                <CheckBox fx:id="chkActive" layoutX="529.0" layoutY="62.0" mnemonicParsing="false" selected="true" text="Ativo" />
+                <CheckBox fx:id="chkTemporaryRegistration" layoutX="530.0" layoutY="62.0" mnemonicParsing="false" onAction="#checkTemporaryRegistration" text="Pré-cadastro" />
             </children>
         </AnchorPane>
         <AnchorPane layoutY="226.0" prefHeight="318.0" prefWidth="800.0">

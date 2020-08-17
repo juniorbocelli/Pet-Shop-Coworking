@@ -14,13 +14,13 @@ import java.util.List;
 public class DAOSecretary extends AbstractTemplateSqlDAO<Secretary, String> {
     @Override
     protected String createSaveSql() {
-        return "INSERT INTO secretary (cpf, name, email, phone, cell, address, password) " +
+        return "INSERT INTO secretary (name, email, phone, cell, address, password, cpf) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?)";
     }
 
     @Override
     protected String createUpdateSql() {
-        return "UPDATE secretary SET cpf = ?, name = ?, email = ?, phone = ?, cell = ?, address = ?, password = ? "
+        return "UPDATE secretary SET name = ?, email = ?, phone = ?, cell = ?, address = ?, password = ? "
                 + "WHERE cpf = ?";
     }
 
@@ -46,14 +46,13 @@ public class DAOSecretary extends AbstractTemplateSqlDAO<Secretary, String> {
 
     @Override
     protected void setEntityToPreparedStatement(@NotNull Secretary entity, @NotNull PreparedStatement stmt) throws SQLException {
-        stmt.setString(1, entity.getCpf());
-        stmt.setString(2, entity.getName());
-        stmt.setString(3, entity.getEmail());
-        stmt.setString(4, entity.getPhone());
-        stmt.setString(5, entity.getCell());
-        stmt.setString(6, entity.getAddress());
-        stmt.setString(7, entity.getPassword());
-        stmt.setString(8, entity.getCpf());
+        stmt.setString(1, entity.getName());
+        stmt.setString(2, entity.getEmail());
+        stmt.setString(3, entity.getPhone());
+        stmt.setString(4, entity.getCell());
+        stmt.setString(5, entity.getAddress());
+        stmt.setString(6, entity.getPassword());
+        stmt.setString(7, entity.getCpf());
     }
 
     @Override
