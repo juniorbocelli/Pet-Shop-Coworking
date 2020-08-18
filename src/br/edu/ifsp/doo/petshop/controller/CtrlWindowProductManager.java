@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -116,14 +117,20 @@ public class CtrlWindowProductManager {
         showFilteredData();
     }
 
-    public void search(ActionEvent actionEvent) {
-
-    }
-
     public void addNewProduct(ActionEvent actionEvent) {
         WindowProduct windowProduct = new WindowProduct();
         windowProduct.startModal();
 
         loadDataAndShow();
+    }
+
+    public void editProduct(MouseEvent mouseEvent) {
+        Product selectedProduct = tblProduct.getSelectionModel().getSelectedItem();
+        if (mouseEvent.getClickCount() == 2 && selectedProduct != null) {
+            WindowProduct windowProduct = new WindowProduct();
+            windowProduct.startModal(selectedProduct, selectedProduct.getName());
+
+            loadDataAndShow();
+        }
     }
 }

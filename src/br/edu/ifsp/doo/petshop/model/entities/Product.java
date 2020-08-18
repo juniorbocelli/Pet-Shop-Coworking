@@ -1,11 +1,13 @@
 package br.edu.ifsp.doo.petshop.model.entities;
 
-import br.edu.ifsp.doo.petshop.model.utils.AbstractFilterEntity;
-
-public class Product implements AbstractFilterEntity {
+public class Product {
     private String name;
     private Double price;
     private boolean active = true;
+
+    public Product() {
+
+    }
 
     public Product(String name, Double price) {
         this.name = name;
@@ -39,7 +41,6 @@ public class Product implements AbstractFilterEntity {
         this.active = active;
     }
 
-    @Override
     public boolean matchesSearchString(String substring) {
         String nameLowerCase = getName().toLowerCase();
         String priceToStringLowerCase = getPrice().toString().toLowerCase().replace(".", ",");
@@ -51,7 +52,6 @@ public class Product implements AbstractFilterEntity {
         return isContainedInName || isContainedInPrice;
     }
 
-    @Override
     public boolean matchesSearchByInactive(boolean inactive) {
         return !this.active || this.active != inactive;
     }
