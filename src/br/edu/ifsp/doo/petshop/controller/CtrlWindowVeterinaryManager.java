@@ -126,9 +126,11 @@ public class CtrlWindowVeterinaryManager {
     public void addNewVeterinary(ActionEvent actionEvent) {
         WindowVeterinary windowVeterinary = new WindowVeterinary();
         windowVeterinary.startModal();
+
+        loadDataAndShow();
     }
 
-    public void editClient(MouseEvent mouseEvent) {
+    public void editVeterinary(MouseEvent mouseEvent) {
         Veterinary selectedVeterinary = tblVeterinary.getSelectionModel().getSelectedItem();
         if (mouseEvent.getClickCount() == 2 && selectedVeterinary != null) {
             WindowVeterinary windowVeterinary = new WindowVeterinary();

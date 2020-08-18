@@ -48,8 +48,8 @@ public class DAOClient extends AbstractTemplateSqlDAO<Client, String> {
         stmt.setString(3, entity.getPhone());
         stmt.setString(4, entity.getCell());
         stmt.setString(5, entity.getAddress());
-        stmt.setInt(7, entity.isTemporaryRegistration() == true ? 1 : 0);
-        stmt.setString(8, entity.getCpf());
+        stmt.setInt(6, entity.isTemporaryRegistration() == true ? 1 : 0);
+        stmt.setString(7, entity.getCpf());
     }
 
     @Override

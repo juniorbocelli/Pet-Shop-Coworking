@@ -43,12 +43,12 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <Button fx:id="btnAddNewConsultant" disable="true" layoutX="676.0" layoutY="18.0" mnemonicParsing="false" onAction="#addNewConsultantion" text="+ Adicionar Novo" />
+            <Button fx:id="btnAddNewConsultant" disable="true" layoutX="676.0" layoutY="18.0" mnemonicParsing="false" onAction="#addNewConsultation" text="+ Adicionar Novo" />
          </children>
       </AnchorPane>
       <AnchorPane layoutY="532.0" prefHeight="67.0" prefWidth="800.0">
          <children>
-            <Button fx:id="btnSaveVeterinary" layoutX="472.0" layoutY="21.0" mnemonicParsing="false" onAction="#saveVeterinary" text="Salvar">
+            <Button fx:id="btnSaveVeterinary" layoutX="472.0" layoutY="21.0" mnemonicParsing="false" onAction="#sendViewVeterinary" text="Salvar">
                <font>
                   <Font size="15.0" />
                </font>

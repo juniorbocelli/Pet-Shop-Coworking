@@ -27,6 +27,10 @@ public class Client {
         this.temporaryRegistration = temporaryRegistration;
     }
 
+    public Client() {
+
+    }
+
     // Construtor para caso de agendamento de Cliente sem cadastro
     public Client(String cpf, String name, String cell, boolean temporaryRegistration) {
         this.cpf = cpf;

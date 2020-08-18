@@ -1,5 +1,7 @@
 package br.edu.ifsp.doo.petshop.view.loaders;
 
+import br.edu.ifsp.doo.petshop.controller.CtrlWindowClient;
+import br.edu.ifsp.doo.petshop.model.entities.Client;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -29,10 +31,17 @@ public class WindowClient {
         }
     }
 
-    public void startModal(String name){
+    public void startModal(Client client, String name){
         try {
             FXMLLoader loader = new FXMLLoader();
             Pane pane = loader.load(getClass().getResource("/br/edu/ifsp/doo/petshop/view/fxml/FXMLClient.fxml").openStream());
+
+            CtrlWindowClient ctrlWindowClient = loader.getController();
+
+            if (client != null) {
+                ctrlWindowClient.setEntityToView(client);
+                ctrlWindowClient.refreshRequiredFields();
+            }
 
             Stage stage = new Stage();
 

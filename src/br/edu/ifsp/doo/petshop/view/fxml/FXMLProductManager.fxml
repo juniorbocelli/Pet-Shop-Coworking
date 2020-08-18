@@ -8,7 +8,7 @@
     <children>
         <AnchorPane prefHeight="109.0" prefWidth="800.0">
             <children>
-                <TextField fx:id="txtSearch" layoutX="134.0" layoutY="33.0" onAction="#search" prefHeight="25.0" prefWidth="481.0" />
+                <TextField fx:id="txtSearch" layoutX="134.0" layoutY="33.0" prefHeight="25.0" prefWidth="481.0" />
                 <Label layoutX="61.0" layoutY="35.0" text="Pesquisar:">
                     <font>
                         <Font size="15.0" />

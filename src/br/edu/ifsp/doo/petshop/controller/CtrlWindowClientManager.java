@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -71,6 +72,10 @@ public class CtrlWindowClientManager {
         allClients = ucManageClient.selectAll();
     }
 
+    public void filterByTemporaryRegistration(ActionEvent actionEvent) {
+        showFilteredData();
+    }
+
     public void showFilteredData() {
         getFiltersFromView();
         updateTableViewFromFilters();
@@ -121,5 +126,17 @@ public class CtrlWindowClientManager {
     public void addNewClient(ActionEvent actionEvent) {
         WindowClient windowClient = new WindowClient();
         windowClient.startModal();
+
+        loadDataAndShow();
+    }
+
+    public void editClient(MouseEvent mouseEvent) {
+        Client selectedClient = tblClient.getSelectionModel().getSelectedItem();
+        if (mouseEvent.getClickCount() == 2 && selectedClient != null) {
+            WindowClient windowClient = new WindowClient();
+            windowClient.startModal(selectedClient, selectedClient.getName());
+
+            loadDataAndShow();
+        }
     }
 }

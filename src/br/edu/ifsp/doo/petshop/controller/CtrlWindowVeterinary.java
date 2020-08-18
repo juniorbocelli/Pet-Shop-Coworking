@@ -48,12 +48,25 @@ public class CtrlWindowVeterinary {
     private UCManageVeterinary ucManageVeterinary;
     private String errorMessage;
 
-    public void addNewConsultantion(ActionEvent actionEvent) {
+    public CtrlWindowVeterinary() {
+        ucManageVeterinary = new UCManageVeterinary(new DAOVeterinary());
+    }
+
+    @FXML
+    private void initialize() {
+        InputTextMask.maskCPF(txtCpf);
+        InputTextMask.maskEmail(txtEmail);
+        InputTextMask.maskPhoneOrCell(txtPhone);
+        InputTextMask.maskPhoneOrCell(txtCell);
+        //configureTextFields();
+    }
+
+    public void addNewConsultation(ActionEvent actionEvent) {
         WindowVeterinaryConsultation windowVeterinaryConsultation = new WindowVeterinaryConsultation();
         windowVeterinaryConsultation.startModal();
     }
 
-    public void saveVeterinary(ActionEvent actionEvent) {
+    public void sendViewVeterinary(ActionEvent actionEvent) {
         identifyErrorsAndBuildMsg();
         if (allViewDataIsOk())
             saveOrUpdateVeterinary ();
@@ -70,30 +83,9 @@ public class CtrlWindowVeterinary {
         stage.close();
     }
 
-    @FXML
-    private void initialize() {
-        InputTextMask.maskCPF(txtCpf);
-        InputTextMask.maskEmail(txtEmail);
-        InputTextMask.maskPhoneOrCell(txtPhone);
-        InputTextMask.maskPhoneOrCell(txtCell);
-        //configureTextFields();
-    }
-
     private void instanceEntityIfNull() {
         if (veterinary == null)
             veterinary = new Veterinary();
-    }
-
-    public CtrlWindowVeterinary() {
-        ucManageVeterinary = new UCManageVeterinary(new DAOVeterinary());
-    }
-
-    public void sendViewVeterinary(ActionEvent actionEvent) {
-        identifyErrorsAndBuildMsg();
-        if (allViewDataIsOk())
-            saveOrUpdateVeterinary ();
-        else
-            showErrorMessage("Erro");
     }
 
     private void saveOrUpdateVeterinary () {
@@ -106,7 +98,6 @@ public class CtrlWindowVeterinary {
 
     private void requestSaveOrUpdate () {
         ucManageVeterinary.saveOrUpdate(veterinary);
-        // TODO: Atualizar tabela de veterinários
         closeStage();
     }
 

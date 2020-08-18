@@ -24,7 +24,7 @@
       </AnchorPane>
       <AnchorPane layoutY="109.0" prefHeight="491.0" prefWidth="800.0">
          <children>
-            <TableView fx:id="tblVeterinary" onMouseClicked="#editClient" prefHeight="491.0" prefWidth="800.0">
+            <TableView fx:id="tblVeterinary" onMouseClicked="#editVeterinary" prefHeight="491.0" prefWidth="800.0">
               <columns>
                 <TableColumn fx:id="clnCpf" prefWidth="123.0" text="CPF" />
                 <TableColumn fx:id="clnName" prefWidth="245.0" text="Nome" />
