@@ -6,9 +6,11 @@ import br.edu.ifsp.doo.petshop.persistence.utils.DatabaseBuilder;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -125,6 +127,11 @@ public class Main extends Application {
 
         stage.setTitle(title);
         stage.getIcons().add(new Image("/br/edu/ifsp/doo/petshop/view/image/logo.png"));
+
+        // Centraliza a scene na tela
+        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+        stage.setX((screenBounds.getWidth() - width) / 2);
+        stage.setY((screenBounds.getHeight() - height) / 2);
 
         Scene scene = new Scene(page, width, height);
         stage.setScene(scene);

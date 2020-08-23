@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="73.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifsp.doo.petshop.controller.CtrlWindowProduct">
+<AnchorPane prefHeight="136.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifsp.doo.petshop.controller.CtrlWindowProduct">
    <children>
       <AnchorPane prefHeight="90.0" prefWidth="600.0">
          <children>
@@ -19,12 +19,16 @@
                   <Font size="15.0" />
                </font>
             </Label>
-            <TextField fx:id="txtPrice" layoutX="89.0" layoutY="53.0" prefHeight="25.0" prefWidth="474.0" promptText="0,00" />
+            <TextField fx:id="txtPrice" layoutX="89.0" layoutY="53.0" prefHeight="25.0" prefWidth="391.0" promptText="0,00" />
+            <CheckBox fx:id="chkActive" layoutX="500.0" layoutY="55.0" mnemonicParsing="false" selected="true" text="Ativo">
+               <font>
+                  <Font size="15.0" />
+               </font></CheckBox>
          </children>
       </AnchorPane>
       <AnchorPane layoutY="90.0" prefHeight="46.0" prefWidth="600.0">
          <children>
-            <Button fx:id="btnSaveProduct" layoutX="331.0" layoutY="8.0" mnemonicParsing="false" onAction="#saveProduct" text="Salvar">
+            <Button fx:id="btnSaveProduct" layoutX="331.0" layoutY="8.0" mnemonicParsing="false" onAction="#sendViewProduct" text="Salvar">
                <font>
                   <Font size="15.0" />
                </font>

@@ -8,7 +8,7 @@
     <children>
         <AnchorPane prefHeight="109.0" prefWidth="800.0">
             <children>
-                <TextField fx:id="txtSearch" layoutX="134.0" layoutY="33.0" onAction="#search" prefHeight="25.0" prefWidth="481.0" />
+                <TextField fx:id="txtSearch" onKeyReleased="#filterTableData" layoutX="134.0" layoutY="33.0" prefHeight="25.0" prefWidth="481.0" />
                 <Label layoutX="61.0" layoutY="35.0" text="Pesquisar:">
                     <font>
                         <Font size="15.0" />
@@ -24,7 +24,7 @@
         </AnchorPane>
         <AnchorPane layoutY="109.0" prefHeight="491.0" prefWidth="800.0">
             <children>
-                <TableView fx:id="tblProduct" prefHeight="491.0" prefWidth="800.0">
+                <TableView fx:id="tblProduct" onMouseClicked="#editProduct" prefHeight="491.0" prefWidth="800.0">
                     <columns>
                         <TableColumn fx:id="clnName" prefWidth="642.0" text="Nome" />
                   <TableColumn fx:id="clnPrice" prefWidth="157.0" text="Preço" />

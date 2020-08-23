@@ -14,9 +14,9 @@ public class Animal {
     private AnimalTypes animalType;
     private ArrayList<Diseases> diseases = new ArrayList<>();
     private Genders gender;
-    private Veterinary preferredVeterinarian;
 
-    // Prontuário do animal
+    private Veterinary preferredVeterinarian;
+    private  Client owner;
     private VeterinaryRecord veterinaryRecord;
 
     public Animal(String name, int birthYear, AnimalTypes animalType, ArrayList<Diseases> diseases, Genders gender, Veterinary preferredVeterinarian) {
@@ -88,6 +88,14 @@ public class Animal {
 
     public void setPreferredVeterinarian(Veterinary preferredVeterinarian) {
         this.preferredVeterinarian = preferredVeterinarian;
+    }
+
+    public Client getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Client owner) {
+        this.owner = owner;
     }
 
     public ArrayList<Diseases> getDiseases() {

@@ -1,5 +1,6 @@
 package br.edu.ifsp.doo.petshop.controller;
 
+import br.edu.ifsp.doo.petshop.model.entities.Animal;
 import br.edu.ifsp.doo.petshop.view.loaders.WindowAnimal;
 import br.edu.ifsp.doo.petshop.view.loaders.WindowVeterinaryConsultation;
 import javafx.event.ActionEvent;
@@ -26,9 +27,11 @@ public class CtrlWindowVeterinaryRecords {
 
     @FXML TextArea txaGeneralAnnotations;
 
+    private Animal animal;
+
     public void openAnimal(ActionEvent actionEvent) {
         WindowAnimal windowAnimal = new WindowAnimal();
-        windowAnimal.startModal("Nome do Animal");
+        windowAnimal.startModal(animal, animal.getName());
     }
 
     public void addConsultation(ActionEvent actionEvent) {

@@ -1,15 +1,10 @@
 package br.edu.ifsp.doo.petshop.controller;
 
 import br.edu.ifsp.doo.petshop.model.entities.Product;
-import br.edu.ifsp.doo.petshop.model.entities.Veterinary;
 import br.edu.ifsp.doo.petshop.model.usecases.UCManageProduct;
-import br.edu.ifsp.doo.petshop.model.usecases.UCManageVeterinary;
 import br.edu.ifsp.doo.petshop.persistence.dao.DAOProduct;
-import br.edu.ifsp.doo.petshop.persistence.dao.DAOVeterinary;
-import br.edu.ifsp.doo.petshop.view.loaders.WindowVeterinaryConsultation;
 import br.edu.ifsp.doo.petshop.view.util.InputTextMask;
 import br.edu.ifsp.doo.petshop.view.util.InputValidator;
-import br.edu.ifsp.doo.petshop.view.util.TextFieldFormater;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -27,7 +22,9 @@ public class CtrlWindowProduct {
     @FXML Button btnSaveProduct;
     @FXML Button btnCloseProduct;
 
-    private Product product;
+    private Product productToSaveOrUpdate;
+    private Product productToSet;
+
     private UCManageProduct ucManageProduct;
     private String errorMessage;
 
@@ -58,11 +55,6 @@ public class CtrlWindowProduct {
         stage.close();
     }
 
-    private void instanceEntityIfNull() {
-        if (product == null)
-            product = new Product();
-    }
-
     private void saveOrUpdateVeterinary () {
         errorMessage = getEntityFromView();
         if (!allViewDataIsOk())
@@ -72,7 +64,7 @@ public class CtrlWindowProduct {
     }
 
     private void requestSaveOrUpdate () {
-        ucManageProduct.saveOrUpdate(product);
+        ucManageProduct.saveOrUpdate(productToSaveOrUpdate);
         closeStage();
     }
 
@@ -81,19 +73,28 @@ public class CtrlWindowProduct {
     }
 
     private String getEntityFromView () {
-        instanceEntityIfNull();
+        productToSaveOrUpdate = new Product();
         try {
-            product.setName(txtName.getText().trim());
-            product.setName(txtPrice.getText().trim());
-            product.setActive(chkActive.isSelected());
+            productToSaveOrUpdate.setName(txtName.getText().trim());
+            productToSaveOrUpdate.setPrice(txtPrice.getText().trim());
+            productToSaveOrUpdate.setActive(chkActive.isSelected());
+
+            if(isUpdateRequest())
+                productToSaveOrUpdate.setId(productToSet.getId());
+            else
+                productToSaveOrUpdate.setId(productToSaveOrUpdate.getNextTransientID());
         } catch (Exception e) {
             return e.getMessage();
         }
         return null;
     }
 
+    private boolean isUpdateRequest() {
+        return productToSet != null;
+    }
+
     public void setEntityToView(Product product) {
-        this.product = product;
+        this.productToSet = product;
 
         txtName.setText(product.getName());
         txtPrice.setText(product.getPrice().toString());
