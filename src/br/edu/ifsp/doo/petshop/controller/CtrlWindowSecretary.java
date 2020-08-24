@@ -12,7 +12,6 @@ import javafx.stage.Stage;
 import java.util.Arrays;
 import java.util.List;
 
-import br.edu.ifsp.doo.petshop.view.util.TextFieldFormater;
 import br.edu.ifsp.doo.petshop.view.util.InputValidator;
 import br.edu.ifsp.doo.petshop.view.util.InputTextMask;
 
@@ -33,7 +32,8 @@ public class CtrlWindowSecretary {
 
     private String errorMessage;
 
-    private Secretary secretary;
+    private Secretary secretaryToSet;
+    private Secretary secretaryToSaveOrUpdate;
     private UCManageSecretary ucManageSecretary;
 
     @FXML
@@ -42,7 +42,6 @@ public class CtrlWindowSecretary {
         InputTextMask.maskEmail(txtEmail);
         InputTextMask.maskPhoneOrCell(txtPhone);
         InputTextMask.maskPhoneOrCell(txtCell);
-        //configureTextFields();
     }
 
     public CtrlWindowSecretary() {
@@ -58,17 +57,11 @@ public class CtrlWindowSecretary {
     }
 
     private void requestSaveOrUpdate() {
-        ucManageSecretary.saveOrUpdate(secretary);
+        ucManageSecretary.saveOrUpdate(secretaryToSaveOrUpdate);
         if (Main.getInstance().isFirstExecution) {
             Main.getInstance().gotoLogin();
         } else
             closeStage();
-    }
-
-    private void configureTextFields() {
-        TextFieldFormater.formatAsRG(txtCpf);
-        TextFieldFormater.formatAsPhoneNumber(txtPhone);
-        //TextFieldFormater.formatAsPhoneNumber(txtCell);
     }
 
     public void closeViewSecretary(ActionEvent actionEvent) {
@@ -80,12 +73,6 @@ public class CtrlWindowSecretary {
         stage.close();
     }
 
-
-    private void instanceEntityIfNull() {
-        if (secretary == null)
-            secretary = new Secretary();
-    }
-
     private void saveOrUpdateSecretary () {
         errorMessage = getEntityFromView();
         if (!allViewDataIsOk())
@@ -95,15 +82,15 @@ public class CtrlWindowSecretary {
     }
 
     private String getEntityFromView () {
-        instanceEntityIfNull();
+        secretaryToSaveOrUpdate = new Secretary();
         try {
-            secretary.setCpf(txtCpf.getText().trim());
-            secretary.setName(txtName.getText().trim());
-            secretary.setEmail(txtEmail.getText().trim());
-            secretary.setPhone(txtPhone.getText().trim());
-            secretary.setCell(txtCell.getText().trim());
-            secretary.setAddress(txaAddress.getText().trim());
-            secretary.setPassword(txtPassword.getText().trim());
+            secretaryToSaveOrUpdate.setCpf(txtCpf.getText().trim());
+            secretaryToSaveOrUpdate.setName(txtName.getText().trim());
+            secretaryToSaveOrUpdate.setEmail(txtEmail.getText().trim());
+            secretaryToSaveOrUpdate.setPhone(txtPhone.getText().trim());
+            secretaryToSaveOrUpdate.setCell(txtCell.getText().trim());
+            secretaryToSaveOrUpdate.setAddress(txaAddress.getText().trim());
+            secretaryToSaveOrUpdate.setPassword(txtPassword.getText().trim());
         } catch (Exception e) {
             return e.getMessage();
         }
@@ -111,16 +98,18 @@ public class CtrlWindowSecretary {
     }
 
     public void setEntityToView(Secretary secretary) {
-        this.secretary = secretary;
+        this.secretaryToSet = secretary;
 
-        System.out.println(secretary.getCell());
-
-        txtCpf.setText(secretary.getCpf());
+        txtCpf.setText(secretary.getMaskedCpf());
         txtName.setText(secretary.getName());
         txtEmail.setText(secretary.getEmail());
-        txtPhone.setText(secretary.getPhone());
-        txtCell.setText(secretary.getCell());
+        txtPhone.setText(secretary.getMaskedPhone());
+        txtCell.setText(secretary.getMaskedCell());
         txaAddress.setText(secretary.getAddress());
+    }
+
+    private boolean isUpdateRequest() {
+        return secretaryToSet != null;
     }
 
     /**
@@ -137,7 +126,9 @@ public class CtrlWindowSecretary {
     }
 
     private void identifyErrorsAndBuildMsg() {
-        if(secretaryInfoIsIncomplete())
+        if(secretaryInfoIsIncomplete() && !isUpdateRequest())
+            appendErrorMessage("Todos os dados devem ser preenchidos.");
+        if(secretaryInfoRequiredIsIncomplete() && isUpdateRequest())
             appendErrorMessage("Todos os dados devem ser preenchidos.");
         if (confirmPasswordIsOk())
             appendErrorMessage("As senhas informadas não combinam.");
@@ -186,5 +177,15 @@ public class CtrlWindowSecretary {
 
     private boolean confirmPasswordIsOk() {
         return !txtPassword.getText().equals(txtConfirmPassword.getText());
+    }
+
+    private boolean secretaryInfoRequiredIsIncomplete() {
+        return someStringsAreNotFilled(getRequiredDataViewAsList()) || !allStringsAreFilled(getRequiredDataViewAsList());
+    }
+
+    private List<String> getRequiredDataViewAsList() {
+        List<String> dataList = Arrays.asList(txtCpf.getText(), txtName.getText(), txtEmail.getText(),
+                txtPhone.getText(), txtCell.getText(), txaAddress.getText());
+        return dataList;
     }
 }

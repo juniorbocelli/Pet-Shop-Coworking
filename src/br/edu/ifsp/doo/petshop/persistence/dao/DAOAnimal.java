@@ -8,46 +8,57 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class DAOAnimal extends AbstractTemplateSqlDAO<Animal, String> {
+public class DAOAnimal extends AbstractTemplateSqlDAO<Animal, Integer> {
 
     @Override
     protected String createSaveSql() {
-        return null;
+        return "INSERT INTO animal (cpf_owner, cpf_official_veterinary, name, type, gender, birth_year, general_annotations, active) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     }
 
     @Override
     protected String createUpdateSql() {
-        return null;
+        return "UPDATE animal SET cpf_owner = ?, cpf_official_veterinary = ?, name = ?, type = ?, gender = ?, birth_year = ?, " +
+                "general_annotations = ?, active = ? WHERE id = ?";
     }
 
     @Override
     protected String createDeleteSql() {
-        return null;
+        return "DELETE FROM animal WHERE id = ?";
     }
 
     @Override
     protected String createSelectSql() {
-        return null;
+        return "SELECT * FROM animal WHERE id = ?";
     }
 
     @Override
     protected String createSelectAllSql() {
-        return null;
+        return "SELECT * FROM animal";
     }
 
     @Override
     protected String createSelectBySql(String field) {
-        return null;
+        return "SELECT * FROM animal WHERE " + field + " = ?";
     }
 
     @Override
     protected void setEntityToPreparedStatement(@NotNull Animal entity, @NotNull PreparedStatement stmt) throws SQLException {
-
+        stmt.setString(1, entity.getOwner().getCpf());
+        stmt.setString(2, entity.getPreferredVeterinarian().getCpf());
+        stmt.setString(3, entity.getName());
+        stmt.setString(4, entity.getAnimalType().name());
+        stmt.setString(5, entity.getGender().name());
+        stmt.setInt(6, entity.getBirthYear());
+        stmt.setString(7, entity.getVeterinaryRecord().getGeneralAnnotations());
+        stmt.setInt(8, entity.isActive() == true ? 1 : 0);
+        if (entity.getId() != -1)
+            stmt.setInt(9, entity.getId());
     }
 
     @Override
-    protected void setKeyToPreparedStatement(@NotNull String key, @NotNull PreparedStatement stmt) throws SQLException {
-
+    protected void setKeyToPreparedStatement(@NotNull Integer key, @NotNull PreparedStatement stmt) throws SQLException {
+        stmt.setInt(1, key);
     }
 
     @Override
@@ -57,11 +68,18 @@ public class DAOAnimal extends AbstractTemplateSqlDAO<Animal, String> {
 
     @Override
     protected Animal getEntityFromResultSet(@NotNull ResultSet rs) throws SQLException {
-        return null;
+        Animal entity = new Animal(
+                rs.getInt("id"),
+                rs.getString("name"),
+                rs.getString("type"),
+                rs.getString("gender"),
+                rs.getInt("birth_year"),
+                rs.getInt("active") == 1 ? true:false);
+        return entity;
     }
 
     @Override
-    protected String getEntityKey(@NotNull Animal entity) {
-        return null;
+    protected Integer getEntityKey(@NotNull Animal entity) {
+        return entity.getId();
     }
 }

@@ -1,10 +1,7 @@
 package br.edu.ifsp.doo.petshop.controller;
 
-import br.edu.ifsp.doo.petshop.main.Main;
 import br.edu.ifsp.doo.petshop.model.entities.Veterinary;
-import br.edu.ifsp.doo.petshop.model.usecases.UCManageSecretary;
 import br.edu.ifsp.doo.petshop.model.usecases.UCManageVeterinary;
-import br.edu.ifsp.doo.petshop.persistence.dao.DAOSecretary;
 import br.edu.ifsp.doo.petshop.persistence.dao.DAOVeterinary;
 import br.edu.ifsp.doo.petshop.view.loaders.WindowVeterinaryConsultation;
 import br.edu.ifsp.doo.petshop.view.util.InputTextMask;
@@ -44,7 +41,8 @@ public class CtrlWindowVeterinary {
     @FXML TableColumn clnClientName;
     @FXML TableColumn clnAnimalName;
 
-    private Veterinary veterinary;
+    private Veterinary veterinaryToSet;
+    private Veterinary veterinaryToSaveOrUpdate;
     private UCManageVeterinary ucManageVeterinary;
     private String errorMessage;
 
@@ -83,11 +81,6 @@ public class CtrlWindowVeterinary {
         stage.close();
     }
 
-    private void instanceEntityIfNull() {
-        if (veterinary == null)
-            veterinary = new Veterinary();
-    }
-
     private void saveOrUpdateVeterinary () {
         errorMessage = getEntityFromView();
         if (!allViewDataIsOk())
@@ -97,7 +90,7 @@ public class CtrlWindowVeterinary {
     }
 
     private void requestSaveOrUpdate () {
-        ucManageVeterinary.saveOrUpdate(veterinary);
+        ucManageVeterinary.saveOrUpdate(veterinaryToSaveOrUpdate);
         closeStage();
     }
 
@@ -108,16 +101,16 @@ public class CtrlWindowVeterinary {
     }
 
     private String getEntityFromView () {
-        instanceEntityIfNull();
+        veterinaryToSaveOrUpdate = new Veterinary();
         try {
-            veterinary.setCpf(txtCpf.getText().trim());
-            veterinary.setName(txtName.getText().trim());
-            veterinary.setEmail(txtEmail.getText().trim());
-            veterinary.setPhone(txtPhone.getText().trim());
-            veterinary.setCell(txtCell.getText().trim());
-            veterinary.setAddress(txaAddress.getText().trim());
-            veterinary.setPassword(txtPassword.getText().trim());
-            veterinary.setActive(chkActive.isSelected());
+            veterinaryToSaveOrUpdate.setCpf(txtCpf.getText().trim());
+            veterinaryToSaveOrUpdate.setName(txtName.getText().trim());
+            veterinaryToSaveOrUpdate.setEmail(txtEmail.getText().trim());
+            veterinaryToSaveOrUpdate.setPhone(txtPhone.getText().trim());
+            veterinaryToSaveOrUpdate.setCell(txtCell.getText().trim());
+            veterinaryToSaveOrUpdate.setAddress(txaAddress.getText().trim());
+            veterinaryToSaveOrUpdate.setPassword(isUpdateRequest() ? null:txtPassword.getText().trim());
+            veterinaryToSaveOrUpdate.setActive(chkActive.isSelected());
         } catch (Exception e) {
             return e.getMessage();
         }
@@ -125,15 +118,26 @@ public class CtrlWindowVeterinary {
     }
 
     public void setEntityToView(Veterinary veterinary) {
-        this.veterinary = veterinary;
+        this.veterinaryToSet = veterinary;
 
-        txtCpf.setText(veterinary.getCpf());
+        txtCpf.setText(veterinary.getMaskedCpf());
         txtName.setText(veterinary.getName());
         txtEmail.setText(veterinary.getEmail());
-        txtPhone.setText(veterinary.getPhone());
-        txtCell.setText(veterinary.getCell());
+        txtPhone.setText(veterinary.getMaskedPhone());
+        txtCell.setText(veterinary.getMaskedCell());
         txaAddress.setText(veterinary.getAddress());
         chkActive.setSelected(veterinary.getActive());
+
+        setViewToEditMode();
+    }
+
+    private void setViewToEditMode() {
+        btnAddNewConsultant.setDisable(false);
+        tblSchedule.setDisable(false);
+    }
+
+    private boolean isUpdateRequest() {
+        return veterinaryToSet != null;
     }
 
     /**
@@ -150,7 +154,9 @@ public class CtrlWindowVeterinary {
     }
 
     private void identifyErrorsAndBuildMsg() {
-        if(veterinaryInfoIsIncomplete())
+        if(veterinaryInfoIsIncomplete() && !isUpdateRequest())
+            appendErrorMessage("Todos os dados devem ser preenchidos.");
+        if(veterinaryInfoRequiredIsIncomplete() && isUpdateRequest())
             appendErrorMessage("Todos os dados devem ser preenchidos.");
         if (confirmPasswordIsOk())
             appendErrorMessage("As senhas informadas não combinam.");
@@ -199,5 +205,15 @@ public class CtrlWindowVeterinary {
 
     private boolean confirmPasswordIsOk() {
         return !txtPassword.getText().equals(txtConfirmPassword.getText());
+    }
+
+    private boolean veterinaryInfoRequiredIsIncomplete() {
+        return someStringsAreNotFilled(getRequiredDataViewAsList()) || !allStringsAreFilled(getRequiredDataViewAsList());
+    }
+
+    private List<String> getRequiredDataViewAsList() {
+        List<String> dataList = Arrays.asList(txtCpf.getText(), txtName.getText(), txtEmail.getText(),
+                txtPhone.getText(), txtCell.getText(), txaAddress.getText());
+        return dataList;
     }
 }

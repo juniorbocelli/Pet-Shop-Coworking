@@ -1,13 +1,16 @@
 package br.edu.ifsp.doo.petshop.model.entities;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Optional;
 
 public class Animal {
     public enum AnimalTypes {CACHORRO, GATO};
     public enum Diseases {CARDIOPATA, RENAL, PULMONAR, ALÉRGICO};
     public enum Genders {MACHO, FÊMEA};
 
+    private int id;
     private String name;
     private int birthYear;
     private boolean active = true;
@@ -16,8 +19,12 @@ public class Animal {
     private Genders gender;
 
     private Veterinary preferredVeterinarian;
-    private  Client owner;
+    private Client owner;
     private VeterinaryRecord veterinaryRecord;
+
+    public Animal() {
+
+    }
 
     public Animal(String name, int birthYear, AnimalTypes animalType, ArrayList<Diseases> diseases, Genders gender, Veterinary preferredVeterinarian) {
         this.name = name;
@@ -28,10 +35,28 @@ public class Animal {
         this.preferredVeterinarian = preferredVeterinarian;
     }
 
+    // Usado pelo DAO para criar entidade
+    public Animal(int id, String name, String animalType, String gender, int birthYear, boolean active) {
+        this.id = id;
+        this.name = name;
+        this.animalType = AnimalTypes.valueOf(animalType);
+        this.gender = Genders.valueOf(gender);
+        this.birthYear = birthYear;
+        this.active = active;
+    }
+
     public Animal(String name, AnimalTypes animalType, Veterinary preferredVeterinarian) {
         this.name = name;
         this.animalType = animalType;
         this.preferredVeterinarian = preferredVeterinarian;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -96,6 +121,14 @@ public class Animal {
 
     public void setOwner(Client owner) {
         this.owner = owner;
+    }
+
+    public VeterinaryRecord getVeterinaryRecord() {
+        return veterinaryRecord;
+    }
+
+    public void setVeterinaryRecord(VeterinaryRecord veterinaryRecord) {
+        this.veterinaryRecord = veterinaryRecord;
     }
 
     public ArrayList<Diseases> getDiseases() {

@@ -2,6 +2,7 @@ package br.edu.ifsp.doo.petshop.model.entities;
 
 import br.edu.ifsp.doo.petshop.model.utils.CheckCpf;
 import br.edu.ifsp.doo.petshop.model.utils.EncryptString;
+import br.edu.ifsp.doo.petshop.model.utils.MaskApply;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
@@ -51,16 +52,22 @@ public class User {
         this.cpf = cpf;
     }
 
+    public String getMaskedCpf() {
+        return MaskApply.maskCfp(this.cpf);
+    }
+
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) throws UnsupportedEncodingException, NoSuchAlgorithmException {
-        if (password.length() < 6)
-            throw new IllegalArgumentException("A Senha deve ter no mínimo 6 caracteres!");
-        // Para evitar sobrescrever a senha correta gravando um hash de um outro hash
-        if(password != this.password)
-            this.password = EncryptString.encryptPassword(password);
+        if (password != null) {
+            if (password.length() < 6)
+                throw new IllegalArgumentException("A Senha deve ter no mínimo 6 caracteres!");
+            // Para evitar sobrescrever a senha correta gravando um hash de um outro hash
+            if(password != this.password)
+                this.password = EncryptString.encryptPassword(password);
+        }
     }
 
     public String getName() {
@@ -90,6 +97,10 @@ public class User {
         this.phone = phone;
     }
 
+    public String getMaskedPhone() {
+        return MaskApply.maskPhone(this.phone);
+    }
+
     public String getCell() {
         return cell;
     }
@@ -106,6 +117,10 @@ public class User {
             throw  new  IllegalArgumentException("Celular inválido!");
         }
         this.cell = cell;
+    }
+
+    public String getMaskedCell() {
+        return MaskApply.maskCell(this.cell);
     }
 
     public String getEmail() {

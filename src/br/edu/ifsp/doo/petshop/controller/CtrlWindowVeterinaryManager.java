@@ -4,6 +4,7 @@ import br.edu.ifsp.doo.petshop.model.entities.Veterinary;
 import br.edu.ifsp.doo.petshop.model.usecases.UCManageVeterinary;
 import br.edu.ifsp.doo.petshop.persistence.dao.DAOVeterinary;
 import br.edu.ifsp.doo.petshop.view.loaders.WindowVeterinary;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -56,11 +57,11 @@ public class CtrlWindowVeterinaryManager {
     }
 
     public void bindColumnsToValueSources() {
-        clnCpf.setCellValueFactory(new PropertyValueFactory<>("cpf"));
+        clnCpf.setCellValueFactory((param) -> new SimpleStringProperty(param.getValue().getMaskedCpf()));
         clnName.setCellValueFactory(new PropertyValueFactory<>("name"));
         clnEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
-        clnPhone.setCellValueFactory(new PropertyValueFactory<>("phone"));
-        clnCell.setCellValueFactory(new PropertyValueFactory<>("cell"));
+        clnPhone.setCellValueFactory((param) -> new SimpleStringProperty(param.getValue().getMaskedPhone()));
+        clnCell.setCellValueFactory((param) -> new SimpleStringProperty(param.getValue().getMaskedCell()));
     }
 
     private void loadDataAndShow() {

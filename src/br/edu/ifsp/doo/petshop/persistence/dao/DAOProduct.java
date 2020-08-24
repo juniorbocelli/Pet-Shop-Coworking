@@ -42,7 +42,6 @@ public class DAOProduct extends AbstractTemplateSqlDAO<Product, Integer> {
 
     @Override
     protected void setEntityToPreparedStatement(@NotNull Product entity, @NotNull PreparedStatement stmt) throws SQLException {
-        System.out.println(entity);
         stmt.setString(1, entity.getName());
         stmt.setDouble(2, entity.getPrice());
         stmt.setInt(3, entity.isActive() == true ? 1 : 0);

@@ -1,7 +1,6 @@
 package br.edu.ifsp.doo.petshop.controller;
 
 import br.edu.ifsp.doo.petshop.model.entities.Client;
-import br.edu.ifsp.doo.petshop.model.entities.Veterinary;
 import br.edu.ifsp.doo.petshop.model.usecases.UCManageClient;
 import br.edu.ifsp.doo.petshop.persistence.dao.DAOClient;
 import br.edu.ifsp.doo.petshop.view.loaders.WindowAnimal;
