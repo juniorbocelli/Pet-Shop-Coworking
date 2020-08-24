@@ -81,8 +81,7 @@ public class CtrlWindowProduct {
 
             if(isUpdateRequest())
                 productToSaveOrUpdate.setId(productToSet.getId());
-            else
-                productToSaveOrUpdate.setId(productToSaveOrUpdate.getNextTransientID());
+            else productToSaveOrUpdate.setId(-1);
         } catch (Exception e) {
             return e.getMessage();
         }

@@ -7,17 +7,16 @@ public class Product {
     private String name;
     private Double price;
     private boolean active = true;
-    private static int transientId;
 
     public Product() {
 
     }
 
     public Product(String name, Double price, boolean active) {
-        this(getNextTransientID(), name, price, active);
+        this(-1, name, price, active);
     }
 
-    public Product(int id, String name, Double price, boolean active) {
+    public Product(Integer id, String name, Double price, boolean active) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -107,9 +106,5 @@ public class Product {
 
     public boolean matchesSearchByInactive(boolean inactive) {
         return !this.active || this.active != inactive;
-    }
-
-    public static int getNextTransientID(){
-        return --transientId;
     }
 }

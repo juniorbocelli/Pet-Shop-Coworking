@@ -11,8 +11,8 @@ import java.sql.SQLException;
 public class DAOProduct extends AbstractTemplateSqlDAO<Product, Integer> {
     @Override
     protected String createSaveSql() {
-        return "INSERT INTO product (name, price, active, id) " +
-                "VALUES (?, ?, ?, ?)";
+        return "INSERT INTO product (name, price, active) " +
+                "VALUES (?, ?, ?)";
     }
 
     @Override
@@ -42,13 +42,12 @@ public class DAOProduct extends AbstractTemplateSqlDAO<Product, Integer> {
 
     @Override
     protected void setEntityToPreparedStatement(@NotNull Product entity, @NotNull PreparedStatement stmt) throws SQLException {
+        System.out.println(entity);
         stmt.setString(1, entity.getName());
         stmt.setDouble(2, entity.getPrice());
         stmt.setInt(3, entity.isActive() == true ? 1 : 0);
         if (entity.getId() != -1)
-            stmt.setInt(4,entity.getId());
-        else
-            stmt.setString(4, "ID");
+            stmt.setInt(4, entity.getId());
     }
 
     @Override

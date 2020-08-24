@@ -23,7 +23,7 @@ public class DatabaseBuilder {
             stmt.addBatch(createVeterinaryTableSql());
             stmt.addBatch(createClientTableSql());
             stmt.addBatch(createAnimalTableSql());
-            stmt.addBatch(createDiseaseTableSql());
+            stmt.addBatch(createDiseasesOfAnimalsTableSql());
             stmt.addBatch(createProductTableSql());
             stmt.addBatch(createConsultationTableSql());
             stmt.addBatch(createProductsOfConsultationsTableSql());
@@ -114,10 +114,10 @@ public class DatabaseBuilder {
         return builder.toString();
     }
 
-    private String createDiseaseTableSql(){
+    private String createDiseasesOfAnimalsTableSql(){
         StringBuilder builder = new StringBuilder();
 
-        builder.append("CREATE TABLE  disease (\n");
+        builder.append("CREATE TABLE  diseases_of_animals (\n");
         builder.append("id_animal\tNUMERIC NOT NULL, \n");
         builder.append("name\tTEXT NOT NULL, \n");
         builder.append("PRIMARY KEY(id_animal,name) \n");
