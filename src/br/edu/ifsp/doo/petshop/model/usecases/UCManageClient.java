@@ -11,13 +11,15 @@ public class UCManageClient {
     UCManageAnimal ucManageAnimalPersistence;
 
     public UCManageClient(DAOClient daoClient) {
-        this(daoClient = daoClient, null);
+        this.daoClient = daoClient;
     }
 
+    /*
     public UCManageClient(DAOClient daoClient, DAOAnimal daoAnimal) {
         this.daoClient = daoClient;
         this.ucManageAnimalPersistence = new UCManageAnimal(daoAnimal);
     }
+     */
 
     public void saveOrUpdate(Client client) {
         daoClient.saveOrUpdate(client);

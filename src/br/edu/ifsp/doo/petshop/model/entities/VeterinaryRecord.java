@@ -6,6 +6,10 @@ public class VeterinaryRecord {
     private String generalAnnotations;
     private ArrayList<ClinicalConsultation> clinicalConsultations = new ArrayList<>();
 
+    public VeterinaryRecord(String generalAnnotations) {
+        this.generalAnnotations = generalAnnotations;
+    }
+
     public String getGeneralAnnotations() {
         return generalAnnotations;
     }

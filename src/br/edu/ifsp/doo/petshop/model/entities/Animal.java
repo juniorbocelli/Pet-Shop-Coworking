@@ -99,12 +99,29 @@ public class Animal {
         this.animalType = animalType;
     }
 
+    public void setAnimalType(String animalType) {
+        try {
+            this.animalType = AnimalTypes.valueOf(animalType);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Tipo de Animal inválido!");
+        }
+    }
+
+
     public Genders getGender() {
         return gender;
     }
 
     public void setGender(Genders gender) {
         this.gender = gender;
+    }
+
+    public void setGender(String gender) {
+        try {
+            this.gender = Genders.valueOf(gender);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Sexo de Animal inválido!");
+        }
     }
 
     public Veterinary getPreferredVeterinarian() {
