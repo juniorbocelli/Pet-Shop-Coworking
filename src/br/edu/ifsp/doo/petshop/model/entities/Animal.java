@@ -1,9 +1,7 @@
 package br.edu.ifsp.doo.petshop.model.entities;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Optional;
 
 public class Animal {
     public enum AnimalTypes {CACHORRO, GATO};
@@ -39,8 +37,8 @@ public class Animal {
     public Animal(int id, String name, String animalType, String gender, int birthYear, boolean active) {
         this.id = id;
         this.name = name;
-        this.animalType = AnimalTypes.valueOf(animalType);
-        this.gender = Genders.valueOf(gender);
+        this.animalType = AnimalTypes.valueOf(animalType.toUpperCase());
+        this.gender = Genders.valueOf(gender.toUpperCase());
         this.birthYear = birthYear;
         this.active = active;
     }
@@ -74,13 +72,13 @@ public class Animal {
     }
 
     public void setBirthYear(int birthYear) {
-        if (birthYear < 2000 || birthYear > Calendar.getInstance().YEAR)
+        if (birthYear < 2000 || birthYear > LocalDate.now().getYear())
             throw new IllegalArgumentException("Ano de nascimento inválido!");
         this.birthYear = birthYear;
     }
 
     public int getAge() {
-        return birthYear - Calendar.getInstance().YEAR;
+        return birthYear - LocalDate.now().getYear();
     }
 
     public boolean isActive() {
@@ -101,7 +99,7 @@ public class Animal {
 
     public void setAnimalType(String animalType) {
         try {
-            this.animalType = AnimalTypes.valueOf(animalType);
+            this.animalType = AnimalTypes.valueOf(animalType.toUpperCase());
         } catch (Exception e) {
             throw new IllegalArgumentException("Tipo de Animal inválido!");
         }
@@ -118,7 +116,7 @@ public class Animal {
 
     public void setGender(String gender) {
         try {
-            this.gender = Genders.valueOf(gender);
+            this.gender = Genders.valueOf(gender.toUpperCase());
         } catch (Exception e) {
             throw new IllegalArgumentException("Sexo de Animal inválido!");
         }

@@ -193,6 +193,10 @@ public class CtrlWindowAnimal {
             animalToSaveOrUpdate.setBirthYear(txtBirthYear.getValue());
             animalToSaveOrUpdate.setVeterinaryRecord(new VeterinaryRecord(txaGeneralAnnotations.getText()));
             animalToSaveOrUpdate.setActive(chkActive.isSelected());
+
+            if(isUpdateRequest())
+                animalToSaveOrUpdate.setId(animalToSaveOrUpdate.getId());
+            else animalToSaveOrUpdate.setId(-1);
         } catch (Exception e) {
             return e.getMessage();
         }
@@ -238,7 +242,7 @@ public class CtrlWindowAnimal {
     }
 
     private void identifyErrorsAndBuildMsg() {
-        if(veterinaryInfoIsIncomplete() && !isUpdateRequest())
+        if(animalInfoIsIncomplete())
             appendErrorMessage("Todos os dados devem ser preenchidos.");
         if (getClientFromView() == null)
             appendErrorMessage("Escolha um Cliente para o Animal.");
@@ -277,7 +281,7 @@ public class CtrlWindowAnimal {
     }
 
     // Métodos específicos para validação de dados
-    private boolean veterinaryInfoIsIncomplete() {
+    private boolean animalInfoIsIncomplete() {
         return someStringsAreNotFilled(getAllDataViewAsList()) || !allStringsAreFilled(getAllDataViewAsList());
     }
 }

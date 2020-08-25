@@ -12,7 +12,11 @@
             <TextField fx:id="txtName" layoutX="70.0" layoutY="31.0" prefHeight="25.0" prefWidth="377.0" promptText="Nome..." />
             <CheckBox fx:id="chkActive" layoutX="701.0" layoutY="35.0" mnemonicParsing="false" selected="true" text="Ativo" />
             <Label layoutX="491.0" layoutY="35.0" text="Nascimento:" />
-            <Spinner fx:id="txtBirthYear" editable="true" layoutX="566.0" layoutY="31.0" prefHeight="25.0" prefWidth="89.0" />
+            <Spinner fx:id="txtBirthYear" editable="true" layoutX="566.0" layoutY="31.0" prefHeight="25.0" prefWidth="89.0">
+               <valueFactory>
+                  <SpinnerValueFactory.IntegerSpinnerValueFactory min="2000" max="2050"/>
+               </valueFactory>
+            </Spinner>
             <Label layoutX="31.0" layoutY="81.0" text="Sexo">
                <font>
                   <Font name="System Bold" size="12.0" />
@@ -53,7 +57,7 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <TextArea fx:id="txaGeneralAnnotations" editable="false" layoutX="19.0" layoutY="50.0" prefHeight="235.0" prefWidth="762.0" promptText="Observações..." wrapText="true" />
+            <TextArea fx:id="txaGeneralAnnotations" layoutX="19.0" layoutY="50.0" prefHeight="235.0" prefWidth="762.0" promptText="Observações..." wrapText="true" />
             <Button fx:id="btnVeterinaryRecord" disable="true" layoutX="709.0" layoutY="12.0" mnemonicParsing="false" onAction="#openVeterinaryRecord" text="Prontuário" />
          </children>
       </AnchorPane>
