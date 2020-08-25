@@ -34,7 +34,7 @@ public class CtrlWindowProduct {
 
     @FXML
     private void initialize() {
-        InputTextMask.maskReal(txtPrice);
+        InputTextMask.maskMoney(txtPrice);
         //configureTextFields();
     }
 

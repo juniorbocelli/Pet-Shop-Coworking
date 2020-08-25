@@ -17,14 +17,14 @@ public class InputTextMask {
 
     }
 
-    public static void maskReal(TextField textField){
+    public static void maskMoney(TextField textField){
 
         textField.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            newValue = newValue.replaceAll(",",".");
             if(newValue.length()>0){
                 try{
-                    Double.parseDouble(newValue);
-                    textField.setText(newValue.replaceAll(",","."));
+                    if (!newValue.matches("\\d+(,\\d{0,2})?")) {
+                        textField.setText(oldValue);
+                    }
                 }catch(Exception e){
                     textField.setText(oldValue);
                 }

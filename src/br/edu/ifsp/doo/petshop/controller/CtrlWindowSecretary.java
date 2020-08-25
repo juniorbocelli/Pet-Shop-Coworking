@@ -90,7 +90,7 @@ public class CtrlWindowSecretary {
             secretaryToSaveOrUpdate.setPhone(txtPhone.getText().trim());
             secretaryToSaveOrUpdate.setCell(txtCell.getText().trim());
             secretaryToSaveOrUpdate.setAddress(txaAddress.getText().trim());
-            secretaryToSaveOrUpdate.setPassword(txtPassword.getText().trim());
+            secretaryToSaveOrUpdate.setPassword(isUpdateRequest() ? null:txtPassword.getText().trim());
         } catch (Exception e) {
             return e.getMessage();
         }

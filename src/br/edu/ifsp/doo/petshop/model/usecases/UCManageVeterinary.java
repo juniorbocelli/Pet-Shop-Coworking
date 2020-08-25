@@ -13,7 +13,7 @@ public class UCManageVeterinary {
     private UCManageAnimal ucAnimal;
 
     public UCManageVeterinary(DAOVeterinary daoVeterinary) {
-        this(daoVeterinary, null, null);
+        this.daoVeterinary = daoVeterinary;
     }
 
     public UCManageVeterinary(DAOVeterinary daoVeterinary,
