@@ -151,14 +151,13 @@ public class Animal {
         return diseases;
     }
 
-    public void addDiaese(Diseases diaese){
-        if (!diseases.contains(diaese))
-            diseases.add(diaese);
+    public void addDisease(Diseases disease){
+        if (!diseases.contains(disease))
+            diseases.add(disease);
     }
 
-    public void removeDiaese(Diseases diaese){
-        if (diseases.contains(diaese))
-            diseases.remove(diaese);
+    public void clearDisease(){
+        diseases.clear();
     }
 
     public boolean matchesSearchString(String substring){

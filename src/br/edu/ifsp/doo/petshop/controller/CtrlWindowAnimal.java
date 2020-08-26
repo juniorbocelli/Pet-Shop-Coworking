@@ -18,6 +18,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -194,6 +195,8 @@ public class CtrlWindowAnimal {
             animalToSaveOrUpdate.setVeterinaryRecord(new VeterinaryRecord(txaGeneralAnnotations.getText()));
             animalToSaveOrUpdate.setActive(chkActive.isSelected());
 
+            setDiseasesFromView(animalToSaveOrUpdate);
+
             if(isUpdateRequest())
                 animalToSaveOrUpdate.setId(animalToSaveOrUpdate.getId());
             else animalToSaveOrUpdate.setId(-1);
@@ -201,6 +204,18 @@ public class CtrlWindowAnimal {
             return e.getMessage();
         }
         return null;
+    }
+
+    private void setDiseasesFromView(Animal animal) {
+        animal.clearDisease();
+        if (chkAllergic.isSelected())
+            animal.addDisease(Animal.Diseases.ALÉRGICO);
+        if (chkCardiopath.isSelected())
+            animal.addDisease(Animal.Diseases.CARDIOPATA);
+        if (chkPulmonary.isSelected())
+            animal.addDisease(Animal.Diseases.PULMONAR);
+        if (chkRenal.isSelected())
+            animal.addDisease(Animal.Diseases.PULMONAR);
     }
 
     public void setEntityToView(Animal animal) {
