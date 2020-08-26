@@ -1,25 +1,18 @@
 package br.edu.ifsp.doo.petshop.model.usecases;
 
 import br.edu.ifsp.doo.petshop.model.entities.Client;
-import br.edu.ifsp.doo.petshop.persistence.dao.DAOAnimal;
-import br.edu.ifsp.doo.petshop.persistence.dao.DAOClient;
+import br.edu.ifsp.doo.petshop.persistence.utils.DAO;
 
 import java.util.List;
+import java.util.Optional;
 
 public class UCManageClient {
-    DAOClient daoClient;
+    DAO<Client, String> daoClient;
     UCManageAnimal ucManageAnimalPersistence;
 
-    public UCManageClient(DAOClient daoClient) {
+    public UCManageClient(DAO<Client, String> daoClient) {
         this.daoClient = daoClient;
     }
-
-    /*
-    public UCManageClient(DAOClient daoClient, DAOAnimal daoAnimal) {
-        this.daoClient = daoClient;
-        this.ucManageAnimalPersistence = new UCManageAnimal(daoAnimal);
-    }
-     */
 
     public void saveOrUpdate(Client client) {
         daoClient.saveOrUpdate(client);
@@ -27,5 +20,9 @@ public class UCManageClient {
 
     public List<Client> selectAll() {
         return daoClient.selectAll();
+    }
+
+    public Optional<Client> select(String cpf) {
+        return daoClient.select(cpf);
     }
 }

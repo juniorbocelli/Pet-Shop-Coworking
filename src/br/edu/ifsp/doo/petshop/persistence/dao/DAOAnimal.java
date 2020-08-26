@@ -1,12 +1,19 @@
 package br.edu.ifsp.doo.petshop.persistence.dao;
 
 import br.edu.ifsp.doo.petshop.model.entities.Animal;
+import br.edu.ifsp.doo.petshop.model.entities.Client;
+import br.edu.ifsp.doo.petshop.model.entities.Veterinary;
 import br.edu.ifsp.doo.petshop.persistence.utils.AbstractTemplateSqlDAO;
+import br.edu.ifsp.doo.petshop.persistence.utils.ConnectionFactory;
+import br.edu.ifsp.doo.petshop.persistence.utils.DAO;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class DAOAnimal extends AbstractTemplateSqlDAO<Animal, Integer> {
 
@@ -74,6 +81,7 @@ public class DAOAnimal extends AbstractTemplateSqlDAO<Animal, Integer> {
                 rs.getString("type"),
                 rs.getString("gender"),
                 rs.getInt("birth_year"),
+                rs.getString("general_annotations"),
                 rs.getInt("active") == 1 ? true:false);
         return entity;
     }
@@ -81,5 +89,49 @@ public class DAOAnimal extends AbstractTemplateSqlDAO<Animal, Integer> {
     @Override
     protected Integer getEntityKey(@NotNull Animal entity) {
         return entity.getId();
+    }
+
+    private String selectOwnerKey(Animal animal) {
+        String sql = "SELECT cpf_owner FROM animal WHERE id = ?";
+        String key = null;
+
+        try(PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)){
+            stmt.setInt(1, animal.getId());
+            ResultSet rs  = stmt.executeQuery();
+
+            while (rs.next()) {
+                key = rs.getString("cpf_owner");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return key;
+    }
+
+    private String selectOfficialVeterinaryKey(Animal animal) {
+        String sql = "SELECT cpf_official_veterinary FROM animal WHERE id = ?";
+        String key = null;
+
+        try(PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)){
+            stmt.setInt(1, animal.getId());
+            ResultSet rs  = stmt.executeQuery();
+
+            while (rs.next()) {
+                key = rs.getString("cpf_official_veterinary");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return key;
+    }
+
+    public void selectAndBindOwner(Animal animal) {
+        DAOClient daoClient = new DAOClient();
+        animal.setOwner(daoClient.select(selectOwnerKey(animal)).get());
+    }
+
+    public void selectAndBindVeterinary(Animal animal) {
+        DAOVeterinary daoVeterinary = new DAOVeterinary();
+        animal.setPreferredVeterinarian(daoVeterinary.select(selectOfficialVeterinaryKey(animal)).get());
     }
 }

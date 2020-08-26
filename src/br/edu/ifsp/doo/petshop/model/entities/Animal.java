@@ -34,13 +34,14 @@ public class Animal {
     }
 
     // Usado pelo DAO para criar entidade
-    public Animal(int id, String name, String animalType, String gender, int birthYear, boolean active) {
+    public Animal(int id, String name, String animalType, String gender, int birthYear, String generalAnnotations, boolean active) {
         this.id = id;
         this.name = name;
         this.animalType = AnimalTypes.valueOf(animalType.toUpperCase());
         this.gender = Genders.valueOf(gender.toUpperCase());
         this.birthYear = birthYear;
         this.active = active;
+        this.veterinaryRecord = new VeterinaryRecord(generalAnnotations);
     }
 
     public Animal(String name, AnimalTypes animalType, Veterinary preferredVeterinarian) {
@@ -78,7 +79,7 @@ public class Animal {
     }
 
     public int getAge() {
-        return birthYear - LocalDate.now().getYear();
+        return LocalDate.now().getYear() - birthYear;
     }
 
     public boolean isActive() {
@@ -158,5 +159,20 @@ public class Animal {
     public void removeDiaese(Diseases diaese){
         if (diseases.contains(diaese))
             diseases.remove(diaese);
+    }
+
+    public boolean matchesSearchString(String substring){
+        String nameLowerCase = getName().toLowerCase();
+        String ownerLowerCase = getOwner().getName().toLowerCase();
+        String subStringLowerCase = substring.toLowerCase().replace(".", "").replace("-", "");
+
+        boolean isContainedInName = nameLowerCase.contains(subStringLowerCase);
+        boolean isContainedInOwner = ownerLowerCase.contains(subStringLowerCase);
+
+        return isContainedInName || isContainedInOwner;
+    }
+
+    public boolean matchesSearchByInactive(boolean inactive){
+        return !this.active || this.active != inactive;
     }
 }
