@@ -43,6 +43,16 @@ public class UCManageAnimal {
         return animalList;
     }
 
+    public List<Animal> selectAllWithOwnerAndVeterinary(Client client) {
+        List<Animal> animalList = daoAnimal.selectBy("cpf_owner", client.getCpf());
+        animalList.forEach(k -> {
+            k.setOwner(client);
+            daoAnimal.selectAndBindVeterinary(k);
+        });
+
+        return animalList;
+    }
+
     public List<Animal> selectAll() {
         return daoAnimal.selectAll();
     }

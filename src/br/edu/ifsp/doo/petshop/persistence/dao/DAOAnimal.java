@@ -66,7 +66,12 @@ public class DAOAnimal extends AbstractTemplateSqlDAO<Animal, Integer> {
 
     @Override
     protected void setFilterToPreparedStatement(@NotNull Object filter, @NotNull PreparedStatement stmt) throws SQLException {
-
+        if(filter instanceof  String)
+            stmt.setString(1, filter.toString());
+        else if(filter instanceof Integer)
+            stmt.setInt(1, (Integer)filter);
+        else
+            throw new SQLException("O tipo do filtro fornecido não é suportado pela consulta.");
     }
 
     @Override

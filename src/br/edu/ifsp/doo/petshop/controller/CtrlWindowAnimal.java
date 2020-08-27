@@ -60,6 +60,8 @@ public class CtrlWindowAnimal {
     private Animal animalToSet;
     private Animal animalToSaveOrUpdate;
 
+    private Client owner;
+
     private ObservableList<Client> clients;
     private ObservableList<Veterinary> veterinaries;
 
@@ -74,6 +76,13 @@ public class CtrlWindowAnimal {
 
         loadClientsInComboBox();
         loadVeterinariesInComboBox();
+    }
+
+    public void setOwnerToView(Client client) {
+        owner = client;
+
+        cbxOwner.getSelectionModel().select(client);
+        cbxOwner.setDisable(true);
     }
 
     private void groupTypeRadioButton() {

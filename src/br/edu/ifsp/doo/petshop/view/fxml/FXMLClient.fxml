@@ -25,21 +25,21 @@
         </AnchorPane>
         <AnchorPane layoutY="226.0" prefHeight="318.0" prefWidth="800.0">
             <children>
-                <TableView fx:id="tblAnimal" layoutX="11.0" layoutY="49.0" prefHeight="255.0" prefWidth="777.0">
+                <TableView fx:id="tblAnimal" disable="true" layoutX="11.0" layoutY="49.0" onMouseClicked="#editAnimal" prefHeight="255.0" prefWidth="777.0">
                     <columns>
                         <TableColumn fx:id="clnName" prefWidth="458.0" text="Nome" />
                         <TableColumn fx:id="clnType" prefWidth="87.0" text="Tipo" />
-                        <TableColumn fx:id="clsGender" prefWidth="84.0" text="Sexo" />
+                        <TableColumn fx:id="clnGender" prefWidth="84.0" text="Sexo" />
                         <TableColumn fx:id="clnAge" prefWidth="77.0" text="Idade" />
                         <TableColumn fx:id="clnActive" prefWidth="70.0" text="Ativo" />
                     </columns>
                 </TableView>
-                <Label layoutX="11.0" layoutY="20.0" text="Animais Cadastrados">
+                <Label fx:id="lblTableTitle" disable="true" layoutX="11.0" layoutY="20.0" text="Animais Cadastrados">
                     <font>
                         <Font name="System Bold" size="15.0" />
                     </font>
                 </Label>
-                <Button fx:id="btnAddNewConsultant" layoutX="676.0" layoutY="18.0" mnemonicParsing="false" onAction="#addNewAnimal" text="+ Adicionar Novo" />
+                <Button fx:id="btnAddNewAnimal" disable="true" layoutX="676.0" layoutY="18.0" mnemonicParsing="false" onAction="#addNewAnimal" text="+ Adicionar Novo" />
             </children>
         </AnchorPane>
         <AnchorPane layoutY="526.0" prefHeight="74.0" prefWidth="800.0">

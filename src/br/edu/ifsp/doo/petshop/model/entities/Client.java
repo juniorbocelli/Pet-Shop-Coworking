@@ -1,6 +1,7 @@
 package br.edu.ifsp.doo.petshop.model.entities;
 
 import br.edu.ifsp.doo.petshop.model.utils.CheckCpf;
+import br.edu.ifsp.doo.petshop.model.utils.MaskApply;
 
 import java.util.ArrayList;
 
@@ -43,6 +44,10 @@ public class Client {
         return cpf;
     }
 
+    public String getMaskedCpf() {
+        return MaskApply.maskCfp(this.cpf);
+    }
+
     public void setCpf(String cpf) {
         if (!CheckCpf.isValid(cpf))
             throw new IllegalArgumentException("CPF inválido!");
@@ -64,6 +69,10 @@ public class Client {
         return phone;
     }
 
+    public String getMaskedPhone() {
+        return MaskApply.maskPhone(this.phone);
+    }
+
     public void setPhone(String phone) {
         // Retira máscara
         phone = phone.replace("(", "")
@@ -79,6 +88,10 @@ public class Client {
 
     public String getCell() {
         return cell;
+    }
+
+    public String getMaskedCell() {
+        return MaskApply.maskCell(this.cell);
     }
 
     public void setCell(String cell) {

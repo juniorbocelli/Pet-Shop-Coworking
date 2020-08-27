@@ -1,14 +1,21 @@
 package br.edu.ifsp.doo.petshop.controller;
 
+import br.edu.ifsp.doo.petshop.model.entities.Animal;
 import br.edu.ifsp.doo.petshop.model.entities.Client;
 import br.edu.ifsp.doo.petshop.model.usecases.UCManageClient;
+import br.edu.ifsp.doo.petshop.persistence.dao.DAOAnimal;
 import br.edu.ifsp.doo.petshop.persistence.dao.DAOClient;
 import br.edu.ifsp.doo.petshop.view.loaders.WindowAnimal;
 import br.edu.ifsp.doo.petshop.view.util.InputTextMask;
 import br.edu.ifsp.doo.petshop.view.util.InputValidator;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.util.Arrays;
@@ -18,6 +25,7 @@ public class CtrlWindowClient {
     @FXML Label lblEmail;
     @FXML Label lblPhone;
     @FXML Label lblAddress;
+    @FXML Label lblTableTitle;
 
     @FXML TextField txtName;
     @FXML TextField txtCpf;
@@ -29,24 +37,28 @@ public class CtrlWindowClient {
 
     @FXML TextArea txaAddress;
 
-    @FXML Button btnAddNewConsultant;
+    @FXML Button btnAddNewAnimal;
     @FXML Button btnSaveClient;
     @FXML Button btnCloseClient;
 
-    @FXML TableView tblAnimal;
+    @FXML TableView<Animal> tblAnimal;
 
-    @FXML TableColumn clnName;
-    @FXML TableColumn clnType;
-    @FXML TableColumn clsGender;
-    @FXML TableColumn clnAge;
-    @FXML TableColumn clnActive;
+    @FXML TableColumn<Animal, String> clnName;
+    @FXML TableColumn<Animal, String> clnType;
+    @FXML TableColumn<Animal, String> clnGender;
+    @FXML TableColumn<Animal, String> clnAge;
+    @FXML TableColumn<Animal, String> clnActive;
 
-    private Client client;
+    private ObservableList<Animal> tableData;
+    private List<Animal> allAnimals;
+
+    private Client clientToSaveOrUpdate;
+    private Client clientToSet;
     private UCManageClient ucManageClient;
     private String errorMessage;
 
     public CtrlWindowClient() {
-        ucManageClient = new UCManageClient(new DAOClient());
+        ucManageClient = new UCManageClient(new DAOClient(), new DAOAnimal());
     }
 
     @FXML
@@ -57,9 +69,31 @@ public class CtrlWindowClient {
         InputTextMask.maskPhoneOrCell(txtCell);
     }
 
+    public void bindTableViewToItemsList() {
+        tableData = FXCollections.observableArrayList();
+        tblAnimal.setItems(tableData);
+    }
+
+    public void bindColumnsToValueSources() {
+        clnName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        clnType.setCellValueFactory((param) -> new SimpleStringProperty(param.getValue().getAnimalType().toString()));
+        clnGender.setCellValueFactory((param) -> new SimpleStringProperty(param.getValue().getGender().toString()));
+        clnAge.setCellValueFactory((param) -> new SimpleStringProperty(Integer.toString(param.getValue().getAge())));
+        clnActive.setCellValueFactory((param) -> new SimpleStringProperty(param.getValue().isActive()?"Ativo":"Inativo"));
+    }
+
+    private void loadDataAndShow() {
+        loadTableDataFromDatabase();
+    }
+
+    private void loadTableDataFromDatabase() {
+        allAnimals = ucManageClient.selectAllWithOwnerAndVeterinary(clientToSet);
+        tableData.setAll(allAnimals);
+    }
+
     public void addNewAnimal(ActionEvent actionEvent) {
         WindowAnimal windowAnimal = new WindowAnimal();
-        windowAnimal.startModal();
+        windowAnimal.startModal(clientToSet);
     }
 
     public void sendViewClient(ActionEvent actionEvent) {
@@ -83,11 +117,6 @@ public class CtrlWindowClient {
         refreshRequiredFields();
     }
 
-    private void instanceEntityIfNull() {
-        if (client == null)
-            client = new Client();
-    }
-
     private void saveOrUpdateClient() {
         errorMessage = getEntityFromView();
         if (!allViewDataIsOk())
@@ -97,20 +126,20 @@ public class CtrlWindowClient {
     }
 
     private void requestSaveOrUpdate () {
-        ucManageClient.saveOrUpdate(client);
+        ucManageClient.saveOrUpdate(clientToSaveOrUpdate);
         closeStage();
     }
 
     private String getEntityFromView () {
-        instanceEntityIfNull();
+        clientToSaveOrUpdate = new Client();
         try {
-            client.setCpf(txtCpf.getText().trim());
-            client.setName(txtName.getText().trim());
-            client.setEmail(txtEmail.getText().trim());
-            client.setPhone(txtPhone.getText().trim());
-            client.setCell(txtCell.getText().trim());
-            client.setAddress(txaAddress.getText().trim());
-            client.setTemporaryRegistration(chkTemporaryRegistration.isSelected());
+            clientToSaveOrUpdate.setCpf(txtCpf.getText().trim());
+            clientToSaveOrUpdate.setName(txtName.getText().trim());
+            clientToSaveOrUpdate.setEmail(txtEmail.getText().trim());
+            clientToSaveOrUpdate.setPhone(txtPhone.getText().trim());
+            clientToSaveOrUpdate.setCell(txtCell.getText().trim());
+            clientToSaveOrUpdate.setAddress(txaAddress.getText().trim());
+            clientToSaveOrUpdate.setTemporaryRegistration(chkTemporaryRegistration.isSelected());
         } catch (Exception e) {
             return e.getMessage();
         }
@@ -118,15 +147,31 @@ public class CtrlWindowClient {
     }
 
     public void setEntityToView(Client client) {
-        this.client = client;
+        this.clientToSet = client;
 
-        txtCpf.setText(client.getCpf());
+        txtCpf.setText(client.getMaskedCpf());
         txtName.setText(client.getName());
         txtEmail.setText(client.getEmail());
-        txtPhone.setText(client.getPhone());
-        txtCell.setText(client.getCell());
+        txtPhone.setText(client.getMaskedPhone());
+        txtCell.setText(client.getMaskedCell());
         txaAddress.setText(client.getAddress());
         chkTemporaryRegistration.setSelected(client.isTemporaryRegistration());
+
+        setViewToEditMode();
+    }
+
+    private void setViewToEditMode() {
+        setAnimalTableData();
+
+        btnAddNewAnimal.setDisable(false);
+        lblTableTitle.setDisable(false);
+        tblAnimal.setDisable(false);
+    }
+
+    private void setAnimalTableData() {
+        bindTableViewToItemsList();
+        bindColumnsToValueSources();
+        loadDataAndShow();
     }
 
     /**
@@ -221,5 +266,15 @@ public class CtrlWindowClient {
             disableUnrequiredFields();
         else
             enableUnrequiredFields();
+    }
+
+    public void editAnimal(MouseEvent mouseEvent) {
+        Animal selectedAnimal = tblAnimal.getSelectionModel().getSelectedItem();
+        if (mouseEvent.getClickCount() == 2 && selectedAnimal != null) {
+            WindowAnimal windowAnimal = new WindowAnimal();
+            windowAnimal.startModal(selectedAnimal, clientToSet);
+
+            loadDataAndShow();
+        }
     }
 }

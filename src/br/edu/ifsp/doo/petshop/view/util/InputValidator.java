@@ -25,7 +25,7 @@ public class InputValidator {
     }
 
     public static boolean isPhone(String input) {
-        String pattern = "^(\\(?\\d{2}\\)?\\s?)?(\\d{4,5}(\\-|\\s)?\\d{4})\\s?(\\(\\d{4}\\))?$";
+        String pattern = "^\\(\\d{2}\\)\\d{4}\\-\\d{4}$";
         return applyPattern(pattern, input);
     }
 
