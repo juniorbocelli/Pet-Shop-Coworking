@@ -1,8 +1,10 @@
 package br.edu.ifsp.doo.petshop.controller;
 
 import br.edu.ifsp.doo.petshop.model.entities.Animal;
+import br.edu.ifsp.doo.petshop.model.entities.Client;
 import br.edu.ifsp.doo.petshop.model.usecases.UCManageAnimal;
 import br.edu.ifsp.doo.petshop.persistence.dao.DAOAnimal;
+import br.edu.ifsp.doo.petshop.persistence.dao.DAOClient;
 import br.edu.ifsp.doo.petshop.view.loaders.WindowAnimal;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -13,6 +15,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.util.StringConverter;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,7 +25,8 @@ public class CtrlWindowAnimalManager {
 
     @FXML CheckBox chkInactive;
 
-    @FXML ComboBox<String> cbxOwner;
+    @FXML ComboBox cbxOwner;
+    private StringConverter<Client> stringClientConverter;
 
     @FXML Button btnAddVeterinary;
 
@@ -34,6 +38,8 @@ public class CtrlWindowAnimalManager {
     @FXML TableColumn<Animal, String> clnGender;
     @FXML TableColumn<Animal, String> clnAge;
 
+    private ObservableList<Client> clients;
+
     private UCManageAnimal ucManageAnimal;
 
     private List<Animal> allAnimals;
@@ -44,21 +50,25 @@ public class CtrlWindowAnimalManager {
 
     @FXML
     private void initialize() {
+        loadClientsInComboBox();
         bindTableViewToItemsList();
         bindColumnsToValueSources();
         loadDataAndShow();
     }
 
     public CtrlWindowAnimalManager() {
-        ucManageAnimal = new UCManageAnimal(new DAOAnimal());
+        ucManageAnimal = new UCManageAnimal(new DAOAnimal(), new DAOClient(), null);
     }
 
     public void addNewAnimal(ActionEvent actionEvent) {
         WindowAnimal windowAnimal = new WindowAnimal();
         windowAnimal.startModal();
+
+        loadDataAndShow();
     }
 
     public void filterByOwner(ActionEvent actionEvent) {
+        showFilteredData();
     }
 
     public void bindTableViewToItemsList() {
@@ -100,6 +110,7 @@ public class CtrlWindowAnimalManager {
 
     private void filterData() {
         filterDataFromCheckboxes();
+        filterDataFromOwner();
         filterDataFromSubstring();
     }
 
@@ -108,6 +119,18 @@ public class CtrlWindowAnimalManager {
                 parallelStream().
                 filter(c -> c.matchesSearchByInactive(showingInactive)).
                 collect(Collectors.toList());
+    }
+
+    private void filterDataFromOwner() {
+        if (clientIsNotNull())
+            filteredAnimals = filteredAnimals.
+                parallelStream().
+                filter(c -> c.matchesSearchByClient(getClientFromView().getCpf())).
+                collect(Collectors.toList());
+    }
+
+    private Client getClientFromView() {
+        return (Client)cbxOwner.getValue();
     }
 
     private void filterDataFromSubstring() {
@@ -142,5 +165,32 @@ public class CtrlWindowAnimalManager {
 
             loadDataAndShow();
         }
+    }
+
+    private void loadClientsInComboBox() {
+        clients = FXCollections.observableArrayList(ucManageAnimal.getClientsList());
+        cbxOwner.setItems(clients);
+        cbxOwner.getItems().add(0, new Client());
+        stringClientConverter = new StringConverter<Client>() {
+
+            @Override
+            public String toString(Client object) {
+                return object.getName();
+            }
+
+            @Override
+            public Client fromString(String cpf) {
+                return clients.stream()
+                        .filter(item -> item.getCpf().equals(cpf))
+                        .collect(Collectors.toList()).get(0);
+            }
+        };
+
+        cbxOwner.setConverter(stringClientConverter);
+
+    }
+
+    private boolean clientIsNotNull() {
+        return !(getClientFromView() == null);
     }
 }

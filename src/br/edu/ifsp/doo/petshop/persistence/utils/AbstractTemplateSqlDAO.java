@@ -26,6 +26,7 @@ public abstract class AbstractTemplateSqlDAO<T, K> implements DAO<T, K> {
     protected abstract K getEntityKey(@NotNull T entity);
 
     private String sql;
+    private Integer lastGeneratedInsertId;
 
     @Override
     public void save(T entity) {
@@ -37,6 +38,9 @@ public abstract class AbstractTemplateSqlDAO<T, K> implements DAO<T, K> {
         try (PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)) {
             setEntityToPreparedStatement(entity, stmt);
             stmt.execute();
+
+            ResultSet generatedKeys = stmt.getGeneratedKeys();
+            lastGeneratedInsertId = generatedKeys.getInt(1);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -55,6 +59,17 @@ public abstract class AbstractTemplateSqlDAO<T, K> implements DAO<T, K> {
             update(entity);
         else
             save(entity);
+    }
+
+    @Override
+    public Integer saveOrUpdateWithReturnId(T entity){
+        Optional<T> result = select(getEntityKey(entity));
+        if(result.isPresent())
+            update(entity);
+        else
+            save(entity);
+
+        return lastGeneratedInsertId;
     }
 
     @Override

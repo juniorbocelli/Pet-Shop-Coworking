@@ -63,7 +63,7 @@
       </AnchorPane>
       <AnchorPane layoutY="539.0" prefHeight="61.0" prefWidth="800.0">
          <children>
-            <Button fx:id="btnSaveAnimal" layoutX="477.0" layoutY="18.0" mnemonicParsing="false" onAction="#sendViewVeterinary" text="Salvar">
+            <Button fx:id="btnSaveAnimal" layoutX="477.0" layoutY="18.0" mnemonicParsing="false" onAction="#sendViewAnimal" text="Salvar">
                <font>
                   <Font size="15.0" />
                </font>

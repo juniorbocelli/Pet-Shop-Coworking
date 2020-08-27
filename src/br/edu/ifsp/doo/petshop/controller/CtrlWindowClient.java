@@ -6,7 +6,6 @@ import br.edu.ifsp.doo.petshop.persistence.dao.DAOClient;
 import br.edu.ifsp.doo.petshop.view.loaders.WindowAnimal;
 import br.edu.ifsp.doo.petshop.view.util.InputTextMask;
 import br.edu.ifsp.doo.petshop.view.util.InputValidator;
-import br.edu.ifsp.doo.petshop.view.util.TextFieldFormater;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -66,7 +65,7 @@ public class CtrlWindowClient {
     public void sendViewClient(ActionEvent actionEvent) {
         identifyErrorsAndBuildMsg();
         if (allViewDataIsOk())
-            saveOrUpdateVeterinary ();
+            saveOrUpdateClient();
         else
             showErrorMessage("Erro");
     }
@@ -89,7 +88,7 @@ public class CtrlWindowClient {
             client = new Client();
     }
 
-    private void saveOrUpdateVeterinary () {
+    private void saveOrUpdateClient() {
         errorMessage = getEntityFromView();
         if (!allViewDataIsOk())
             showErrorMessage("Erro");
@@ -100,12 +99,6 @@ public class CtrlWindowClient {
     private void requestSaveOrUpdate () {
         ucManageClient.saveOrUpdate(client);
         closeStage();
-    }
-
-    private void configureTextFields() {
-        TextFieldFormater.formatAsRG(txtCpf);
-        TextFieldFormater.formatAsPhoneNumber(txtPhone);
-        //TextFieldFormater.formatAsPhoneNumber(txtCell);
     }
 
     private String getEntityFromView () {

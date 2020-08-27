@@ -1,11 +1,8 @@
 package br.edu.ifsp.doo.petshop.persistence.dao;
 
 import br.edu.ifsp.doo.petshop.model.entities.Animal;
-import br.edu.ifsp.doo.petshop.model.entities.Client;
-import br.edu.ifsp.doo.petshop.model.entities.Veterinary;
 import br.edu.ifsp.doo.petshop.persistence.utils.AbstractTemplateSqlDAO;
 import br.edu.ifsp.doo.petshop.persistence.utils.ConnectionFactory;
-import br.edu.ifsp.doo.petshop.persistence.utils.DAO;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.PreparedStatement;
@@ -13,7 +10,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class DAOAnimal extends AbstractTemplateSqlDAO<Animal, Integer> {
 
@@ -133,5 +129,47 @@ public class DAOAnimal extends AbstractTemplateSqlDAO<Animal, Integer> {
     public void selectAndBindVeterinary(Animal animal) {
         DAOVeterinary daoVeterinary = new DAOVeterinary();
         animal.setPreferredVeterinarian(daoVeterinary.select(selectOfficialVeterinaryKey(animal)).get());
+    }
+
+    public List<String> selectAnimalDiseases(Animal animal) {
+        List<String> diseasesList = new ArrayList<>();
+        String sql = "SELECT * FROM diseases_of_animals WHERE id_animal = ?";
+
+        try(PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)){
+            stmt.setInt(1, animal.getId());
+            ResultSet rs  = stmt.executeQuery();
+
+            while (rs.next()) {
+                diseasesList.add(rs.getString("name"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return diseasesList;
+    }
+
+    public void removeAnimalDisease(Animal animal, String disease) {
+        String sql = "DELETE FROM diseases_of_animals WHERE id_animal = ? AND name = ?";
+
+        try(PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)){
+            stmt.setInt(1, animal.getId());
+            stmt.setString(2, disease);
+            stmt.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void insertAnimalDisease(Animal animal, String disease) {
+        String sql = "INSERT INTO diseases_of_animals (id_animal, name) VALUES (?, ?)";
+
+        try(PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)){
+            stmt.setInt(1, animal.getId());
+            stmt.setString(2, disease);
+            stmt.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

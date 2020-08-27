@@ -7,6 +7,7 @@ public interface DAO <T, K> {
     void save(T entity);
     void update(T entity);
     void saveOrUpdate(T entity);
+    Integer saveOrUpdateWithReturnId(T entity);
     void delete(K key);
     Optional<T> select(K key);
     List<T> selectAll();

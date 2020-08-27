@@ -6,7 +6,6 @@ import br.edu.ifsp.doo.petshop.persistence.dao.DAOVeterinary;
 import br.edu.ifsp.doo.petshop.view.loaders.WindowVeterinaryConsultation;
 import br.edu.ifsp.doo.petshop.view.util.InputTextMask;
 import br.edu.ifsp.doo.petshop.view.util.InputValidator;
-import br.edu.ifsp.doo.petshop.view.util.TextFieldFormater;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -56,7 +55,6 @@ public class CtrlWindowVeterinary {
         InputTextMask.maskEmail(txtEmail);
         InputTextMask.maskPhoneOrCell(txtPhone);
         InputTextMask.maskPhoneOrCell(txtCell);
-        //configureTextFields();
     }
 
     public void addNewConsultation(ActionEvent actionEvent) {
@@ -92,12 +90,6 @@ public class CtrlWindowVeterinary {
     private void requestSaveOrUpdate () {
         ucManageVeterinary.saveOrUpdate(veterinaryToSaveOrUpdate);
         closeStage();
-    }
-
-    private void configureTextFields() {
-        TextFieldFormater.formatAsRG(txtCpf);
-        TextFieldFormater.formatAsPhoneNumber(txtPhone);
-        //TextFieldFormater.formatAsPhoneNumber(txtCell);
     }
 
     private String getEntityFromView () {

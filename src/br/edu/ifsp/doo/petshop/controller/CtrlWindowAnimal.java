@@ -9,7 +9,6 @@ import br.edu.ifsp.doo.petshop.persistence.dao.DAOAnimal;
 import br.edu.ifsp.doo.petshop.persistence.dao.DAOClient;
 import br.edu.ifsp.doo.petshop.persistence.dao.DAOVeterinary;
 import br.edu.ifsp.doo.petshop.view.loaders.WindowVeterinaryRecords;
-import br.edu.ifsp.doo.petshop.view.util.InputValidator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -18,7 +17,6 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -149,10 +147,10 @@ public class CtrlWindowAnimal {
         windowVeterinaryRecords.startModal("Nome do Animal");
     }
 
-    public void sendViewVeterinary(ActionEvent actionEvent) {
+    public void sendViewAnimal(ActionEvent actionEvent) {
         identifyErrorsAndBuildMsg();
         if (allViewDataIsOk())
-            saveOrUpdateVeterinary ();
+            saveOrUpdateAnimal();
         else
             showErrorMessage("Erro");
     }
@@ -170,7 +168,7 @@ public class CtrlWindowAnimal {
         stage.close();
     }
 
-    private void saveOrUpdateVeterinary () {
+    private void saveOrUpdateAnimal () {
         errorMessage = getEntityFromView();
         if (!allViewDataIsOk())
             showErrorMessage("Erro");
@@ -179,7 +177,11 @@ public class CtrlWindowAnimal {
     }
 
     private void requestSaveOrUpdate () {
-        ucManageAnimal.saveOrUpdate(animalToSaveOrUpdate);
+        if (isUpdateRequest())
+            ucManageAnimal.saveOrUpdate(animalToSaveOrUpdate);
+        else
+            animalToSaveOrUpdate.setId(ucManageAnimal.saveOrUpdateWithReturnId(animalToSaveOrUpdate));
+        ucManageAnimal.updateDiseaseList(animalToSaveOrUpdate);
         closeStage();
     }
 
@@ -195,10 +197,10 @@ public class CtrlWindowAnimal {
             animalToSaveOrUpdate.setVeterinaryRecord(new VeterinaryRecord(txaGeneralAnnotations.getText()));
             animalToSaveOrUpdate.setActive(chkActive.isSelected());
 
-            setDiseasesFromView(animalToSaveOrUpdate);
+            getDiseasesFromView(animalToSaveOrUpdate);
 
             if(isUpdateRequest())
-                animalToSaveOrUpdate.setId(animalToSaveOrUpdate.getId());
+                animalToSaveOrUpdate.setId(animalToSet.getId());
             else animalToSaveOrUpdate.setId(-1);
         } catch (Exception e) {
             return e.getMessage();
@@ -206,7 +208,7 @@ public class CtrlWindowAnimal {
         return null;
     }
 
-    private void setDiseasesFromView(Animal animal) {
+    private void getDiseasesFromView(Animal animal) {
         animal.clearDisease();
         if (chkAllergic.isSelected())
             animal.addDisease(Animal.Diseases.ALÉRGICO);
@@ -215,7 +217,7 @@ public class CtrlWindowAnimal {
         if (chkPulmonary.isSelected())
             animal.addDisease(Animal.Diseases.PULMONAR);
         if (chkRenal.isSelected())
-            animal.addDisease(Animal.Diseases.PULMONAR);
+            animal.addDisease(Animal.Diseases.RENAL);
     }
 
     public void setEntityToView(Animal animal) {
@@ -232,7 +234,37 @@ public class CtrlWindowAnimal {
         txaGeneralAnnotations.setText(animal.getVeterinaryRecord().getGeneralAnnotations());
         chkActive.setSelected(animal.isActive());
 
+        loadDiseasesFromDatabase(animal);
+        setDiseasesToView(animal);
+
         setViewToEditMode();
+    }
+
+    public void setDiseasesToView(Animal animal) {
+        List<Animal.Diseases> diseasesList = animal.getDiseases();
+        diseasesList.forEach((d)->{
+            switch (d) {
+                case RENAL:
+                    chkRenal.setSelected(true);
+                    break;
+
+                case ALÉRGICO:
+                    chkAllergic.setSelected(true);
+                    break;
+
+                case PULMONAR:
+                    chkPulmonary.setSelected(true);
+                    break;
+
+                case CARDIOPATA:
+                    chkCardiopath.setSelected(true);
+                    break;
+            }
+        });
+    }
+
+    public void loadDiseasesFromDatabase(Animal animal) {
+        animal.setDiseasesFromString(ucManageAnimal.selectAnimalDiseases(animal));
     }
 
     private void setViewToEditMode() {

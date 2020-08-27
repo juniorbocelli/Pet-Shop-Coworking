@@ -118,7 +118,7 @@ public class DatabaseBuilder {
         StringBuilder builder = new StringBuilder();
 
         builder.append("CREATE TABLE  diseases_of_animals (\n");
-        builder.append("id_animal\tNUMERIC NOT NULL, \n");
+        builder.append("id_animal\tINTEGER NOT NULL, \n");
         builder.append("name\tTEXT NOT NULL, \n");
         builder.append("PRIMARY KEY(id_animal,name) \n");
         builder.append("); \n");

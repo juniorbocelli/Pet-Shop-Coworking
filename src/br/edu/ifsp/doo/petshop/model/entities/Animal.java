@@ -2,6 +2,8 @@ package br.edu.ifsp.doo.petshop.model.entities;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.PrimitiveIterator;
 
 public class Animal {
     public enum AnimalTypes {CACHORRO, GATO};
@@ -156,6 +158,31 @@ public class Animal {
             diseases.add(disease);
     }
 
+    public void addDisease(String disease){
+        if (!diseases.contains(Diseases.valueOf(disease)))
+            diseases.add(Diseases.valueOf(disease));
+    }
+
+    public void removeDisease(Diseases disease) {
+        if (diseases.contains(disease))
+            diseases.remove(disease);
+    }
+
+    public List<String> getDiseasesAsString() {
+        List<String> diseasesStringList = new ArrayList<>();
+        diseases.forEach((d) -> {
+            diseasesStringList.add(d.name());
+        });
+
+        return diseasesStringList;
+    }
+
+    public void setDiseasesFromString(List<String> diseases) {
+        diseases.forEach((d) -> {
+            addDisease(d);
+        });
+    }
+
     public void clearDisease(){
         diseases.clear();
     }
@@ -173,5 +200,11 @@ public class Animal {
 
     public boolean matchesSearchByInactive(boolean inactive){
         return !this.active || this.active != inactive;
+    }
+
+    public boolean matchesSearchByClient(String cpf){
+        if (cpf != null)
+            return this.owner.getCpf().equals(cpf);
+        return true;
     }
 }

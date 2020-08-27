@@ -29,6 +29,10 @@ public class UCManageAnimal {
         daoAnimal.saveOrUpdate(animal);
     }
 
+    public Integer saveOrUpdateWithReturnId(Animal animal) {
+        return daoAnimal.saveOrUpdateWithReturnId(animal);
+    }
+
     public List<Animal> selectAllWithOwnerAndVeterinary() {
         List<Animal> animalList = selectAll();
         animalList.forEach(k -> {
@@ -41,6 +45,33 @@ public class UCManageAnimal {
 
     public List<Animal> selectAll() {
         return daoAnimal.selectAll();
+    }
+
+    public void updateDiseaseList(Animal animal) {
+        List<String> diseasesToUpdate = animal.getDiseasesAsString();
+        List<String> diseasesInDatabase = selectAnimalDiseases(animal);
+
+        deleteRemovedDiseases(animal, diseasesToUpdate, diseasesInDatabase);
+        insertNewDiseases(animal, diseasesToUpdate, diseasesInDatabase);
+    }
+
+    public List<String> selectAnimalDiseases(Animal animal){
+        List<String> diseases = daoAnimal.selectAnimalDiseases(animal);
+        return diseases;
+    }
+
+    private void deleteRemovedDiseases(Animal animal, List<String> diseasesToUpdate, List<String> diseasesInDatabase) {
+        diseasesInDatabase.forEach(c-> {
+            if(!diseasesToUpdate.contains(c))
+                daoAnimal.removeAnimalDisease(animal, c);
+        });
+    }
+
+    private void insertNewDiseases(Animal animal, List<String> diseasesToUpdate, List<String> diseasesInDatabase) {
+        diseasesToUpdate.forEach(c-> {
+            if(!diseasesInDatabase.contains(c))
+                daoAnimal.insertAnimalDisease(animal, c);
+        });
     }
 
     public List<Client> getClientsList() {

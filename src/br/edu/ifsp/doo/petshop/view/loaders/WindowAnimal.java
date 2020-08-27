@@ -38,8 +38,9 @@ public class WindowAnimal {
 
             CtrlWindowAnimal ctrlWindowAnimal = loader.getController();
 
-            if (animal != null)
+            if (animal != null) {
                 ctrlWindowAnimal.setEntityToView(animal);
+            }
 
             Stage stage = new Stage();
 
