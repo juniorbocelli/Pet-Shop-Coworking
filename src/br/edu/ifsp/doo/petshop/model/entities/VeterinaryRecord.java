@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class VeterinaryRecord {
     private String generalAnnotations;
-    private ArrayList<ClinicalConsultation> clinicalConsultations = new ArrayList<>();
+    private ArrayList<Consultation> consultations = new ArrayList<>();
 
     public VeterinaryRecord(String generalAnnotations) {
         this.generalAnnotations = generalAnnotations;
@@ -18,11 +18,11 @@ public class VeterinaryRecord {
         this.generalAnnotations = generalAnnotations;
     }
 
-    public ArrayList<ClinicalConsultation> getClinicalConsultations() {
-        return clinicalConsultations;
+    public ArrayList<Consultation> getClinicalConsultations() {
+        return consultations;
     }
 
-    public void setClinicalConsultations(ArrayList<ClinicalConsultation> clinicalConsultations) {
-        this.clinicalConsultations = clinicalConsultations;
+    public void setClinicalConsultations(ArrayList<Consultation> consultations) {
+        this.consultations = consultations;
     }
 }

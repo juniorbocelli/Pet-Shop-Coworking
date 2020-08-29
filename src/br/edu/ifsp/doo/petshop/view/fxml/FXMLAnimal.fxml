@@ -14,7 +14,7 @@
             <Label layoutX="491.0" layoutY="35.0" text="Nascimento:" />
             <Spinner fx:id="txtBirthYear" editable="true" layoutX="566.0" layoutY="31.0" prefHeight="25.0" prefWidth="89.0">
                <valueFactory>
-                  <SpinnerValueFactory.IntegerSpinnerValueFactory min="2000" max="2050"/>
+                  <SpinnerValueFactory.IntegerSpinnerValueFactory max="2050" min="2000" />
                </valueFactory>
             </Spinner>
             <Label layoutX="31.0" layoutY="81.0" text="Sexo">
@@ -52,12 +52,12 @@
       </AnchorPane>
       <AnchorPane layoutX="-1.0" layoutY="239.0" prefHeight="300.0" prefWidth="800.0">
          <children>
-            <Label layoutX="20.0" layoutY="24.0" text="Observações">
+            <Label fx:id="lblObservations" disable="true" layoutX="20.0" layoutY="24.0" text="Observações">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <TextArea fx:id="txaGeneralAnnotations" layoutX="19.0" layoutY="50.0" prefHeight="235.0" prefWidth="762.0" promptText="Observações..." wrapText="true" />
+            <TextArea fx:id="txaGeneralAnnotations" disable="true" layoutX="19.0" layoutY="50.0" prefHeight="235.0" prefWidth="762.0" promptText="Observações..." wrapText="true" />
             <Button fx:id="btnVeterinaryRecord" disable="true" layoutX="709.0" layoutY="12.0" mnemonicParsing="false" onAction="#openVeterinaryRecord" text="Prontuário" />
          </children>
       </AnchorPane>

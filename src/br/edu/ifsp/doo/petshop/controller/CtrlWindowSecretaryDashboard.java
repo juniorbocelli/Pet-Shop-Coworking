@@ -20,6 +20,7 @@ import javafx.util.Duration;
 import javafx.util.StringConverter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.stream.Collectors;
 
@@ -67,6 +68,8 @@ public class CtrlWindowSecretaryDashboard {
         initializeDate();
 
         loadVeterinariesInComboBox();
+
+        System.out.println(LocalDateTime.now());
     }
 
     private void initializeClock() {

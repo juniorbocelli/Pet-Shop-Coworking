@@ -3,7 +3,7 @@ package br.edu.ifsp.doo.petshop.controller;
 import br.edu.ifsp.doo.petshop.model.entities.Veterinary;
 import br.edu.ifsp.doo.petshop.model.usecases.UCManageVeterinary;
 import br.edu.ifsp.doo.petshop.persistence.dao.DAOVeterinary;
-import br.edu.ifsp.doo.petshop.view.loaders.WindowVeterinaryConsultation;
+import br.edu.ifsp.doo.petshop.view.loaders.WindowConsultation;
 import br.edu.ifsp.doo.petshop.view.util.InputTextMask;
 import br.edu.ifsp.doo.petshop.view.util.InputValidator;
 import javafx.event.ActionEvent;
@@ -58,8 +58,8 @@ public class CtrlWindowVeterinary {
     }
 
     public void addNewConsultation(ActionEvent actionEvent) {
-        WindowVeterinaryConsultation windowVeterinaryConsultation = new WindowVeterinaryConsultation();
-        windowVeterinaryConsultation.startModal();
+        WindowConsultation windowConsultation = new WindowConsultation();
+        windowConsultation.startModal();
     }
 
     public void sendViewVeterinary(ActionEvent actionEvent) {

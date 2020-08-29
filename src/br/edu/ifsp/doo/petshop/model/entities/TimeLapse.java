@@ -7,10 +7,6 @@ public class TimeLapse {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
 
-    public TimeLapse(LocalDateTime startTime) {
-        this.startTime = startTime;
-    }
-
     public LocalDateTime getStartTime() {
         return startTime;
     }

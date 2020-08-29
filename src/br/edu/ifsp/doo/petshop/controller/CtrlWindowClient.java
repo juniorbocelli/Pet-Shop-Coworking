@@ -94,6 +94,8 @@ public class CtrlWindowClient {
     public void addNewAnimal(ActionEvent actionEvent) {
         WindowAnimal windowAnimal = new WindowAnimal();
         windowAnimal.startModal(clientToSet);
+
+        loadDataAndShow();
     }
 
     public void sendViewClient(ActionEvent actionEvent) {
@@ -166,6 +168,9 @@ public class CtrlWindowClient {
         btnAddNewAnimal.setDisable(false);
         lblTableTitle.setDisable(false);
         tblAnimal.setDisable(false);
+
+        if (!clientToSet.isTemporaryRegistration())
+            chkTemporaryRegistration.setDisable(true);
     }
 
     private void setAnimalTableData() {
