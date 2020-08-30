@@ -1,5 +1,7 @@
 package br.edu.ifsp.doo.petshop.model.entities;
 
+import br.edu.ifsp.doo.petshop.model.utils.MaskApply;
+
 import java.util.ArrayList;
 
 public class Consultation {
@@ -71,6 +73,10 @@ public class Consultation {
         return price;
     }
 
+    public String getMaskedPrice() {
+        return MaskApply.maskMoney(price);
+    }
+
     public void setPrice(double price) {
         if (price < 0)
             throw new IllegalArgumentException("Preço inválido!");
@@ -78,6 +84,19 @@ public class Consultation {
         String decimalFormated = String.format("$.2f", price);
 
         this.price = Double.parseDouble(decimalFormated);
+    }
+
+    public void setPrice(String price) {
+        Double priceDouble;
+
+        try {
+            priceDouble = Double.parseDouble(price.replace(",", "."));
+        } catch (Exception e) {
+            throw new IllegalArgumentException("O valor do preço é inválido!");
+        }
+
+        this.setPrice(priceDouble);
+
     }
 
     public boolean isPaid() {

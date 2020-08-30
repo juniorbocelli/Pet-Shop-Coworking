@@ -1,8 +1,11 @@
 package br.edu.ifsp.doo.petshop.model.usecases;
 
+import br.edu.ifsp.doo.petshop.model.entities.Client;
 import br.edu.ifsp.doo.petshop.model.entities.Consultation;
+import br.edu.ifsp.doo.petshop.model.entities.Veterinary;
 import br.edu.ifsp.doo.petshop.persistence.dao.*;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class UCManageConsultation {
@@ -30,5 +33,13 @@ public class UCManageConsultation {
 
     public List<Consultation> selectAll() {
         return daoConsultation.selectAll();
+    }
+
+    public List<Client> getClientsList() {
+        return daoConsultation.getClientsList();
+    }
+
+    public List<Veterinary> getVeterinariesList() {
+        return daoConsultation.getVeterinariesList();
     }
 }

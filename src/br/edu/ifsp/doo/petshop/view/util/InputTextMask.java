@@ -85,21 +85,13 @@ public class InputTextMask {
                     textField.setText(textField.getText().substring(0,2));
                     textField.positionCaret(textField.getText().length());
                 }
-                if(textField.getText().length()==6){
-                    textField.setText(textField.getText().substring(0,5));
-                    textField.positionCaret(textField.getText().length());
-                }
 
             }else{ // escrevendo
 
-                if(textField.getText().length()==10) event.consume();
+                if(textField.getText().length()==5) event.consume();
 
                 if(textField.getText().length()==2){
-                    textField.setText(textField.getText()+"/");
-                    textField.positionCaret(textField.getText().length());
-                }
-                if(textField.getText().length()==5){
-                    textField.setText(textField.getText()+"/");
+                    textField.setText(textField.getText()+":");
                     textField.positionCaret(textField.getText().length());
                 }
 
@@ -108,8 +100,8 @@ public class InputTextMask {
 
         textField.setOnKeyReleased((KeyEvent evt) -> {
 
-            if(!textField.getText().matches("\\d/*")){
-                textField.setText(textField.getText().replaceAll("[^\\d/]", ""));
+            if(!textField.getText().matches("\\d:*")){
+                textField.setText(textField.getText().replaceAll("[^\\d:]", ""));
                 textField.positionCaret(textField.getText().length());
             }
         });

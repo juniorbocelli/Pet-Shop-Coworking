@@ -88,7 +88,7 @@ public class DAOClient extends AbstractTemplateSqlDAO<Client, String> {
     }
 
     @Override
-    protected void loadNestedEntitiesHook(List<Client> entities) throws SQLException {
+    protected void loadNestedEntitiesHook(List<Client> entities) {
         entities.forEach((x) -> {
             selectAndBindAnimals(x);
         });

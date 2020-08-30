@@ -74,7 +74,7 @@ public class DAOVeterinary extends AbstractTemplateSqlDAO<Veterinary, String> {
     }
 
     @Override
-    protected void loadNestedEntitiesHook(List<Veterinary> entities) throws SQLException {
+    protected void loadNestedEntitiesHook(List<Veterinary> entities) {
         entities.forEach((x) -> {
             selectAndBindConsultations(x);
         });

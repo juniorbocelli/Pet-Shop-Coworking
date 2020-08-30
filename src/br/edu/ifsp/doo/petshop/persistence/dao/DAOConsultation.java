@@ -1,13 +1,16 @@
 package br.edu.ifsp.doo.petshop.persistence.dao;
 
 import br.edu.ifsp.doo.petshop.model.entities.Animal;
+import br.edu.ifsp.doo.petshop.model.entities.Client;
 import br.edu.ifsp.doo.petshop.model.entities.Consultation;
+import br.edu.ifsp.doo.petshop.model.entities.Veterinary;
 import br.edu.ifsp.doo.petshop.persistence.utils.AbstractTemplateSqlDAO;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 public class DAOConsultation extends AbstractTemplateSqlDAO<Consultation, Integer> {
     @Override
@@ -86,5 +89,21 @@ public class DAOConsultation extends AbstractTemplateSqlDAO<Consultation, Intege
     @Override
     protected Integer getEntityKey(@NotNull Consultation entity) {
         return entity.getId();
+    }
+
+    public List<Client> getClientsList() {
+        DAOClient daoClient = new DAOClient();
+        List<Client> clientList = daoClient.selectAll();
+        daoClient.loadNestedEntitiesHook(clientList);
+
+        return clientList;
+    }
+
+    public List<Veterinary> getVeterinariesList() {
+        DAOVeterinary daoVeterinary = new DAOVeterinary();
+        List<Veterinary> veterinaryList = daoVeterinary.selectAll();
+        daoVeterinary.loadNestedEntitiesHook(veterinaryList);
+
+        return veterinaryList;
     }
 }
