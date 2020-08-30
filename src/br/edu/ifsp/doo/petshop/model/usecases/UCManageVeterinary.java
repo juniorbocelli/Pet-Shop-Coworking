@@ -2,14 +2,14 @@ package br.edu.ifsp.doo.petshop.model.usecases;
 
 import br.edu.ifsp.doo.petshop.model.entities.Veterinary;
 import br.edu.ifsp.doo.petshop.persistence.dao.DAOAnimal;
-import br.edu.ifsp.doo.petshop.persistence.dao.DAOClinicalConsultation;
+import br.edu.ifsp.doo.petshop.persistence.dao.DAOConsultation;
 import br.edu.ifsp.doo.petshop.persistence.dao.DAOVeterinary;
 
 import java.util.List;
 
 public class UCManageVeterinary {
     private DAOVeterinary daoVeterinary;
-    private UCManageClinicalConsultation ucManageClinicalConsultationPersistence;
+    private UCManageConsultation ucManageConsultationPersistence;
     private UCManageAnimal ucAnimal;
 
     public UCManageVeterinary(DAOVeterinary daoVeterinary) {
@@ -17,16 +17,20 @@ public class UCManageVeterinary {
     }
 
     public UCManageVeterinary(DAOVeterinary daoVeterinary,
-                              DAOClinicalConsultation daoClinicalConsultation,
+                              DAOConsultation daoConsultation,
                               DAOAnimal daoAnimal) {
         this.daoVeterinary = daoVeterinary;
 
-        this.ucManageClinicalConsultationPersistence = new UCManageClinicalConsultation(daoClinicalConsultation);
+        this.ucManageConsultationPersistence = new UCManageConsultation(daoConsultation);
         this.ucAnimal = new UCManageAnimal(daoAnimal);
     }
 
     public void saveOrUpdate(Veterinary veterinary) {
         daoVeterinary.saveOrUpdate(veterinary);
+    }
+
+    public Veterinary select(String cpf) {
+        return daoVeterinary.select(cpf).get();
     }
 
     public List<Veterinary> selectAll() {

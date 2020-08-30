@@ -1,9 +1,7 @@
 package br.edu.ifsp.doo.petshop.controller;
 
-import br.edu.ifsp.doo.petshop.model.entities.Animal;
-import br.edu.ifsp.doo.petshop.model.entities.Client;
-import br.edu.ifsp.doo.petshop.model.entities.Veterinary;
-import br.edu.ifsp.doo.petshop.model.entities.VeterinaryRecord;
+import br.edu.ifsp.doo.petshop.main.Main;
+import br.edu.ifsp.doo.petshop.model.entities.*;
 import br.edu.ifsp.doo.petshop.model.usecases.UCManageAnimal;
 import br.edu.ifsp.doo.petshop.persistence.dao.DAOAnimal;
 import br.edu.ifsp.doo.petshop.persistence.dao.DAOClient;
@@ -22,6 +20,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class CtrlWindowAnimal {
+    @FXML Label lblObservations;
     @FXML TextField txtName;
 
     @FXML Spinner<Integer> txtBirthYear;
@@ -76,6 +75,9 @@ public class CtrlWindowAnimal {
 
         loadClientsInComboBox();
         loadVeterinariesInComboBox();
+
+        if (isRequestByVeterinary())
+            setViewVeterinaryMode();
     }
 
     public void setOwnerToView(Client client) {
@@ -166,6 +168,15 @@ public class CtrlWindowAnimal {
 
     private boolean isUpdateRequest() {
         return animalToSet != null;
+    }
+
+    private boolean isRequestByVeterinary() {
+        return Main.getInstance().getLoggedUser() instanceof Veterinary;
+    }
+
+    private void setViewVeterinaryMode() {
+        txaGeneralAnnotations.setDisable(false);
+        lblObservations.setDisable(false);
     }
 
     public void closeAnimal(ActionEvent actionEvent) {

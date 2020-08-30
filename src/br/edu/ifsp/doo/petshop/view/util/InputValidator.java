@@ -38,4 +38,9 @@ public class InputValidator {
         String pattern = "([0-9]{3}[\\.]?[0-9]{3}[\\.]?[0-9]{3}[-]?[0-9]{2})$";
         return applyPattern(pattern, input);
     }
+
+    public static boolean isMoney(String input){
+        String pattern = "^\\d{1,},\\d{2}$";
+        return applyPattern(pattern, input);
+    }
 }

@@ -4,6 +4,7 @@ import br.edu.ifsp.doo.petshop.model.utils.CheckCpf;
 import br.edu.ifsp.doo.petshop.model.utils.MaskApply;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Client {
     private String cpf;
@@ -131,6 +132,10 @@ public class Client {
         this.temporaryRegistration = temporaryRegistration;
     }
 
+    public void setAnimals(List<Animal> animals) {
+        this.animals.addAll(animals);
+    }
+
     // Método que adiciona Animal
     public void addAnimal(Animal animal) throws Exception{
         // Verifica se o Animal já pertence a lista
@@ -140,7 +145,7 @@ public class Client {
     }
 
     // Método que lista Animais ativos
-    public ArrayList<Animal> listAnimals(){
+    public ArrayList<Animal> listActiveAnimals(){
         ArrayList<Animal> activeAnimalsList = new ArrayList<>();
 
         for (Animal a : this.animals)

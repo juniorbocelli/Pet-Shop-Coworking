@@ -8,7 +8,7 @@ public class Veterinary extends User {
     private boolean isSuperUser = false;
 
     // Lista de Consultas
-    private Map<TimeLapse, ClinicalConsultation> schedule = new TreeMap<>();
+    private Map<TimeLapse, Consultation> schedule = new TreeMap<>();
 
     public Veterinary() {
     }
@@ -27,8 +27,8 @@ public class Veterinary extends User {
     }
 
     // Método que adiciona Consultas a Agenda
-    public boolean addSchedule(ClinicalConsultation clinicalConsultation){
-        return true;
+    public void addSchedule(Consultation consultation){
+        schedule.put(consultation.getTimeLapse(), consultation);
     }
 
     private boolean isFreeTimeLapse(TimeLapse timeLapse){

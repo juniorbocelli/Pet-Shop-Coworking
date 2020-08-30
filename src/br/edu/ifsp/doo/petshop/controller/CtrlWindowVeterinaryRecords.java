@@ -2,7 +2,7 @@ package br.edu.ifsp.doo.petshop.controller;
 
 import br.edu.ifsp.doo.petshop.model.entities.Animal;
 import br.edu.ifsp.doo.petshop.view.loaders.WindowAnimal;
-import br.edu.ifsp.doo.petshop.view.loaders.WindowVeterinaryConsultation;
+import br.edu.ifsp.doo.petshop.view.loaders.WindowConsultation;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -35,8 +35,8 @@ public class CtrlWindowVeterinaryRecords {
     }
 
     public void addConsultation(ActionEvent actionEvent) {
-        WindowVeterinaryConsultation windowVeterinaryConsultation = new WindowVeterinaryConsultation();
-        windowVeterinaryConsultation.startModal();
+        WindowConsultation windowConsultation = new WindowConsultation();
+        windowConsultation.startModal();
     }
 
     public void saveVeterinaryRecord(ActionEvent actionEvent) {

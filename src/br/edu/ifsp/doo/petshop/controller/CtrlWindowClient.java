@@ -87,13 +87,15 @@ public class CtrlWindowClient {
     }
 
     private void loadTableDataFromDatabase() {
-        allAnimals = ucManageClient.selectAllWithOwnerAndVeterinary(clientToSet);
+        allAnimals = clientToSet.listActiveAnimals();
         tableData.setAll(allAnimals);
     }
 
     public void addNewAnimal(ActionEvent actionEvent) {
         WindowAnimal windowAnimal = new WindowAnimal();
         windowAnimal.startModal(clientToSet);
+
+        loadDataAndShow();
     }
 
     public void sendViewClient(ActionEvent actionEvent) {
@@ -156,7 +158,6 @@ public class CtrlWindowClient {
         txtCell.setText(client.getMaskedCell());
         txaAddress.setText(client.getAddress());
         chkTemporaryRegistration.setSelected(client.isTemporaryRegistration());
-
         setViewToEditMode();
     }
 
@@ -166,6 +167,9 @@ public class CtrlWindowClient {
         btnAddNewAnimal.setDisable(false);
         lblTableTitle.setDisable(false);
         tblAnimal.setDisable(false);
+
+        if (!clientToSet.isTemporaryRegistration())
+            chkTemporaryRegistration.setDisable(true);
     }
 
     private void setAnimalTableData() {

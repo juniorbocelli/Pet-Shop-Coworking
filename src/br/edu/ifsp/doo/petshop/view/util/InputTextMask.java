@@ -72,6 +72,42 @@ public class InputTextMask {
 
     }
 
+    public static void maskTime(TextField textField){
+
+        textField.setOnKeyTyped((KeyEvent event) -> {
+            if("0123456789".contains(event.getCharacter())==false){
+                event.consume();
+            }
+
+            if(event.getCharacter().trim().length()==0){ // apagando
+
+                if(textField.getText().length()==3){
+                    textField.setText(textField.getText().substring(0,2));
+                    textField.positionCaret(textField.getText().length());
+                }
+
+            }else{ // escrevendo
+
+                if(textField.getText().length()==5) event.consume();
+
+                if(textField.getText().length()==2){
+                    textField.setText(textField.getText()+":");
+                    textField.positionCaret(textField.getText().length());
+                }
+
+            }
+        });
+
+        textField.setOnKeyReleased((KeyEvent evt) -> {
+
+            if(!textField.getText().matches("\\d:*")){
+                textField.setText(textField.getText().replaceAll("[^\\d:]", ""));
+                textField.positionCaret(textField.getText().length());
+            }
+        });
+
+    }
+
     public static void maskDate(TextField textField){
 
         textField.setOnKeyTyped((KeyEvent event) -> {

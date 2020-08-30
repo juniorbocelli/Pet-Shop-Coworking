@@ -29,6 +29,10 @@ public class UCManageAnimal {
         daoAnimal.saveOrUpdate(animal);
     }
 
+    public Animal select(Integer id) {
+        return daoAnimal.select(id).get();
+    }
+
     public Integer saveOrUpdateWithReturnId(Animal animal) {
         return daoAnimal.saveOrUpdateWithReturnId(animal);
     }
