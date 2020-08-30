@@ -87,7 +87,7 @@ public class CtrlWindowClient {
     }
 
     private void loadTableDataFromDatabase() {
-        allAnimals = ucManageClient.selectAllWithOwnerAndVeterinary(clientToSet);
+        allAnimals = clientToSet.listActiveAnimals();
         tableData.setAll(allAnimals);
     }
 
@@ -158,7 +158,6 @@ public class CtrlWindowClient {
         txtCell.setText(client.getMaskedCell());
         txaAddress.setText(client.getAddress());
         chkTemporaryRegistration.setSelected(client.isTemporaryRegistration());
-
         setViewToEditMode();
     }
 

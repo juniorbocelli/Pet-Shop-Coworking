@@ -27,8 +27,8 @@ public class Veterinary extends User {
     }
 
     // Método que adiciona Consultas a Agenda
-    public boolean addSchedule(Consultation consultation){
-        return true;
+    public void addSchedule(Consultation consultation){
+        schedule.put(consultation.getTimeLapse(), consultation);
     }
 
     private boolean isFreeTimeLapse(TimeLapse timeLapse){

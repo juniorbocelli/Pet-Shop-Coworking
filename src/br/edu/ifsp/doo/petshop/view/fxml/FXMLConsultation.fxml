@@ -17,7 +17,7 @@
             <Label layoutX="588.0" layoutY="31.0" text="Data:" />
             <DatePicker fx:id="txtDate" layoutX="628.0" layoutY="27.0" prefHeight="25.0" prefWidth="155.0" />
             <Label layoutX="586.0" layoutY="66.0" text="Início:" />
-            <TextField fx:id="txtInitialTime" editable="false" layoutX="628.0" layoutY="62.0" prefHeight="25.0" prefWidth="48.0" promptText="00:00" />
+            <TextField fx:id="txtInitialTime" layoutX="628.0" layoutY="62.0" prefHeight="25.0" prefWidth="48.0" promptText="00:00" />
             <Label layoutX="594.0" layoutY="102.0" text="Fim:" />
             <TextField fx:id="txtEndTime" editable="false" layoutX="628.0" layoutY="98.0" prefHeight="25.0" prefWidth="48.0" promptText="00:00" />
             <Button fx:id="btnModifyStartTime" layoutX="695.0" layoutY="62.0" mnemonicParsing="false" onAction="#modifyStartTime" text="Modificar" />

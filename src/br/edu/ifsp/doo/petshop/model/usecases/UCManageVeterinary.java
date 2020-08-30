@@ -29,6 +29,10 @@ public class UCManageVeterinary {
         daoVeterinary.saveOrUpdate(veterinary);
     }
 
+    public Veterinary select(String cpf) {
+        return daoVeterinary.select(cpf).get();
+    }
+
     public List<Veterinary> selectAll() {
         return daoVeterinary.selectAll();
     }

@@ -1,5 +1,6 @@
 package br.edu.ifsp.doo.petshop.persistence.dao;
 
+import br.edu.ifsp.doo.petshop.model.entities.Animal;
 import br.edu.ifsp.doo.petshop.model.entities.Consultation;
 import br.edu.ifsp.doo.petshop.persistence.utils.AbstractTemplateSqlDAO;
 import org.jetbrains.annotations.NotNull;
@@ -71,18 +72,15 @@ public class DAOConsultation extends AbstractTemplateSqlDAO<Consultation, Intege
 
     @Override
     protected Consultation getEntityFromResultSet(@NotNull ResultSet rs) throws SQLException {
-        /*
         Consultation entity = new Consultation(
                 rs.getInt("id"),
-                rs.getString("name"),
-                rs.getString("type"),
-                rs.getString("gender"),
-                rs.getInt("birth_year"),
-                rs.getString("general_annotations"),
-                rs.getInt("active") == 1 ? true:false);
+                rs.getString("start_time"),
+                rs.getString("end_time"),
+                rs.getDouble("price"),
+                rs.getString("annotations"),
+                rs.getInt("paid") == 1 ? true:false);
 
-         */
-        return null;
+        return entity;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package br.edu.ifsp.doo.petshop.persistence.dao;
 
+import br.edu.ifsp.doo.petshop.model.entities.Animal;
 import br.edu.ifsp.doo.petshop.model.entities.Client;
 import br.edu.ifsp.doo.petshop.persistence.utils.AbstractTemplateSqlDAO;
 import org.jetbrains.annotations.NotNull;
@@ -7,6 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 public class DAOClient extends AbstractTemplateSqlDAO<Client, String> {
     @Override
@@ -59,7 +61,12 @@ public class DAOClient extends AbstractTemplateSqlDAO<Client, String> {
 
     @Override
     protected void setFilterToPreparedStatement(@NotNull Object filter, @NotNull PreparedStatement stmt) throws SQLException {
-
+        if(filter instanceof  String)
+            stmt.setString(1, filter.toString());
+        else if(filter instanceof Integer)
+            stmt.setInt(1, (Integer)filter);
+        else
+            throw new SQLException("O tipo do filtro fornecido não é suportado pela consulta.");
     }
 
     @Override
@@ -78,5 +85,22 @@ public class DAOClient extends AbstractTemplateSqlDAO<Client, String> {
     @Override
     protected String getEntityKey(@NotNull Client entity) {
         return entity.getCpf();
+    }
+
+    @Override
+    protected void loadNestedEntitiesHook(List<Client> entities) throws SQLException {
+        entities.forEach((x) -> {
+            selectAndBindAnimals(x);
+        });
+    }
+
+    private void selectAndBindAnimals(Client client) {
+        DAOAnimal daoAnimal = new DAOAnimal();
+        List<Animal> animalList = daoAnimal.selectBy("cpf_owner", client.getCpf());
+        animalList.forEach((a) -> {
+            daoAnimal.selectAndBindVeterinary(a);
+            a.setOwner(client);
+        });
+        client.setAnimals(animalList);
     }
 }
