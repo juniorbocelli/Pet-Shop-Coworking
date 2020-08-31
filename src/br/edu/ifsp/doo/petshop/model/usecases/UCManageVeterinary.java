@@ -1,10 +1,13 @@
 package br.edu.ifsp.doo.petshop.model.usecases;
 
+import br.edu.ifsp.doo.petshop.model.entities.Consultation;
 import br.edu.ifsp.doo.petshop.model.entities.Veterinary;
 import br.edu.ifsp.doo.petshop.persistence.dao.DAOAnimal;
 import br.edu.ifsp.doo.petshop.persistence.dao.DAOConsultation;
 import br.edu.ifsp.doo.petshop.persistence.dao.DAOVeterinary;
+import br.edu.ifsp.doo.petshop.persistence.dao.DAOVeterinaryRecord;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class UCManageVeterinary {
@@ -35,5 +38,10 @@ public class UCManageVeterinary {
 
     public List<Veterinary> selectAll() {
         return daoVeterinary.selectAll();
+    }
+
+    public List<Consultation> selectConsultationsList(Veterinary veterinary, LocalDate localDate) {
+        DAOVeterinaryRecord daoVeterinaryRecord = new DAOVeterinaryRecord();
+        return daoVeterinaryRecord.selectConsultationsList(veterinary, localDate);
     }
 }
