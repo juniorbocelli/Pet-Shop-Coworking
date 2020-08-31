@@ -12,6 +12,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
@@ -154,8 +155,8 @@ public class CtrlWindowVeterinaryRecords {
             String[] dateParts = dateTimeString.split("T")[0].split("-");
             return new SimpleStringProperty(dateParts[2] + "/" + dateParts[1] + "/" + dateParts[0]);
         });
-        clnStartTime.setCellValueFactory((param) -> new SimpleStringProperty(param.getValue().getTimeLapse().getStartTime().toString().substring(12, 17)));
-        clnEndTime.setCellValueFactory((param) -> new SimpleStringProperty(param.getValue().getTimeLapse().getEndTime().toString().substring(12, 17)));
+        clnStartTime.setCellValueFactory((param) -> new SimpleStringProperty(param.getValue().getTimeLapse().getStartTime().toString().substring(11, 16)));
+        clnEndTime.setCellValueFactory((param) -> new SimpleStringProperty(param.getValue().getTimeLapse().getEndTime().toString().substring(11, 16)));
         clnVeterinary.setCellValueFactory((param) -> new SimpleStringProperty(param.getValue().getVeterinary().getName()));
         clnPrice.setCellValueFactory((param) -> new SimpleStringProperty(param.getValue().getMaskedPrice()));
         clnFinalized.setCellValueFactory((param) -> new SimpleStringProperty(param.getValue().isPaid() ? "Pago":"Não Pago"));
@@ -187,7 +188,6 @@ public class CtrlWindowVeterinaryRecords {
     }
 
     public void setEntityToView(Animal animal) {
-        System.out.println(animal.getId());
         animalToSet = animal;
         cbxClient.getSelectionModel().select(stringClientConverter.fromString(animal.getOwner().getCpf()));
         loadAnimalsInComboBox();
@@ -195,5 +195,15 @@ public class CtrlWindowVeterinaryRecords {
         txaGeneralAnnotations.setText(animal.getVeterinaryRecord().getGeneralAnnotations());
 
         loadDataAndShow();
+    }
+
+    public void editConsultation(MouseEvent mouseEvent) {
+        Consultation selectedConsultation = tblConsultations.getSelectionModel().getSelectedItem();
+        if (mouseEvent.getClickCount() == 2 && selectedConsultation != null) {
+            WindowConsultation windowConsultation = new WindowConsultation();
+            windowConsultation.startModal(selectedConsultation);
+
+            loadDataAndShow();
+        }
     }
 }

@@ -12,6 +12,10 @@ public class UCManageVeterinaryRecord {
     private DAOVeterinaryRecord daoVeterinaryRecord;
     private UCManageConsultation ucManageConsultationPersistence;
 
+    public UCManageVeterinaryRecord(DAOVeterinaryRecord daoVeterinaryRecord) {
+        this.daoVeterinaryRecord = daoVeterinaryRecord;
+    }
+
     public UCManageVeterinaryRecord(DAOVeterinaryRecord daoVeterinaryRecord, DAOConsultation daoConsultation) {
         this.daoVeterinaryRecord = daoVeterinaryRecord;
         ucManageConsultationPersistence = new UCManageConsultation(daoConsultation);

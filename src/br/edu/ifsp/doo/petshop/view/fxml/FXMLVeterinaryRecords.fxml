@@ -28,7 +28,7 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <TableView fx:id="tblConsultations" layoutX="14.0" layoutY="43.0" prefHeight="200.0" prefWidth="773.0">
+            <TableView fx:id="tblConsultations" layoutX="14.0" layoutY="43.0" onMouseClicked="#editConsultation" prefHeight="200.0" prefWidth="773.0">
               <columns>
                 <TableColumn fx:id="clnDate" prefWidth="91.0" text="Data" />
                 <TableColumn fx:id="clnStartTime" prefWidth="70.0" text="Início" />

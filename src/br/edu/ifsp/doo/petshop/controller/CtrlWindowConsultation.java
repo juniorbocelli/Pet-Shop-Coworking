@@ -4,7 +4,6 @@ import br.edu.ifsp.doo.petshop.main.Main;
 import br.edu.ifsp.doo.petshop.model.entities.*;
 import br.edu.ifsp.doo.petshop.model.usecases.UCManageConsultation;
 import br.edu.ifsp.doo.petshop.persistence.dao.*;
-import br.edu.ifsp.doo.petshop.view.loaders.WindowVeterinary;
 import br.edu.ifsp.doo.petshop.view.util.InputTextMask;
 import br.edu.ifsp.doo.petshop.view.util.InputValidator;
 import javafx.beans.property.SimpleStringProperty;
@@ -139,6 +138,12 @@ public class CtrlWindowConsultation {
     }
 
     public void paidConsultation(ActionEvent actionEvent) {
+        itsPaid = true;
+        identifyErrorsAndBuildMsg();
+        if (allViewDataIsOk())
+            saveOrUpdateConsultation();
+        else
+            showErrorMessage("Erro");
     }
 
     public void addProduct(ActionEvent actionEvent) {
@@ -351,8 +356,9 @@ public class CtrlWindowConsultation {
         this.consultationToSet = consultation;
 
         cbxClient.getSelectionModel().select(stringClientConverter.fromString(consultation.getAnimal().getOwner().getCpf()));
+        loadAnimalsInComboBox();
         cbxAnimal.getSelectionModel().select(stringAnimalConverter.fromString(consultation.getAnimal().getId() + ""));
-        cbxVeterinary.getSelectionModel().select(stringVeterinaryConverter.fromString(consultation.getAnimal().getPreferredVeterinarian().getCpf()));
+        cbxVeterinary.getSelectionModel().select(stringVeterinaryConverter.fromString(consultation.getVeterinary().getCpf()));
         txtDate.setValue(consultation.getTimeLapse().getStartTime().toLocalDate());
         txtInitialTime.setText(consultation.getTimeLapse().getStartTime().toLocalTime().toString());
         txtEndTime.setText(consultation.getTimeLapse().getEndTime().toLocalTime().toString());
@@ -360,6 +366,10 @@ public class CtrlWindowConsultation {
         txaAnnotations.setText(consultation.getAnnotations());
 
         itsPaid = consultation.isPaid();
+        if (itsPaid)
+            setViewToPaidMode();
+
+        consultationToSet.setProducts(ucManageConsultation.selectConsultationProducts(consultation));
 
         allProducts = consultationToSet.getProducts();
         loadDataAndShow();
@@ -376,6 +386,11 @@ public class CtrlWindowConsultation {
 
     private void setViewToEditMode() {
 
+    }
+
+    private void setViewToPaidMode() {
+        txtPrice.setDisable(true);
+        btnPaidConsultation.setDisable(true);
     }
 
     public User getLoggedUser() {
@@ -475,8 +490,8 @@ public class CtrlWindowConsultation {
         return (Animal)cbxAnimal.getValue();
     }
 
-    private Animal getVeterinaryFromView() {
-        return (Animal) cbxAnimal.getValue();
+    private Veterinary getVeterinaryFromView() {
+        return (Veterinary) cbxVeterinary.getValue();
     }
 
     private Product getProductFromView() {
