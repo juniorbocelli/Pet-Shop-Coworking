@@ -76,6 +76,8 @@ public class DAOAnimal extends AbstractTemplateSqlDAO<Animal, Integer> {
 
     @Override
     protected Animal getEntityFromResultSet(@NotNull ResultSet rs) throws SQLException {
+        DAOClient daoClient = new DAOClient();
+        DAOVeterinary daoVeterinary = new DAOVeterinary();
         Animal entity = new Animal(
                 rs.getInt("id"),
                 rs.getString("name"),
@@ -84,6 +86,7 @@ public class DAOAnimal extends AbstractTemplateSqlDAO<Animal, Integer> {
                 rs.getInt("birth_year"),
                 rs.getString("general_annotations"),
                 rs.getInt("active") == 1 ? true:false);
+
         return entity;
     }
 

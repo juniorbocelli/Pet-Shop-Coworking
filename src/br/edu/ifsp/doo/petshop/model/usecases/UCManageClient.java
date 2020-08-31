@@ -5,8 +5,6 @@ import br.edu.ifsp.doo.petshop.model.entities.Client;
 import br.edu.ifsp.doo.petshop.persistence.dao.DAOAnimal;
 import br.edu.ifsp.doo.petshop.persistence.utils.DAO;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

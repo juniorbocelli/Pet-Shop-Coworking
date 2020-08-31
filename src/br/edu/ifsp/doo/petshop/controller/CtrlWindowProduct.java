@@ -68,10 +68,6 @@ public class CtrlWindowProduct {
         closeStage();
     }
 
-    private void configureTextFields() {
-        //TextFieldFormater.formatAsPhoneNumber(txtCell);
-    }
-
     private String getEntityFromView () {
         productToSaveOrUpdate = new Product();
         try {
@@ -96,7 +92,7 @@ public class CtrlWindowProduct {
         this.productToSet = product;
 
         txtName.setText(product.getName());
-        txtPrice.setText(product.getPrice().toString());
+        txtPrice.setText(product.getMaskedPrice());
         chkActive.setSelected(product.isActive());
     }
 

@@ -87,7 +87,8 @@ public class CtrlWindowClient {
     }
 
     private void loadTableDataFromDatabase() {
-        allAnimals = clientToSet.listActiveAnimals();
+        allAnimals = ucManageClient.selectAllWithOwnerAndVeterinary(clientToSet);
+        clientToSet.setAnimals(allAnimals);
         tableData.setAll(allAnimals);
     }
 

@@ -19,4 +19,8 @@ public class UCManageProduct {
     public List<Product> selectAll() {
         return daoProduct.selectAll();
     }
+
+    public List<Product> selectAllActives() {
+        return daoProduct.selectBy("active", 1);
+    }
 }

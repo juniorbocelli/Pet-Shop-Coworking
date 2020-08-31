@@ -1,9 +1,11 @@
 package br.edu.ifsp.doo.petshop.model.entities;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
 
-public class TimeLapse {
+public class TimeLapse implements Comparable<TimeLapse> {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
 
@@ -58,6 +60,17 @@ public class TimeLapse {
         if (newTime.isBefore(this.startTime))
             throw new IllegalArgumentException("Data final inválida!");
 
-        this.startTime = newTime;
+        this.endTime = newTime;
+    }
+
+    @Override
+    public int compareTo(@NotNull TimeLapse o) {
+        if (this.getStartTime().isBefore(o.getStartTime()))
+            return -1;
+
+        if (this.getStartTime().isAfter(o.getStartTime()))
+            return 1;
+
+        return 0;
     }
 }

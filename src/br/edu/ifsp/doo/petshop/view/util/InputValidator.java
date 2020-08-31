@@ -40,7 +40,7 @@ public class InputValidator {
     }
 
     public static boolean isMoney(String input){
-        String pattern = "^\\d{1,},\\d{2}$";
+        String pattern = "^[0-9]+(,[0-9]{1,2})?$";
         return applyPattern(pattern, input);
     }
 }

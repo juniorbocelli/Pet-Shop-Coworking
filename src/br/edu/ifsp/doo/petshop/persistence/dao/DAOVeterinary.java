@@ -1,7 +1,5 @@
 package br.edu.ifsp.doo.petshop.persistence.dao;
 
-import br.edu.ifsp.doo.petshop.model.entities.Animal;
-import br.edu.ifsp.doo.petshop.model.entities.Client;
 import br.edu.ifsp.doo.petshop.model.entities.Consultation;
 import br.edu.ifsp.doo.petshop.model.entities.Veterinary;
 import br.edu.ifsp.doo.petshop.persistence.utils.AbstractTemplateSqlDAO;
@@ -73,18 +71,10 @@ public class DAOVeterinary extends AbstractTemplateSqlDAO<Veterinary, String> {
             throw new SQLException("O tipo do filtro fornecido não é suportado pela consulta.");
     }
 
-    @Override
-    protected void loadNestedEntitiesHook(List<Veterinary> entities) {
-        entities.forEach((x) -> {
-            selectAndBindConsultations(x);
-        });
-    }
-
     private void selectAndBindConsultations(Veterinary veterinary) {
         DAOConsultation daoConsultation = new DAOConsultation();
         List<Consultation> consultationList = daoConsultation.selectBy("cpf_veterinary", veterinary.getCpf());
         consultationList.forEach((c) -> {
-            c.setVeterinary(veterinary);
             veterinary.addSchedule(c);
         });
     }

@@ -1,15 +1,18 @@
 package br.edu.ifsp.doo.petshop.controller;
 
 import br.edu.ifsp.doo.petshop.main.Main;
+import br.edu.ifsp.doo.petshop.model.entities.Consultation;
 import br.edu.ifsp.doo.petshop.model.entities.Secretary;
 import br.edu.ifsp.doo.petshop.model.entities.Veterinary;
 import br.edu.ifsp.doo.petshop.model.usecases.UCManageSecretary;
 import br.edu.ifsp.doo.petshop.persistence.dao.DAOSecretary;
 import br.edu.ifsp.doo.petshop.persistence.dao.DAOVeterinary;
+import br.edu.ifsp.doo.petshop.persistence.dao.DAOVeterinaryRecord;
 import br.edu.ifsp.doo.petshop.view.loaders.*;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,8 +23,8 @@ import javafx.util.Duration;
 import javafx.util.StringConverter;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class CtrlWindowSecretaryDashboard {
@@ -41,22 +44,25 @@ public class CtrlWindowSecretaryDashboard {
     @FXML Label lblCurrentDate;
     @FXML Label lblCurrentTime;
 
-    @FXML TableView tblSchedule;
+    @FXML TableView<Consultation> tblSchedule;
 
-    @FXML TableColumn clnStartTime;
-    @FXML TableColumn clnEndTime;
-    @FXML TableColumn clnClient;
-    @FXML TableColumn clnAnimal;
-    @FXML TableColumn clnStatus;
+    @FXML TableColumn<Consultation, String> clnStartTime;
+    @FXML TableColumn<Consultation, String> clnEndTime;
+    @FXML TableColumn<Consultation, String> clnClient;
+    @FXML TableColumn<Consultation, String> clnAnimal;
+    @FXML TableColumn<Consultation, String> clnStatus;
 
     private Secretary secretary;
     private UCManageSecretary ucManageSecretary;
 
     private ObservableList<Veterinary> veterinaries;
 
+    private ObservableList<Consultation> tableData;
+    private List<Consultation> allConsultations;
+
     public CtrlWindowSecretaryDashboard() {
         secretary = (Secretary)Main.getInstance().getLoggedUser();
-        ucManageSecretary = new UCManageSecretary(new DAOSecretary(), new DAOVeterinary());
+        ucManageSecretary = new UCManageSecretary(new DAOSecretary(), new DAOVeterinary(), new DAOVeterinaryRecord());
     }
 
     @FXML
@@ -67,9 +73,12 @@ public class CtrlWindowSecretaryDashboard {
         initializeClock();
         initializeDate();
 
+        bindTableViewToItemsList();
+        bindColumnsToValueSources();
+
         loadVeterinariesInComboBox();
 
-        System.out.println(LocalDateTime.now());
+        loadDataAndShow();
     }
 
     private void initializeClock() {
@@ -121,10 +130,12 @@ public class CtrlWindowSecretaryDashboard {
     }
 
     public void changeDate(ActionEvent actionEvent) {
+        loadDataAndShow();
     }
 
     public void goToToday(ActionEvent actionEvent) {
         goToToday();
+        loadDataAndShow();
     }
 
     public void goToToday() {
@@ -133,10 +144,20 @@ public class CtrlWindowSecretaryDashboard {
     }
 
     public void goToVeterinary(ActionEvent actionEvent) {
+        loadDataAndShow();
+    }
+
+    private Veterinary getVeterinaryFromView() {
+        return (Veterinary) cbxVeterinary.getValue();
+    }
+
+    private LocalDate getDateFromView() {
+        return txtDate.getValue();
     }
 
     private void loadVeterinariesInComboBox() {
         veterinaries = FXCollections.observableArrayList(ucManageSecretary.getVeterinariesList());
+        veterinaries.add(0, null);
         cbxVeterinary.setItems(veterinaries);
 
         stringVeterinaryConverter = new StringConverter<Veterinary>() {
@@ -155,5 +176,41 @@ public class CtrlWindowSecretaryDashboard {
         };
 
         cbxVeterinary.setConverter(stringVeterinaryConverter);
+    }
+
+    public void manageConsultations(MouseEvent mouseEvent) {
+        Consultation selectedConsultation = tblSchedule.getSelectionModel().getSelectedItem();
+        if (mouseEvent.getClickCount() == 2) {
+            if (selectedConsultation != null) {
+                WindowConsultation windowConsultation = new WindowConsultation();
+                windowConsultation.startModal(selectedConsultation);
+            } else {
+                WindowConsultation windowConsultation = new WindowConsultation();
+                windowConsultation.startModal();
+            }
+
+            loadDataAndShow();
+        }
+    }
+
+    public void bindTableViewToItemsList() {
+        tableData = FXCollections.observableArrayList();
+        tblSchedule.setItems(tableData);
+    }
+
+    public void bindColumnsToValueSources() {
+        clnStartTime.setCellValueFactory((param) -> new SimpleStringProperty(param.getValue().getTimeLapse().getStartTime().toString().substring(11, 16)));
+        clnEndTime.setCellValueFactory((param) -> new SimpleStringProperty(param.getValue().getTimeLapse().getEndTime().toString().substring(11, 16)));
+        clnAnimal.setCellValueFactory((param) -> new SimpleStringProperty(param.getValue().getAnimal().getName()));
+        clnStatus.setCellValueFactory((param) -> new SimpleStringProperty(param.getValue().isPaid() ? "Pago":"Não Pago"));
+    }
+
+    private void loadDataAndShow() {
+        loadTableDataFromDatabase();
+    }
+
+    private void loadTableDataFromDatabase() {
+        allConsultations = ucManageSecretary.selectConsultationsList(getVeterinaryFromView(), getDateFromView());
+        tableData.setAll(allConsultations);
     }
 }

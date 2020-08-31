@@ -3,6 +3,7 @@ package br.edu.ifsp.doo.petshop.model.entities;
 import br.edu.ifsp.doo.petshop.model.utils.MaskApply;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Consultation {
     private int id;
@@ -10,7 +11,7 @@ public class Consultation {
     private double price = 0.00;
     private boolean paid = false;
     private TimeLapse timeLapse;
-    private ArrayList<Product> products = new ArrayList<>();
+    private List<Product> products;
 
     private Animal animal;
     private Veterinary veterinary;
@@ -25,7 +26,7 @@ public class Consultation {
         String[] initialDateTimeParts = startTime.split("T");
         String[] initialDateParts = initialDateTimeParts[0].split("-");
         String[] initialTimeParts = initialDateTimeParts[1].split(":");
-        this.timeLapse.setEndTime(Integer.parseInt(initialDateParts[0]), Integer.parseInt(initialDateParts[1]), Integer.parseInt(initialDateParts[2]), Integer.parseInt(initialTimeParts[0]), Integer.parseInt(initialTimeParts[1]));
+        this.timeLapse.setStartTime(Integer.parseInt(initialDateParts[0]), Integer.parseInt(initialDateParts[1]), Integer.parseInt(initialDateParts[2]), Integer.parseInt(initialTimeParts[0]), Integer.parseInt(initialTimeParts[1]));
 
         String[] finalDateTimeParts = endTime.split("T");
         String[] finalDateParts = finalDateTimeParts[0].split("-");
@@ -81,9 +82,9 @@ public class Consultation {
         if (price < 0)
             throw new IllegalArgumentException("Preço inválido!");
 
-        String decimalFormated = String.format("$.2f", price);
+        String decimalFormated = String.format("%.2f", price);
 
-        this.price = Double.parseDouble(decimalFormated);
+        this.price = Double.parseDouble(decimalFormated.replace(",", "."));
     }
 
     public void setPrice(String price) {
@@ -123,7 +124,11 @@ public class Consultation {
         products.remove(product);
     }
 
-    public ArrayList<Product> getProducts(){
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
+
+    public List<Product> getProducts(){
         return this.products;
     }
 }

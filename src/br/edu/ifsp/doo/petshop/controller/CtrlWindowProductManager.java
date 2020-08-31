@@ -4,6 +4,7 @@ import br.edu.ifsp.doo.petshop.model.entities.Product;
 import br.edu.ifsp.doo.petshop.model.usecases.UCManageProduct;
 import br.edu.ifsp.doo.petshop.persistence.dao.DAOProduct;
 import br.edu.ifsp.doo.petshop.view.loaders.WindowProduct;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -26,7 +27,7 @@ public class CtrlWindowProductManager {
     @FXML TableView<Product> tblProduct;
 
     @FXML TableColumn<Product, String> clnName;
-    @FXML TableColumn<Product, Double> clnPrice;
+    @FXML TableColumn<Product, String> clnPrice;
 
     private List<Product> allProducts;
     private List<Product> filteredProducts;
@@ -54,7 +55,7 @@ public class CtrlWindowProductManager {
 
     public void bindColumnsToValueSources() {
         clnName.setCellValueFactory(new PropertyValueFactory<>("name"));
-        clnPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
+        clnPrice.setCellValueFactory((param) -> new SimpleStringProperty(param.getValue().getMaskedPrice()));
     }
 
     private void loadDataAndShow() {
