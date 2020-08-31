@@ -30,6 +30,11 @@ public class Product {
         return name + "\t\t\t\t R$ " + getMaskedPrice();
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
+    }
+
     public int getId() {
         return id;
     }

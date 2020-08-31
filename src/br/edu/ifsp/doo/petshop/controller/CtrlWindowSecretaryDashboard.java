@@ -68,8 +68,6 @@ public class CtrlWindowSecretaryDashboard {
         initializeDate();
 
         loadVeterinariesInComboBox();
-
-        System.out.println(LocalDateTime.now());
     }
 
     private void initializeClock() {

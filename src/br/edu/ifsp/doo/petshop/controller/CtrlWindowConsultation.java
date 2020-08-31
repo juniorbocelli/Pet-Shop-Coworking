@@ -1,5 +1,6 @@
 package br.edu.ifsp.doo.petshop.controller;
 
+import br.edu.ifsp.doo.petshop.main.Main;
 import br.edu.ifsp.doo.petshop.model.entities.*;
 import br.edu.ifsp.doo.petshop.model.usecases.UCManageConsultation;
 import br.edu.ifsp.doo.petshop.persistence.dao.*;
@@ -95,6 +96,11 @@ public class CtrlWindowConsultation {
         bindTableViewToItemsList();
         bindColumnsToValueSources();
         loadDataAndShow();
+
+        if (isLoggedUserSecretary())
+            setViewToSecretaryMode();
+        else
+            setViewToVeterinaryMode();
     }
 
     public void bindTableViewToItemsList() {
@@ -265,7 +271,11 @@ public class CtrlWindowConsultation {
     }
 
     private void requestSaveOrUpdate () {
-        ucManageConsultation.saveOrUpdate(consultationToSaveOrUpdate);
+        if (isUpdateRequest())
+            ucManageConsultation.saveOrUpdate(consultationToSaveOrUpdate);
+        else
+            consultationToSaveOrUpdate.setId(ucManageConsultation.saveOrUpdateWithReturnId(consultationToSaveOrUpdate));
+        ucManageConsultation.updateProductsList(consultationToSaveOrUpdate);
         closeStage();
     }
 
@@ -278,6 +288,8 @@ public class CtrlWindowConsultation {
             consultationToSaveOrUpdate.setPrice(txtPrice.getText().trim());
             consultationToSaveOrUpdate.setAnnotations(txaAnnotations.getText().trim());
             consultationToSaveOrUpdate.setPaid(itsPaid);
+
+            consultationToSaveOrUpdate.setProducts(allProducts);
 
             if(isUpdateRequest())
                 consultationToSaveOrUpdate.setId(consultationToSet.getId());
@@ -354,9 +366,24 @@ public class CtrlWindowConsultation {
         setViewToEditMode();
     }
 
+    public void setAnimalToView(Animal animal) {
+
+        cbxClient.getSelectionModel().select(stringClientConverter.fromString(animal.getOwner().getCpf()));
+        loadAnimalsInComboBox();
+        cbxAnimal.getSelectionModel().select(stringAnimalConverter.fromString(animal.getId() + ""));
+        cbxVeterinary.getSelectionModel().select(stringVeterinaryConverter.fromString(animal.getPreferredVeterinarian().getCpf()));
+    }
+
     private void setViewToEditMode() {
-        //btnAddNewConsultant.setDisable(false);
-        //tblSchedule.setDisable(false);
+
+    }
+
+    public User getLoggedUser() {
+        return Main.getInstance().getLoggedUser();
+    }
+
+    public boolean isLoggedUserSecretary() {
+        return getLoggedUser() instanceof Secretary;
     }
 
     private void setViewToSecretaryMode() {

@@ -1,9 +1,6 @@
 package br.edu.ifsp.doo.petshop.model.usecases;
 
-import br.edu.ifsp.doo.petshop.model.entities.Client;
-import br.edu.ifsp.doo.petshop.model.entities.Consultation;
-import br.edu.ifsp.doo.petshop.model.entities.Product;
-import br.edu.ifsp.doo.petshop.model.entities.Veterinary;
+import br.edu.ifsp.doo.petshop.model.entities.*;
 import br.edu.ifsp.doo.petshop.persistence.dao.*;
 
 import java.util.List;
@@ -31,6 +28,10 @@ public class UCManageConsultation {
         daoConsultation.saveOrUpdate(consultation);
     }
 
+    public Integer saveOrUpdateWithReturnId(Consultation consultation) {
+        return daoConsultation.saveOrUpdateWithReturnId(consultation);
+    }
+
     public List<Consultation> selectAll() {
         return daoConsultation.selectAll();
     }
@@ -45,5 +46,32 @@ public class UCManageConsultation {
 
     public List<Product> getProductsList() {
         return ucManageProduct.selectAllActives();
+    }
+
+    public void updateProductsList(Consultation consultation) {
+        List<Product> productsToUpdate = consultation.getProducts();
+        List<Product> productsInDatabase = selectConsultationProducts(consultation);
+
+        deleteRemovedProducts(consultation, productsToUpdate, productsInDatabase);
+        insertNewProducts(consultation, productsToUpdate, productsInDatabase);
+    }
+
+    public List<Product> selectConsultationProducts(Consultation consultation){
+        List<Product> products = daoConsultation.selectConsultationProducts(consultation);
+        return products;
+    }
+
+    private void deleteRemovedProducts(Consultation consultation, List<Product> productsToUpdate, List<Product> productsInDatabase) {
+        productsInDatabase.forEach(c-> {
+            if(!productsToUpdate.contains(c))
+                daoConsultation.removeProduct(consultation, c);
+        });
+    }
+
+    private void insertNewProducts(Consultation consultation, List<Product> productsToUpdate, List<Product> productsInDatabase) {
+        productsToUpdate.forEach(c-> {
+            if(!productsInDatabase.contains(c))
+                daoConsultation.insertProduct(consultation, c);
+        });
     }
 }

@@ -2,11 +2,14 @@ package br.edu.ifsp.doo.petshop.persistence.dao;
 
 import br.edu.ifsp.doo.petshop.model.entities.*;
 import br.edu.ifsp.doo.petshop.persistence.utils.AbstractTemplateSqlDAO;
+import br.edu.ifsp.doo.petshop.persistence.utils.ConnectionFactory;
 import org.jetbrains.annotations.NotNull;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DAOConsultation extends AbstractTemplateSqlDAO<Consultation, Integer> {
@@ -88,6 +91,7 @@ public class DAOConsultation extends AbstractTemplateSqlDAO<Consultation, Intege
         return entity.getId();
     }
 
+
     public List<Client> getClientsList() {
         DAOClient daoClient = new DAOClient();
         List<Client> clientList = daoClient.selectAll();
@@ -102,5 +106,55 @@ public class DAOConsultation extends AbstractTemplateSqlDAO<Consultation, Intege
         daoVeterinary.loadNestedEntitiesHook(veterinaryList);
 
         return veterinaryList;
+    }
+
+    public List<Consultation> getConsultationsList() {
+        List<Consultation> consultationList = selectAll();
+
+        return consultationList;
+    }
+
+    public List<Product> selectConsultationProducts(Consultation consultation) {
+        DAOProduct daoProduct = new DAOProduct();
+        List<Product> productList = new ArrayList<>();
+        String sql = "SELECT * FROM products_of_consultations WHERE id_consultation = ?";
+
+        try(PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)){
+            stmt.setInt(1, consultation.getId());
+            ResultSet rs  = stmt.executeQuery();
+
+            while (rs.next()) {
+                productList.add(daoProduct.select(rs.getInt("id_product")).get());
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return productList;
+    }
+
+    public void insertProduct(Consultation consultation, Product product) {
+        String sql = "INSERT INTO products_of_consultations (id_consultation, id_product, price) VALUES (?, ?, ?)";
+
+        try(PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)){
+            stmt.setInt(1, consultation.getId());
+            stmt.setInt(2, product.getId());
+            stmt.setDouble(3, product.getPrice());
+            stmt.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void removeProduct(Consultation consultation, Product product) {
+        String sql = "DELETE FROM products_of_consultations WHERE id_consultation = ? AND id_product = ?";
+
+        try(PreparedStatement stmt = ConnectionFactory.createPreparedStatement(sql)){
+            stmt.setInt(1, consultation.getId());
+            stmt.setInt(2, product.getId());
+            stmt.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -1,8 +1,10 @@
 package br.edu.ifsp.doo.petshop.controller;
 
+import br.edu.ifsp.doo.petshop.main.Main;
 import br.edu.ifsp.doo.petshop.model.entities.*;
 import br.edu.ifsp.doo.petshop.model.usecases.UCManageVeterinaryRecord;
 import br.edu.ifsp.doo.petshop.persistence.dao.DAOConsultation;
+import br.edu.ifsp.doo.petshop.persistence.dao.DAOVeterinaryRecord;
 import br.edu.ifsp.doo.petshop.view.loaders.WindowConsultation;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -10,11 +12,9 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,6 +39,8 @@ public class CtrlWindowVeterinaryRecords {
 
     @FXML TextArea txaGeneralAnnotations;
 
+    private Animal animalToSet;
+
     private UCManageVeterinaryRecord ucManageVeterinaryRecord;
 
     private ObservableList<Client> clients;
@@ -48,17 +50,27 @@ public class CtrlWindowVeterinaryRecords {
     private List<Consultation> allConsultations;
 
     public CtrlWindowVeterinaryRecords() {
-        ucManageVeterinaryRecord = new UCManageVeterinaryRecord(new DAOConsultation());
+        ucManageVeterinaryRecord = new UCManageVeterinaryRecord(new DAOVeterinaryRecord(), new DAOConsultation());
     }
 
     @FXML
     private void initialize() {
         loadClientsInComboBox();
+
+        bindTableViewToItemsList();
+        bindColumnsToValueSources();
+
+        if (isLoggedUserSecretary())
+            setViewToSecretaryMode();
+        else
+            setViewToVeterinaryMode();
     }
 
     public void addConsultation(ActionEvent actionEvent) {
         WindowConsultation windowConsultation = new WindowConsultation();
-        windowConsultation.startModal();
+        windowConsultation.startModal(animalToSet);
+
+        loadDataAndShow();
     }
 
     public void closeStage() {
@@ -72,6 +84,19 @@ public class CtrlWindowVeterinaryRecords {
 
     public void changeClient(ActionEvent actionEvent) {
         loadAnimalsInComboBox();
+    }
+
+    public void changeAnimal(ActionEvent actionEvent) {
+        if (getAnimalFromView() != null)
+            loadDataAndShow();
+    }
+
+    private Client getClientFromView() {
+        return (Client)cbxClient.getValue();
+    }
+
+    private Animal getAnimalFromView() {
+        return (Animal)cbxAnimal.getValue();
     }
 
     private void loadClientsInComboBox() {
@@ -129,16 +154,46 @@ public class CtrlWindowVeterinaryRecords {
             String[] dateParts = dateTimeString.split("T")[0].split("-");
             return new SimpleStringProperty(dateParts[2] + "/" + dateParts[1] + "/" + dateParts[0]);
         });
-        clnStartTime.setCellValueFactory((param) -> new SimpleStringProperty(param.getValue().getMaskedPrice()));
-        clnEndTime.setCellValueFactory((param) -> new SimpleStringProperty(param.getValue().getMaskedPrice()));
-        clnVeterinary.setCellValueFactory((param) -> new SimpleStringProperty(param.getValue().getMaskedPrice()));
+        clnStartTime.setCellValueFactory((param) -> new SimpleStringProperty(param.getValue().getTimeLapse().getStartTime().toString().substring(12, 17)));
+        clnEndTime.setCellValueFactory((param) -> new SimpleStringProperty(param.getValue().getTimeLapse().getEndTime().toString().substring(12, 17)));
+        clnVeterinary.setCellValueFactory((param) -> new SimpleStringProperty(param.getValue().getVeterinary().getName()));
         clnPrice.setCellValueFactory((param) -> new SimpleStringProperty(param.getValue().getMaskedPrice()));
-        clnFinalized.setCellValueFactory((param) -> new SimpleStringProperty(param.getValue().getMaskedPrice()));
+        clnFinalized.setCellValueFactory((param) -> new SimpleStringProperty(param.getValue().isPaid() ? "Pago":"Não Pago"));
     }
 
     private void loadDataAndShow() {
-        if (allConsultations == null)
-            allConsultations = new ArrayList<>();
+        loadTableDataFromDatabase();
+    }
+
+    private void loadTableDataFromDatabase() {
+        allConsultations = ucManageVeterinaryRecord.getConsultationsList(animalToSet);
         tableData.setAll(allConsultations);
+    }
+
+    private User getLoggedUser() {
+        return Main.getInstance().getLoggedUser();
+    }
+
+    private boolean isLoggedUserSecretary() {
+        return getLoggedUser() instanceof Secretary;
+    }
+
+    private void setViewToSecretaryMode() {
+
+    }
+
+    private void setViewToVeterinaryMode() {
+
+    }
+
+    public void setEntityToView(Animal animal) {
+        System.out.println(animal.getId());
+        animalToSet = animal;
+        cbxClient.getSelectionModel().select(stringClientConverter.fromString(animal.getOwner().getCpf()));
+        loadAnimalsInComboBox();
+        cbxAnimal.getSelectionModel().select(stringAnimalConverter.fromString(animal.getId() + ""));
+        txaGeneralAnnotations.setText(animal.getVeterinaryRecord().getGeneralAnnotations());
+
+        loadDataAndShow();
     }
 }

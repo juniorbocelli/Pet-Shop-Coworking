@@ -155,7 +155,7 @@ public class CtrlWindowAnimal {
 
     public void openVeterinaryRecord(ActionEvent actionEvent) {
         WindowVeterinaryRecords windowVeterinaryRecords = new WindowVeterinaryRecords();
-        windowVeterinaryRecords.startModal("Nome do Animal");
+        windowVeterinaryRecords.startModal(animalToSet);
     }
 
     public void sendViewAnimal(ActionEvent actionEvent) {
