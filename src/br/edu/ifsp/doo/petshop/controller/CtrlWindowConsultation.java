@@ -3,14 +3,17 @@ package br.edu.ifsp.doo.petshop.controller;
 import br.edu.ifsp.doo.petshop.model.entities.*;
 import br.edu.ifsp.doo.petshop.model.usecases.UCManageConsultation;
 import br.edu.ifsp.doo.petshop.persistence.dao.*;
-import br.edu.ifsp.doo.petshop.view.loaders.WindowProductManager;
+import br.edu.ifsp.doo.petshop.view.loaders.WindowVeterinary;
 import br.edu.ifsp.doo.petshop.view.util.InputTextMask;
 import br.edu.ifsp.doo.petshop.view.util.InputValidator;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
@@ -18,8 +21,10 @@ import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class CtrlWindowConsultation {
@@ -32,24 +37,27 @@ public class CtrlWindowConsultation {
     @FXML ComboBox<Veterinary> cbxVeterinary;
     private StringConverter<Veterinary> stringVeterinaryConverter;
 
+    @FXML ComboBox<Product> cbxProducts;
+    private StringConverter<Product> stringProductConverter;
+
     @FXML DatePicker txtDate;
 
     @FXML TextField txtInitialTime;
     @FXML TextField txtEndTime;
     @FXML TextField txtPrice;
 
-    @FXML Button btnModifyStartTime;
+    @FXML Button btnFinalizeConsultation;
     @FXML Button btnAddProduct;
-    @FXML Button btnFinalizeConsultant;
+    @FXML Button btnPaidConsultation;
     @FXML Button btnSaveVeterinaryConsultant;
     @FXML Button btnCloseVeterinaryConsultant;
 
     @FXML TextArea txaAnnotations;
 
-    @FXML TableView tblProducts;
+    @FXML TableView<Product> tblProducts;
 
-    @FXML TableColumn clnName;
-    @FXML TableColumn clnPrice;
+    @FXML TableColumn<Product, String> clnName;
+    @FXML TableColumn<Product, String> clnPrice;
 
     private String errorMessage;
 
@@ -59,9 +67,13 @@ public class CtrlWindowConsultation {
     private ObservableList<Client> clients;
     private ObservableList<Animal> animals;
     private ObservableList<Veterinary> veterinaries;
+    private ObservableList<Product> products;
+
+    private ObservableList<Product> tableData;
+    private List<Product> allProducts;
 
     private boolean itsPaid;
-    private boolean isPaymentRequest;
+    private boolean isPaymentRequest = false;
 
     private UCManageConsultation ucManageConsultation;
 
@@ -76,6 +88,37 @@ public class CtrlWindowConsultation {
 
         loadClientsInComboBox();
         loadVeterinariesInComboBox();
+        loadProductsInComboBox();
+
+        initializeEventFocusOutInEndTime();
+
+        bindTableViewToItemsList();
+        bindColumnsToValueSources();
+        loadDataAndShow();
+    }
+
+    public void bindTableViewToItemsList() {
+        tableData = FXCollections.observableArrayList();
+        tblProducts.setItems(tableData);
+    }
+
+    public void bindColumnsToValueSources() {
+        clnName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        clnPrice.setCellValueFactory((param) -> new SimpleStringProperty(param.getValue().getMaskedPrice()));
+    }
+
+    private void loadDataAndShow() {
+        if (allProducts == null)
+            allProducts = new ArrayList<>();
+        tableData.setAll(allProducts);
+    }
+
+    private void initializeEventFocusOutInEndTime() {
+        txtInitialTime.focusedProperty().addListener((obs, oldVal, newVal) -> {
+            if (!newVal) {
+                setEndTime();
+            }
+        });
     }
 
     public void changeClient(ActionEvent actionEvent) {
@@ -89,19 +132,31 @@ public class CtrlWindowConsultation {
     public void changeVeterinary(ActionEvent actionEvent) {
     }
 
-    public void modifyStartTime(ActionEvent actionEvent) {
+    public void paidConsultation(ActionEvent actionEvent) {
     }
 
     public void addProduct(ActionEvent actionEvent) {
-        // TODO: Criar nova tela para selecionar ou excluir produtos
-        WindowProductManager windowProductManager = new WindowProductManager();
-        windowProductManager.startModal();
+        Product product = getProductFromView();
+        if (product != null)
+            allProducts.add(product);
+        loadDataAndShow();
     }
 
-    public void finalizeConsultant(ActionEvent actionEvent) {
+    public void finalizeConsultation(ActionEvent actionEvent) {
+        isPaymentRequest = true;
+        txtEndTime.setText(LocalTime.now().toString().substring(0, 5));
     }
 
-    public void saveVeterinaryConsultant(ActionEvent actionEvent) {
+    public void  setEndTime() {
+        setEndTimeToView();
+    }
+
+    public void sendViewConsultation(ActionEvent actionEvent) {
+        identifyErrorsAndBuildMsg();
+        if (allViewDataIsOk())
+            saveOrUpdateConsultation();
+        else
+            showErrorMessage("Erro");
     }
 
     public void closeVeterinaryConsultant(ActionEvent actionEvent) {
@@ -179,6 +234,28 @@ public class CtrlWindowConsultation {
         cbxVeterinary.setConverter(stringVeterinaryConverter);
     }
 
+    private void loadProductsInComboBox() {
+        products = FXCollections.observableArrayList(ucManageConsultation.getProductsList());
+        cbxProducts.setItems(products);
+
+        stringProductConverter = new StringConverter<Product>() {
+
+            @Override
+            public String toString(Product object) {
+                return object.getName();
+            }
+
+            @Override
+            public Product fromString(String id) {
+                return products.stream()
+                        .filter(item -> item.getId() == Integer.parseInt(id))
+                        .collect(Collectors.toList()).get(0);
+            }
+        };
+
+        cbxVeterinary.setConverter(stringVeterinaryConverter);
+    }
+
     private void saveOrUpdateConsultation () {
         errorMessage = getEntityFromView();
         if (!allViewDataIsOk())
@@ -201,6 +278,10 @@ public class CtrlWindowConsultation {
             consultationToSaveOrUpdate.setPrice(txtPrice.getText().trim());
             consultationToSaveOrUpdate.setAnnotations(txaAnnotations.getText().trim());
             consultationToSaveOrUpdate.setPaid(itsPaid);
+
+            if(isUpdateRequest())
+                consultationToSaveOrUpdate.setId(consultationToSet.getId());
+            else consultationToSaveOrUpdate.setId(-1);
         } catch (Exception e) {
             return e.getMessage();
         }
@@ -230,7 +311,7 @@ public class CtrlWindowConsultation {
             String[] startTimeParts = txtInitialTime.getText().split(":");
             startTime = LocalTime.of(Integer.parseInt(startTimeParts[0]), Integer.parseInt(startTimeParts[1]));
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println("Data inválida!");
         }
 
         return startTime;
@@ -251,7 +332,7 @@ public class CtrlWindowConsultation {
     private void setEndTimeToView () {
         LocalTime startTime = getStartTimeFromView();
         LocalTime endTime = startTime.plusMinutes(30);
-        txtEndTime.setText(endTime.toString());
+        txtEndTime.setText(endTime.toString().substring(0, 5));
     }
 
     public void setEntityToView(Consultation consultation) {
@@ -268,12 +349,22 @@ public class CtrlWindowConsultation {
 
         itsPaid = consultation.isPaid();
 
+        allProducts = consultationToSet.getProducts();
+        loadDataAndShow();
         setViewToEditMode();
     }
 
     private void setViewToEditMode() {
         //btnAddNewConsultant.setDisable(false);
         //tblSchedule.setDisable(false);
+    }
+
+    private void setViewToSecretaryMode() {
+
+    }
+
+    private void setViewToVeterinaryMode() {
+
     }
 
     private boolean isUpdateRequest() {
@@ -293,6 +384,18 @@ public class CtrlWindowConsultation {
         errorMessage = null;
     }
 
+    private boolean showConfirmationMessage(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK)
+            return true;
+        return false;
+    }
+
     private boolean isPaymentRequest() {
         return isPaymentRequest;
     }
@@ -301,15 +404,19 @@ public class CtrlWindowConsultation {
         if(consultationInfoIsIncomplete() && !isPaymentRequest())
             appendErrorMessage("A data e o horário devem ser preenchidos.");
         if(consultationInfoIsIncomplete() && isPaymentRequest())
-            appendErrorMessage("Data, hhorário e preço devem ser preenchidos.");
+            appendErrorMessage("Data, horário e preço devem ser preenchidos.");
         if (!txtPrice.getText().isEmpty() && !InputValidator.isMoney(txtPrice.getText()))
-            appendErrorMessage("O formato do CPF é inválido.");
+            appendErrorMessage("O formato do preço é inválido.");
         if (getClientFromView() == null)
             appendErrorMessage("Escolha um cliente.");
         if (getAnimalFromView() == null)
             appendErrorMessage("Escolha um animal.");
         if (getVeterinaryFromView() == null)
             appendErrorMessage("Escolha um veterinário.");
+        if (!checkInitialDate())
+            appendErrorMessage("A data selecionada é inferior a data de hoje.");
+        if (!checkTime())
+            appendErrorMessage("O horário de funcionamento do escritório é 8:00 às 18:00.");
     }
 
     private void appendErrorMessage(String message) {
@@ -338,28 +445,48 @@ public class CtrlWindowConsultation {
     }
 
     private Animal getAnimalFromView() {
-        return (Animal) cbxAnimal.getValue();
+        return (Animal)cbxAnimal.getValue();
     }
 
     private Animal getVeterinaryFromView() {
         return (Animal) cbxAnimal.getValue();
     }
 
+    private Product getProductFromView() {
+        return (Product) cbxProducts.getValue();
+    }
+
     private List<String> getAllDataViewAsList() {
-        List<String> dataList = Arrays.asList(txtInitialTime.getText(), txtDate.getValue().toString());
+        List<String> dataList = Arrays.asList(txtInitialTime.getText(), txtDate.getValue()!=null?txtDate.getValue().toString():"");
         return dataList;
     }
 
-    private boolean checkDate() {
+    private boolean checkTime() {
+        if (getStartTimeFromView() != null)
+            return getStartTimeFromView().isBefore(LocalTime.of(17, 31)) && getStartTimeFromView().isAfter(LocalTime.of(7, 59));
         return false;
     }
 
     private boolean checkInitialDate() {
+        if (txtDate.getValue() != null)
+            return LocalDate.from(txtDate.getValue()).isAfter(LocalDate.now());
         return false;
     }
 
     // Métodos específicos para validação de dados
     private boolean consultationInfoIsIncomplete() {
         return someStringsAreNotFilled(getAllDataViewAsList()) || !allStringsAreFilled(getAllDataViewAsList());
+    }
+
+    public void removeProduct(MouseEvent mouseEvent) {
+        Product selectedProduct = tblProducts.getSelectionModel().getSelectedItem();
+        if (mouseEvent.getClickCount() == 2 && selectedProduct != null) {
+            int selectedProductIndex = tblProducts.getSelectionModel().getSelectedIndex();
+            Boolean confirmExclusion = showConfirmationMessage("Excluir Produto", "Deseja excluir o produto?");
+
+            if (confirmExclusion)
+                allProducts.remove(selectedProductIndex);
+            loadDataAndShow();
+        }
     }
 }

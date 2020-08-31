@@ -81,9 +81,9 @@ public class Consultation {
         if (price < 0)
             throw new IllegalArgumentException("Preço inválido!");
 
-        String decimalFormated = String.format("$.2f", price);
+        String decimalFormated = String.format("%.2f", price);
 
-        this.price = Double.parseDouble(decimalFormated);
+        this.price = Double.parseDouble(decimalFormated.replace(",", "."));
     }
 
     public void setPrice(String price) {

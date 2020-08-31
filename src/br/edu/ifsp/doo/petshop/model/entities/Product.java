@@ -1,5 +1,7 @@
 package br.edu.ifsp.doo.petshop.model.entities;
 
+import br.edu.ifsp.doo.petshop.model.utils.MaskApply;
+
 import java.util.Objects;
 
 public class Product {
@@ -24,28 +26,8 @@ public class Product {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Product product = (Product) o;
-        return id == product.id &&
-                name.equals(product.name) &&
-                price == product.price;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, price);
-    }
-
-    @Override
     public String toString() {
-        return "History{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                ", active=" + active +
-                '}';
+        return name + "\t\t\t\t R$ " + getMaskedPrice();
     }
 
     public int getId() {
@@ -71,17 +53,29 @@ public class Product {
         return price;
     }
 
-    public void setPrice(Double price) {
-        this.price = price;
+    public String getMaskedPrice() {
+        return MaskApply.maskMoney(price);
+    }
+
+    public void setPrice(double price) {
+        if (price < 0)
+            throw new IllegalArgumentException("Preço inválido!");
+
+        String decimalFormated = String.format("%.2f", price);
+
+        this.price = Double.parseDouble(decimalFormated.replace(",", "."));
     }
 
     public void setPrice(String price) {
+        Double priceDouble;
 
         try {
-            this.price = Double.parseDouble(price.replace(",", "."));
+            priceDouble = Double.parseDouble(price.replace(",", "."));
         } catch (Exception e) {
             throw new IllegalArgumentException("O valor do preço é inválido!");
         }
+
+        this.setPrice(priceDouble);
 
     }
 

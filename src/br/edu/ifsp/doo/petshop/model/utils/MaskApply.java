@@ -23,10 +23,13 @@ public class MaskApply {
     }
 
     public static String maskMoney(Double d) {
-        String[] strings = d.toString().split(".");
+        String[] strings = d.toString().split("\\.");
 
-        if (strings.length != 2)
-            return strings[0] + "," + strings[1];
+        if (strings.length == 2)
+            if (strings[1].length() < 2)
+                return strings[0] + "," + "0" + strings[1];
+            else
+                return strings[0] + "," + strings[1];
 
         return d.toString();
     }

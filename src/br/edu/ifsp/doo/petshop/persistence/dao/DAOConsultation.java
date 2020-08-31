@@ -1,9 +1,6 @@
 package br.edu.ifsp.doo.petshop.persistence.dao;
 
-import br.edu.ifsp.doo.petshop.model.entities.Animal;
-import br.edu.ifsp.doo.petshop.model.entities.Client;
-import br.edu.ifsp.doo.petshop.model.entities.Consultation;
-import br.edu.ifsp.doo.petshop.model.entities.Veterinary;
+import br.edu.ifsp.doo.petshop.model.entities.*;
 import br.edu.ifsp.doo.petshop.persistence.utils.AbstractTemplateSqlDAO;
 import org.jetbrains.annotations.NotNull;
 
