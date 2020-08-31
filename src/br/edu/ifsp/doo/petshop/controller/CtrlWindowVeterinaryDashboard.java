@@ -61,6 +61,9 @@ public class CtrlWindowVeterinaryDashboard {
         txtDate.setValue(LocalDate.now());
         lblUserName.setText(veterinary.getName());
 
+        bindTableViewToItemsList();
+        bindColumnsToValueSources();
+
         initializeClock();
         initializeDate();
     }

@@ -1,5 +1,7 @@
 package br.edu.ifsp.doo.petshop.model.usecases;
 
+import br.edu.ifsp.doo.petshop.model.entities.Animal;
+import br.edu.ifsp.doo.petshop.model.entities.Client;
 import br.edu.ifsp.doo.petshop.model.entities.Consultation;
 import br.edu.ifsp.doo.petshop.model.entities.Veterinary;
 import br.edu.ifsp.doo.petshop.persistence.dao.DAOAnimal;
@@ -43,5 +45,9 @@ public class UCManageVeterinary {
     public List<Consultation> selectConsultationsList(Veterinary veterinary, LocalDate localDate) {
         DAOVeterinaryRecord daoVeterinaryRecord = new DAOVeterinaryRecord();
         return daoVeterinaryRecord.selectConsultationsList(veterinary, localDate);
+    }
+
+    public List<Consultation> getConsultationsList(Veterinary veterinary) {
+        return daoVeterinary.selectConsultationsList(veterinary);
     }
 }

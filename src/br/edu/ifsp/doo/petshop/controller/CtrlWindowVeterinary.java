@@ -1,14 +1,19 @@
 package br.edu.ifsp.doo.petshop.controller;
 
+import br.edu.ifsp.doo.petshop.model.entities.Consultation;
 import br.edu.ifsp.doo.petshop.model.entities.Veterinary;
 import br.edu.ifsp.doo.petshop.model.usecases.UCManageVeterinary;
 import br.edu.ifsp.doo.petshop.persistence.dao.DAOVeterinary;
 import br.edu.ifsp.doo.petshop.view.loaders.WindowConsultation;
 import br.edu.ifsp.doo.petshop.view.util.InputTextMask;
 import br.edu.ifsp.doo.petshop.view.util.InputValidator;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.util.Arrays;
@@ -32,18 +37,21 @@ public class CtrlWindowVeterinary {
     @FXML Button btnSaveVeterinary;
     @FXML Button btnCloseVeterinary;
 
-    @FXML TableView tblSchedule;
+    @FXML TableView<Consultation> tblSchedule;
 
-    @FXML TableColumn clnDate;
-    @FXML TableColumn clnStartTime;
-    @FXML TableColumn clnEndTime;
-    @FXML TableColumn clnClientName;
-    @FXML TableColumn clnAnimalName;
+    @FXML TableColumn<Consultation, String> clnDate;
+    @FXML TableColumn<Consultation, String> clnStartTime;
+    @FXML TableColumn<Consultation, String> clnEndTime;
+    @FXML TableColumn<Consultation, String> clnClientName;
+    @FXML TableColumn<Consultation, String> clnAnimalName;
 
     private Veterinary veterinaryToSet;
     private Veterinary veterinaryToSaveOrUpdate;
     private UCManageVeterinary ucManageVeterinary;
     private String errorMessage;
+
+    private ObservableList<Consultation> tableData;
+    private List<Consultation> allConsultations;
 
     public CtrlWindowVeterinary() {
         ucManageVeterinary = new UCManageVeterinary(new DAOVeterinary());
@@ -55,6 +63,9 @@ public class CtrlWindowVeterinary {
         InputTextMask.maskEmail(txtEmail);
         InputTextMask.maskPhoneOrCell(txtPhone);
         InputTextMask.maskPhoneOrCell(txtCell);
+
+        bindTableViewToItemsList();
+        bindColumnsToValueSources();
     }
 
     public void addNewConsultation(ActionEvent actionEvent) {
@@ -121,6 +132,8 @@ public class CtrlWindowVeterinary {
         chkActive.setSelected(veterinary.getActive());
 
         setViewToEditMode();
+
+        loadDataAndShow();
     }
 
     private void setViewToEditMode() {
@@ -207,5 +220,46 @@ public class CtrlWindowVeterinary {
         List<String> dataList = Arrays.asList(txtCpf.getText(), txtName.getText(), txtEmail.getText(),
                 txtPhone.getText(), txtCell.getText(), txaAddress.getText());
         return dataList;
+    }
+
+    public void bindTableViewToItemsList() {
+        tableData = FXCollections.observableArrayList();
+        tblSchedule.setItems(tableData);
+    }
+
+    public void bindColumnsToValueSources() {
+        clnDate.setCellValueFactory((param) -> {
+            String dateTimeString = param.getValue().getTimeLapse().getStartTime().toString();
+            String[] dateParts = dateTimeString.split("T")[0].split("-");
+            return new SimpleStringProperty(dateParts[2] + "/" + dateParts[1] + "/" + dateParts[0]);
+        });
+        clnStartTime.setCellValueFactory((param) -> new SimpleStringProperty(param.getValue().getTimeLapse().getStartTime().toString().substring(11, 16)));
+        clnEndTime.setCellValueFactory((param) -> new SimpleStringProperty(param.getValue().getTimeLapse().getEndTime().toString().substring(11, 16)));
+        clnClientName.setCellValueFactory((param) -> new SimpleStringProperty(param.getValue().getVeterinary().getName()));
+        clnAnimalName.setCellValueFactory((param) -> new SimpleStringProperty(param.getValue().getMaskedPrice()));
+    }
+
+    private void loadDataAndShow() {
+        loadTableDataFromDatabase();
+    }
+
+    private void loadTableDataFromDatabase() {
+        allConsultations = ucManageVeterinary.getConsultationsList(veterinaryToSet);
+        tableData.setAll(allConsultations);
+    }
+
+    public void manageConsultations(MouseEvent mouseEvent) {
+        Consultation selectedConsultation = tblSchedule.getSelectionModel().getSelectedItem();
+        if (mouseEvent.getClickCount() == 2) {
+            if (selectedConsultation != null) {
+                WindowConsultation windowConsultation = new WindowConsultation();
+                windowConsultation.startModal(selectedConsultation);
+            } else {
+                WindowConsultation windowConsultation = new WindowConsultation();
+                windowConsultation.startModal();
+            }
+
+            loadDataAndShow();
+        }
     }
 }

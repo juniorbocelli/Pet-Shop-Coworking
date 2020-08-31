@@ -6,6 +6,7 @@ import br.edu.ifsp.doo.petshop.model.utils.MaskApply;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Objects;
 
 public class User {
     private String cpf;
@@ -39,6 +40,11 @@ public class User {
         this.cell = cell;
         this.address = address;
         this.password = password;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cpf);
     }
 
     public String getCpf() {
