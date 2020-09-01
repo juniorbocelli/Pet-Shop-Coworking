@@ -167,8 +167,14 @@ public class CtrlWindowVeterinaryRecords {
     }
 
     private void loadTableDataFromDatabase() {
-        allConsultations = ucManageVeterinaryRecord.getConsultationsList(animalToSet);
+        allConsultations = ucManageVeterinaryRecord.getConsultationsList(getAnimalFromView());
         tableData.setAll(allConsultations);
+
+        setGeneralAnnotationsToView();
+    }
+
+    private void setGeneralAnnotationsToView(){
+        txaGeneralAnnotations.setText(getAnimalFromView().getVeterinaryRecord().getGeneralAnnotations());
     }
 
     private User getLoggedUser() {
