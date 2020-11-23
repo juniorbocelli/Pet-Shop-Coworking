@@ -190,7 +190,7 @@ public class CtrlWindowVeterinaryRecords {
     }
 
     private void setViewToVeterinaryMode() {
-
+        btnAddConsultation.setDisable(true);
     }
 
     public void setEntityToView(Animal animal) {
