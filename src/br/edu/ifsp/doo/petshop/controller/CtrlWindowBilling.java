@@ -141,7 +141,7 @@ public class CtrlWindowBilling {
         });
         clnClient.setCellValueFactory((param) -> new SimpleStringProperty(param.getValue().getAnimal().getOwner().getName()));
         clnAnimal.setCellValueFactory((param) -> new SimpleStringProperty(param.getValue().getAnimal().getName()));
-        clnValue.setCellValueFactory((param) -> new SimpleStringProperty(param.getValue().getPrice() + ""));
+        clnValue.setCellValueFactory((param) -> new SimpleStringProperty(param.getValue().getMaskedPrice() + ""));
     }
 
     private void loadDataAndShow() {

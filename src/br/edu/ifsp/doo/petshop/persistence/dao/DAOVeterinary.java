@@ -1,5 +1,6 @@
 package br.edu.ifsp.doo.petshop.persistence.dao;
 
+import br.edu.ifsp.doo.petshop.model.entities.Animal;
 import br.edu.ifsp.doo.petshop.model.entities.Consultation;
 import br.edu.ifsp.doo.petshop.model.entities.Veterinary;
 import br.edu.ifsp.doo.petshop.persistence.utils.AbstractTemplateSqlDAO;
@@ -114,5 +115,11 @@ public class DAOVeterinary extends AbstractTemplateSqlDAO<Veterinary, String> {
         }
 
         return null;
+    }
+
+    public List<Consultation> selectConsultationsList(Veterinary veterinary) {
+        DAOConsultation daoConsultation = new DAOConsultation();
+        List<Consultation> consultationList = daoConsultation.selectBy("cpf_veterinary", veterinary.getCpf());
+        return consultationList;
     }
 }

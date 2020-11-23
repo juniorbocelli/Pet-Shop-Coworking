@@ -29,7 +29,7 @@
       </AnchorPane>
       <AnchorPane layoutY="245.0" prefHeight="287.0" prefWidth="800.0">
          <children>
-            <TableView fx:id="tblSchedule" disable="true" layoutX="11.0" layoutY="49.0" prefHeight="232.0" prefWidth="777.0">
+            <TableView fx:id="tblSchedule" disable="true" layoutX="11.0" layoutY="49.0" onMouseClicked="#manageConsultations" prefHeight="232.0" prefWidth="777.0">
               <columns>
                 <TableColumn fx:id="clnDate" prefWidth="75.0" text="Data" />
                 <TableColumn fx:id="clnStartTime" prefWidth="88.0" text="Início" />

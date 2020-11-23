@@ -25,7 +25,7 @@ public class DatabaseBuilder {
             stmt.addBatch(createAnimalTableSql());
             stmt.addBatch(createDiseasesOfAnimalsTableSql());
             stmt.addBatch(createProductTableSql());
-            stmt.addBatch(createVeterinaryConsultationTableSql());
+            stmt.addBatch(createConsultationTableSql());
             stmt.addBatch(createProductsOfConsultationsTableSql());
             stmt.executeBatch();
 
@@ -142,10 +142,10 @@ public class DatabaseBuilder {
         return builder.toString();
     }
 
-    private String createVeterinaryConsultationTableSql(){
+    private String createConsultationTableSql(){
         StringBuilder builder = new StringBuilder();
 
-        builder.append("CREATE TABLE  veterinary_consultation (\n");
+        builder.append("CREATE TABLE consultation (\n");
         builder.append("id\tINTEGER NOT NULL, \n");
         builder.append("id_animal\tINTEGER NOT NULL, \n");
         builder.append("cpf_veterinary\tTEXT NOT NULL, \n");

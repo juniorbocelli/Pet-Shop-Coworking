@@ -402,11 +402,19 @@ public class CtrlWindowConsultation {
     }
 
     private void setViewToSecretaryMode() {
-
+        btnAddProduct.setDisable(true);
+        txaAnnotations.setDisable(true);
+        cbxProducts.setDisable(true);
+        btnFinalizeConsultation.setDisable(true);
+        txtPrice.setDisable(true);
     }
 
     private void setViewToVeterinaryMode() {
-
+        cbxClient.setDisable(true);
+        cbxAnimal.setDisable(true);
+        cbxVeterinary.setDisable(true);
+        txtDate.setDisable(true);
+        txtInitialTime.setDisable(true);
     }
 
     private boolean isUpdateRequest() {
