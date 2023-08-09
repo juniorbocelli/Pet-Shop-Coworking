@@ -5,7 +5,7 @@ Esse foi um projeto desenvolvido por mim para a matéria **Desenvolvimento Orien
 ## Requisitos do Sistema
 
  - Java EE 8;
- - Banco de dados SQLite (o JDBC já vem incluso no projeto).
+ - Banco de dados SQLite 3 (o JDBC já vem incluso no projeto).
 
 ## Requisitos dos Usuários
 
